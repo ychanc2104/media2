@@ -1,0 +1,200 @@
+/* http://meyerweb.com/eric/tools/css/reset/ */
+/* v1.0 | 20080212 */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+/* remember to define focus styles! */
+:focus {
+	outline: 0;
+}
+/* remember to highlight inserts somehow! */
+ins {
+	text-decoration: none;
+}
+del {
+	text-decoration: line-through;
+}
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* for login */
+
+.container{
+
+    height: 800px;
+    margin-top: 0px;
+    background: linear-gradient(#144262, #5c7c86);
+}
+.header_label{
+    width: 430px;
+    margin-top: 100px;
+    height: 50px;
+    position: relative;
+}
+.backstage{
+    position: absolute;
+    top: 110px;
+    color: white;
+    font-size: 30px;
+    left: 84px;
+}
+.profile{
+    text-align: center;
+    margin-top: 30px;
+    height: 150px;
+}
+.grayblock{
+    height: 25px;
+    width: 300px;
+    background-color: darkgray;
+    margin: auto;
+    margin-top: 15px;
+    border-radius: 25px;
+}
+.phoneno{
+    height: 15px;
+    width: 300px;
+    margin:auto;
+    margin-top: 18px;
+    color: white;
+    font-size: 11px;
+}
+
+.loginbutton{
+    margin: 20px;
+    width: 120px;
+    height: 44px;
+    background-color: #1D202D;
+    border-radius: 28px;
+    border-color: #1D202D;
+    color: white;
+    outline: none;
+    text-align: center;
+}
+.loginbutton:hover{
+    cursor:pointer;
+}
+
+.flag{
+    margin: auto;
+    margin-top: 20px;
+}
+.lang{
+    height: 11px;
+}
+
+.logo{
+    margin: auto;
+    margin-top: 50px;
+    height: 90px;
+}
+
+.login_accout_form_span {
+    margin: 20px;
+    display: block;
+}
+
+.login_input_style {
+    border-radius: 16px;
+    border-style: solid;
+    border-color: #A9A9A9;
+    width: 320px;
+    height: 20px;
+    background-color: #A9A9A9;
+    outline: none;
+    padding-left: 5px;
+}
+#register_window{
+    display: none;
+    height: fit-content;
+    width: 400px;
+    z-index: 2;
+    position: relative;
+    height: fit-content;
+    width: 400px;
+    z-index: 2;
+    position: relative;
+    top: -580px;
+    left: 300px;
+}
+.input_info{
+    width: 400px;
+    height: 655px;
+    background-color: white;
+    position: absolute;
+    top: 100px;
+}
+
+.subtitle1{
+    color: lightseagreen;
+    font-size: 35px;
+    text-align:center;
+    top: 30px;
+}
+#register_windowfade{
+    display: none;
+    position: fixed;
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%;
+    z-index: 1;
+}
+.fill_form{
+    width: 300px;
+    height: 25px;
+    margin: 10px;
+    border-radius: 5px;
+    font-size: 18px;
+    padding: 5px;
+    background-color: lightgray;
+    border-width: 1px;
+}
+.note{
+    font-size: 12px;
+    margin: 10px;
+}
+.submit_formbtn{
+    background-color: lightslategray;
+    width: 400px;
+    margin-top: 52px;
+    height: 50px;
+    border-width: 0px;
+    color: white;
+    font-size: 18px;
+}
+

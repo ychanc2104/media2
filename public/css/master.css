@@ -1,0 +1,197 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+/* remember to define focus styles! */
+:focus {
+	outline: 0;
+}
+/* remember to highlight inserts somehow! */
+ins {
+	text-decoration: none;
+}
+del {
+	text-decoration: line-through;
+}
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+.background_0{
+	height: 800px;
+	background-color: lightgray;
+}
+.sidebar_1{
+    background: linear-gradient(#144262, #5c7c86);
+    width: 250px;
+    height: 800px;
+    position: relative;
+}
+
+.master_logo{
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: -17px;
+    left: -21px;
+}
+.btn{
+    right: 45px;
+    position: absolute;
+    background-color: inherit;
+}
+#langpage{
+    display: none;
+    z-index: 2;
+    width: 500px;
+    height: 200px;
+    position:relative;
+    background-color: white;
+}
+#langpage_fade{
+    display: none;
+    position: fixed;
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%;
+    z-index: 1;
+}
+.navbar{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: lightsteelblue;
+    position: absolute;
+    right: 0px;
+    width: -webkit-fill-available;
+    height: 100px;
+}
+.profile_0{
+    float: right;
+}
+.subtitle1{
+    margin-top:10px; 
+    margin-left:5px;
+}
+.sidebar_words1{
+    position: absolute;
+    top: 125px;
+    color: white;
+    left: 30px;
+    font-weight: bold;
+    text-decoration: none;
+}
+.sidebar_words1:hover{
+    color: lightslategray;
+}
+.sidebar_words2:hover{
+    color: lightslategray;
+}
+.sidebar_words2{
+    position: absolute;
+    top: 160px;
+    color: white;
+    left: 30px;
+    font-weight: bold;
+    text-decoration: none;
+}
+.languagebtn{
+    background-color: inherit;
+    border: none;
+}
+.white_bg{
+    background-color: white;
+    height: 630px;
+    width: 80%;
+    position: absolute;
+    top: 125px;
+    left: 280px;
+}
+.blueline{
+    background-color: lightblue;
+    margin: 10px;
+}
+.select_date{
+    margin: 10px;
+    margin-top: 5px;
+    border-radius: 6px;
+    background-color: turquoise;
+    width: fit-content;
+    color: white;
+    cursor: pointer;
+    padding: 5px;
+    border-width: 0px;
+}
+.sum1{
+    text-decoration: underline 2px;
+    text-decoration-color: teal;
+    text-underline-position: under;
+    margin: 10px;
+}
+.table{
+    width: 50%;
+    margin: 10px;
+    text-align: left !important;
+    margin-right: 400px;
+    margin-top: 45px;
+}
+
+.greenbutton{
+    background-color: greenyellow;
+    width: 60px;
+    float: left;
+    margin-top: 15px;
+    height: 20px;
+    border-radius: 5px;
+    margin-left: 200px;
+    text-align: center;
+    font-size: 15px;
+    color: white;
+    border-width: 0px;
+    
+}
+.greenbutton:hover{
+    background-color: chartreuse;
+}
+.xbtn{
+    float: right;
+    color: lightgray;
+    border-width: 0px;
+    background-color: white;
+    margin: 5px;
+
+}
+
