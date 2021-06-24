@@ -55,13 +55,12 @@
                                 <a href="pg2" class="sidebar_words2">各廣告成效查詢</a>
                             </div>
                     
-                    @yield('content1')
+                    @yield('content')
 
                 </div>
 
            
         </div>
-        <!-- @yield('content1') -->
     </body>
 </html>
 
