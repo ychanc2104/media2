@@ -1,7 +1,7 @@
 @extends('layouts.media.base')
 
-    
-    <div id="chart_div"></div>
+
+<!-- <div id="chart_div"></div> -->
 
 
     <!-- <table class="table" border = "1">
@@ -27,8 +27,6 @@
 
 
  
- 
-
 
 <div class="portlet light">
 	<div>
@@ -36,26 +34,27 @@
 		<hr style="border: 0;height: 1px;background-color: #a7b9c6;margin: 0px;"/>
 	</div>
 	<br>
-	<div class="btn-group">
-    <span class="date_range" class="pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
-      <span id="filter">{{ trans('default.time' )}}</span>
-			<b class="caret"></b>
-    </span>
+  <!-- date picker -->
 
-    <ul class="dropdown-menu">
-      <li><a onclick="change_date('year',`@lang('default.yearly')`, `@lang('default.year_select')`);">@lang('default.yearly')</a></li>
-      <li><a onclick="change_date('month',`@lang('default.monthly')`, `@lang('default.month_select')`);">@lang('default.monthly')</a></li>
-      <li><a onclick="change_date('week',`@lang('default.weekly')`, `@lang('default.week_select')`);">@lang('default.weekly')</a></li>
-		</ul>
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;時間
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+      <li><a class="dropdown-item" href="#">年份</a></li>
+      <li><a class="dropdown-item" href="#">月份</a></li>
+      <li><a class="dropdown-item" href="#">週</a></li>
+    </ul>
   </div>
 
+  <!-- do not display -->
   <div class="btn-group" id="div_filter_year" style="display: none;">
     <span class="date_range" class="pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <span class="filter">@lang('default.year_select')</span>
       <b class="caret"></b>
     </span>
-    <ul id="filter_year" class="dropdown-menu"></ul>
+    <ul id="filter_year" class="dropdown-menu">
+    </ul>
   </div>
 
 
@@ -92,19 +91,20 @@
     <div style="margin-top: 20px;" id="creat_table_div"></div>
 
 	  <div class="row">
+
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 product_tabs">
         <ul class="">
-        <li class="col-12 col-lg-2 product_tab_active">
-          <div id="likr_tab">
-            <div class="tab_title" onclick="showTable('likr')">@lang('default.likr_push')</div>
-          </div>
-        </li>
+          <li class="col-12 col-lg-2 product_tab_active">
+            <div id="likr_tab">
+              <div class="tab_title" onclick="showTable('likr')">@lang('default.likr_push')</div>
+            </div>
+          </li>
         </ul>
 		  </div>
       <!-- 報表tabs與圖 -->
       <div class="col-12 likr">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 likr_chart">
-          <ul class="nav nav-tabs nav-fill">          
+          <ul class="nav nav-tabs nav-fill">        
             <li class="active nav-item  col-12 col-lg-2">              
               <div class="new_tab selected" style="border-top-color: #4267b8;">             
                 <div style="padding-left: 20px;">aaaaNT$</div>
@@ -137,9 +137,18 @@
               <a style="background-color: #426481;" data-toggle="tab" href="#likr_menu4">zzzzzz@lang('default.click_through_rate')</a>
             </li>
           </ul>
+
         </div>
+
       </div>
+
+      <!-- place to show charts -->
+
+      <div id="chart_div"></div>
+
+
     </div>
 
   </div>
+
 </div>

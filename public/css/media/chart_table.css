@@ -109,507 +109,958 @@ rect[Attributes Style] {
 }
 
 
-        /* 加入使用條款確認頁 by Wine 20190926 */
-            /* 常住項 */
-            .dissapear{
-                display:none !important;
-            }
-            .law_page{
-                position:fixed;
-                z-index:99999;
-                height:100vh;
-                width:100%;
-                bottom:15px;
-                overflow:auto;
-            }
-            .black_screen{
-                position:relative;
-                height:120%;
-                width:100%;
-                background-color:rgba(0, 0, 0, 0.349);
-            }
-            .law_content{
-                position:absolute;
-                width:800px;
-                height:750px;
-                background-color:white;
-                top:0;
-                right:0;
-                bottom:0;
-                left:0;
-                margin:auto;
-                margin-top:30px;
-                display:flex;
-                flex-direction:column;
-                /* justify-content:center; */
-                align-items:center;
-            }
-            .law_content>h4, .law_content>h5{
-                width:750px;
-            }
-            .law_content>h4{
-                margin-top:25px;
-            }
-            .law_content>.law_text{
-                width:750px;
-                height:650px;
-                overflow:auto;
-                border:solid 2px #124160;	
-                border-radius:5px;	
-                padding: 40px 20px 30px 20px;
-            }
-            .law_content>h5>ul>li{
-                list-style-type: disc;
-                margin: 0px 10px 10px 30px;
-            }
+/* 加入使用條款確認頁 by Wine 20190926 */
+    /* 常住項 */
+    .dissapear{
+        display:none !important;
+    }
+    .law_page{
+        position:fixed;
+        z-index:99999;
+        height:100vh;
+        width:100%;
+        bottom:15px;
+        overflow:auto;
+    }
+    .black_screen{
+        position:relative;
+        height:120%;
+        width:100%;
+        background-color:rgba(0, 0, 0, 0.349);
+    }
+    .law_content{
+        position:absolute;
+        width:800px;
+        height:750px;
+        background-color:white;
+        top:0;
+        right:0;
+        bottom:0;
+        left:0;
+        margin:auto;
+        margin-top:30px;
+        display:flex;
+        flex-direction:column;
+        /* justify-content:center; */
+        align-items:center;
+    }
+    .law_content>h4, .law_content>h5{
+        width:750px;
+    }
+    .law_content>h4{
+        margin-top:25px;
+    }
+    .law_content>.law_text{
+        width:750px;
+        height:650px;
+        overflow:auto;
+        border:solid 2px #124160;	
+        border-radius:5px;	
+        padding: 40px 20px 30px 20px;
+    }
+    .law_content>h5>ul>li{
+        list-style-type: disc;
+        margin: 0px 10px 10px 30px;
+    }
 
-            .law_text>ol,.law_text>ol>li{
-                list-style-type: @lang("law.text_list_style_type");
-                margin: 0px 0px 20px 15px;
-            }
+    .law_text>ol,.law_text>ol>li{
+        list-style-type: @lang("law.text_list_style_type");
+        margin: 0px 0px 20px 15px;
+    }
 
-            .law_text>ol>li>ul>li {
-                list-style-type: initial;
-                margin: 0px 0px 0px 28px;
-            }
-            .law_content>.check_area{
-                height:20px;
-                margin-top:5px;
-            }
-            .check_area>*{
-                font-size:15px;
-                margin:0;
-                line-height:20px;
-            }
+    .law_text>ol>li>ul>li {
+        list-style-type: initial;
+        margin: 0px 0px 0px 28px;
+    }
+    .law_content>.check_area{
+        height:20px;
+        margin-top:5px;
+    }
+    .check_area>*{
+        font-size:15px;
+        margin:0;
+        line-height:20px;
+    }
 
-            .law_content>button{
-                background-color:#6EC4D4;
-                color:white;
-                padding: 5px 20px;
-                border-radius: 6px;
-                border: 1px solid;
-                margin: 5px;
-            }
-
-
-        /* 加入使用條款確認頁 END */
-        @media (min-width: 992px){
-            .col-lg-2 {
-                -webkit-box-flex: 0;
-                -ms-flex: 0 0 19.666667%;
-                flex: 0 0 19.666667%;
-                max-width: 19.666667%;
-            }
-        }
-        @media (max-width: 991px){
-            .nav-fill .nav-item{
-                height:54px ;
-            }
-        }
-        /* 新增分產品頁籤 */
-            .product_tabs{
-                left:15px;
-            }
-            .product_tabs>ul>li{
-                padding: 0;
-                border-top-right-radius: 18px;   
-                box-shadow:7px 0px 5px 	#BEBEBE;   
-                position: relative !important;   
-                background:#f2f2f2;   
-                transition:all 0.2s ease;
-                bottom:0;
-            }
-            .product_tabs>ul>li>div{
-                border-top: none !important;    
-                        
-            }
-            .product_tabs>ul>li:nth-child(1){
-                z-index:5
-            }
-            .product_tabs>ul>li:nth-child(2){
-                z-index:4
-            }
-            .product_tabs>ul>li:nth-child(3){
-                z-index:3
-            }
-            .product_tabs>ul>li:nth-child(4){
-                z-index:2
-            }
-            .product_tabs>ul>li>div>div{
-                height: 70px;
-                font-size: 20px;
-                font-weight: bold;
-                line-height: 70px;
-                /* margin-left: 20px; */
-                text-align:center;
-            }
-            .product_tab_active{
-                background:white !important;
-                bottom:4px !important;
-            }
-            .popcorn>div>ul>li{
-                max-width: 25%;
-            }
-            .hot_today>div>ul>li{
-                max-width: 25%;
-            }
-
-        /* 新增分產品頁籤 ＥＮＤ */
+    .law_content>button{
+        background-color:#6EC4D4;
+        color:white;
+        padding: 5px 20px;
+        border-radius: 6px;
+        border: 1px solid;
+        margin: 5px;
+    }
 
 
+/* 加入使用條款確認頁 END */
+@media (min-width: 992px){
+    .col-lg-2 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 19.666667%;
+        flex: 0 0 19.666667%;
+        max-width: 19.666667%;
+    }
+}
+@media (max-width: 991px){
+    .nav-fill .nav-item{
+        height:54px ;
+    }
+}
+/* 新增分產品頁籤 */
+    .product_tabs{
+        left:15px;
+    }
+    .product_tabs>ul>li{
+        padding: 0;
+        border-top-right-radius: 18px;   
+        box-shadow:7px 0px 5px 	#BEBEBE;   
+        position: relative !important;   
+        background:#f2f2f2;   
+        transition:all 0.2s ease;
+        bottom:0;
+    }
+    .product_tabs>ul>li>div{
+        border-top: none !important;    
+                
+    }
+    .product_tabs>ul>li:nth-child(1){
+        z-index:5
+    }
+    .product_tabs>ul>li:nth-child(2){
+        z-index:4
+    }
+    .product_tabs>ul>li:nth-child(3){
+        z-index:3
+    }
+    .product_tabs>ul>li:nth-child(4){
+        z-index:2
+    }
+    .product_tabs>ul>li>div>div{
+        height: 70px;
+        font-size: 20px;
+        font-weight: bold;
+        line-height: 70px;
+        /* margin-left: 20px; */
+        text-align:center;
+    }
+    .product_tab_active{
+        background:white !important;
+        bottom:4px !important;
+    }
+    .popcorn>div>ul>li{
+        max-width: 25%;
+    }
+    .hot_today>div>ul>li{
+        max-width: 25%;
+    }
 
-        * { padding: 0; margin: 0; }
-        body { font-family: SimHei, sans-serif, "FontAwesome", Microsoft JhengHei; overflow: auto;background:#ebebeb;  }
-        p,span,label,h1,h2,h3,h4,h5 {font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";}
-        a { text-decoration: none; color: #00A5CC;}
-        li { list-style-type: none; }
-        @media  screen and (max-width:992px){
-            header {
-            width: 100%;
-            height: 68px;
-            padding-top: 68px;
-            background: #CDD6D5;
-            }
-            nav {
-            width: 90%;
-            margin: 0% 5%;
-             }
-            nav a:hover {
-            background: #426481;
-            color: #FFF;
-            }
-            .menu {
-            width: 90%;
-            /*height: 100%;*/
-            position: absolute;
-            /*background: #D9C9A3;*/
-            background-image: url("{{ asset('/img/master/menu-background.png') }}");
-            background-size: cover;
-            -moz-background-size:100% 100%;        /*for Firefox*/
-            -webkit-background-size:100% 100%;        /*for Google Chrome、Safari*/
-            -ms-background-size:100% 100%;        /*for Google Chrome、Safari*/
-            -o-background-size:100% 100%;        /*for Opera*/
-            background-size:100% 100%;        /*for IE*/
-            top:170px;
-            /*max-height: 750px;*/
-            }
-            .menu-icon {
-            padding: 16px 6%;
-            color: #ebebeb;
-            cursor: pointer;
-            right: 0%;
-            float: right;
-            font-size: 25px;
-            position: absolute;
-            }
-            .logo{
-            width: 100%;
-            height: 68px;
-            background: #124160;
-            position: absolute;
-            left:0px;
-            }
-            .main-body{
-            width: 90%;
-            height: auto;
-            min-height:100%;
-            padding: 20px 5%;
-            margin:20px 5%;
-            position: absolute;
-            background: #ebebeb;
-            top: 150px;
-            transition: all .3s ease-in-out;
-            -webkit-transition: all .3s ease-in-out;
-            -moz-transition: all .3s ease-in-out;
-            -ms-transition: all .3s ease-in-out;
-            -o-transition: all .3s ease-in-out;
-            }
-            .menu-bottom{
-            width:500px;
-            height:480px;
-            display:none;
-            }
-            .logo-image{
-            float:left ;
-            margin-left:3% ;
-            margin-top:1% ;
-            }
-            .header-icon{
-            margin:3px 2.5% ;
-            float:right;
-            }
-            .header-icon-btn {
-                background-color: #ebebeb;
-                margin-top: 10px;
-                margin-right: 10px;
-            }
+/* 新增分產品頁籤 ＥＮＤ */
+
+
+
+* { padding: 0; margin: 0; }
+body { font-family: SimHei, sans-serif, "FontAwesome", Microsoft JhengHei; overflow: auto;background:#ebebeb;  }
+p,span,label,h1,h2,h3,h4,h5 {font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";}
+a { text-decoration: none; color: #00A5CC;}
+li { list-style-type: none; }
+@media  screen and (max-width:992px){
+    header {
+    width: 100%;
+    height: 68px;
+    padding-top: 68px;
+    background: #CDD6D5;
+    }
+    nav {
+    width: 90%;
+    margin: 0% 5%;
         }
-        @media  screen and (min-width:992px){
-            header {
-            width: 100%;
-            height: 104px;
-            margin: auto;
-            background: #CDD6D5;
-            }
-            nav {
-            width: 100%;
-            }
-            nav a:hover {
-            background-image: url("{{ asset('/img/master/menu-background-ontouch.png') }}");
-            -moz-background-size:240px 100%;
-            -webkit-background-size:240px 100%;
-            -ms-background-size:240px 100%;
-            -o-background-size:240px 100%;
-            background-size:240px 100%;
-            color: #FFF;
-            }
-            .menu {
-            width: 240px;
-            min-height: 983px;
-            position: absolute;
-            /*background: #D9C9A3;*/
-            background-image: url("{{ asset('/img/master/menu-background.png') }}");
-            background-size: cover;
-            -moz-background-size:240px 100%;        /*for Firefox*/
-            -webkit-background-size:240px 100%;        /*for Google Chrome、Safari*/
-            -ms-background-size:240px 100%;        /*for Google Chrome、Safari*/
-            -o-background-size:240px 100%;        /*for Opera*/
-            background-size:240px 100%;        /*for IE*/
-            left: 0px;
-            }
-            .menu-icon {
-            padding: 34px 20px;
-            background: #124160;
-            color: #ebebeb;
-            cursor: pointer;
-            left:177.5px;
-            float: left;
-            font-size: 25px;
-            position: absolute;
-            display: none;
-            }
-            .logo{
-            width: 240px;
-            height: 104px;
-            background: #124160;
-            position: absolute;
-            left:0px;
-            }
-            .main-body{
-            margin-left:240px;
-            padding: 20px 20px;
-            }
-            .menu-bottom{
-            width:500px;
-            height:480px;
-            }
-            .logo-image{
-            float:left ;
-            margin-left:76px ;
-            margin-top:25px 
-            }
-            .logo-smallimage
-            {
-                position: absolute;
-                right:170px;
-                top: -20px;
-                width: 100px;
-                height:100px;
-    
-            }
-            .header-icon{
-            /*margin:22px 2% ;*/
-            float:right;
-            /*padding-top: 18px;*/
-            padding-right: 16px;
-            }
-            .header-icon-btn {
-            background-color: #cdd6d5;
-            margin-top: 10px;
-            margin-right: 10px;
-            }
+    nav a:hover {
+    background: #426481;
+    color: #FFF;
+    }
+    .menu {
+    width: 90%;
+    /*height: 100%;*/
+    position: absolute;
+    /*background: #D9C9A3;*/
+    background-image: url("{{ asset('/img/master/menu-background.png') }}");
+    background-size: cover;
+    -moz-background-size:100% 100%;        /*for Firefox*/
+    -webkit-background-size:100% 100%;        /*for Google Chrome、Safari*/
+    -ms-background-size:100% 100%;        /*for Google Chrome、Safari*/
+    -o-background-size:100% 100%;        /*for Opera*/
+    background-size:100% 100%;        /*for IE*/
+    top:170px;
+    /*max-height: 750px;*/
+    }
+    .menu-icon {
+    padding: 16px 6%;
+    color: #ebebeb;
+    cursor: pointer;
+    right: 0%;
+    float: right;
+    font-size: 25px;
+    position: absolute;
+    }
+    .logo{
+    width: 100%;
+    height: 68px;
+    background: #124160;
+    position: absolute;
+    left:0px;
+    }
+    .main-body{
+    width: 90%;
+    height: auto;
+    min-height:100%;
+    padding: 20px 5%;
+    margin:20px 5%;
+    position: absolute;
+    background: #ebebeb;
+    top: 150px;
+    transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    }
+    .menu-bottom{
+    width:500px;
+    height:480px;
+    display:none;
+    }
+    .logo-image{
+    float:left ;
+    margin-left:3% ;
+    margin-top:1% ;
+    }
+    .header-icon{
+    margin:3px 2.5% ;
+    float:right;
+    }
+    .header-icon-btn {
+        background-color: #ebebeb;
+        margin-top: 10px;
+        margin-right: 10px;
+    }
+}
+@media  screen and (min-width:992px){
+    header {
+    width: 100%;
+    height: 104px;
+    margin: auto;
+    background: #CDD6D5;
+    }
+    nav {
+    width: 100%;
+    }
+    nav a:hover {
+    background-image: url("{{ asset('/img/master/menu-background-ontouch.png') }}");
+    -moz-background-size:240px 100%;
+    -webkit-background-size:240px 100%;
+    -ms-background-size:240px 100%;
+    -o-background-size:240px 100%;
+    background-size:240px 100%;
+    color: #FFF;
+    }
+    .menu {
+    width: 240px;
+    min-height: 983px;
+    position: absolute;
+    /*background: #D9C9A3;*/
+    background-image: url("{{ asset('/img/master/menu-background.png') }}");
+    background-size: cover;
+    -moz-background-size:240px 100%;        /*for Firefox*/
+    -webkit-background-size:240px 100%;        /*for Google Chrome、Safari*/
+    -ms-background-size:240px 100%;        /*for Google Chrome、Safari*/
+    -o-background-size:240px 100%;        /*for Opera*/
+    background-size:240px 100%;        /*for IE*/
+    left: 0px;
+    }
+    .menu-icon {
+    padding: 34px 20px;
+    background: #124160;
+    color: #ebebeb;
+    cursor: pointer;
+    left:177.5px;
+    float: left;
+    font-size: 25px;
+    position: absolute;
+    display: none;
+    }
+    .logo{
+    width: 240px;
+    height: 104px;
+    background: #124160;
+    position: absolute;
+    left:0px;
+    }
+    .main-body{
+    margin-left:240px;
+    padding: 20px 20px;
+    }
+    .menu-bottom{
+    width:500px;
+    height:480px;
+    }
+    .logo-image{
+    float:left ;
+    margin-left:76px ;
+    margin-top:25px 
+    }
+    .logo-smallimage
+    {
+        position: absolute;
+        right:170px;
+        top: -20px;
+        width: 100px;
+        height:100px;
+
+    }
+    .header-icon{
+    /*margin:22px 2% ;*/
+    float:right;
+    /*padding-top: 18px;*/
+    padding-right: 16px;
+    }
+    .header-icon-btn {
+    background-color: #cdd6d5;
+    margin-top: 10px;
+    margin-right: 10px;
+    }
+}
+
+#brand {
+    float: left;
+    line-height: 50px;
+    color: #E5DAC0;
+    font-size: 25px;
+    font-weight: bolder;
+}
+nav a {
+    display: block;
+    padding: 15px 0;    /*側欄項目高*/
+    /*border-bottom: 1px solid #C3AA6E;*/
+    color: #ebebeb;
+}
+
+nav a.menu-item-hidden:hover {
+    background: #426481;
+    color: #FFF;
+}
+nav li:last-child a { border-bottom: none; }
+/*-----------------------------------------*/
+
+.menu-hidden {
+    width: 240px;
+    /*height: 100%;*/
+    position: absolute;
+    /*background: #D9C9A3;*/
+    background-image: url("{{ asset('/img/master/menu-background.png') }}");
+    -moz-background-size:240px 100%;        /*for Firefox*/
+    -webkit-background-size:240px 100%;        /*for Google Chrome、Safari*/
+    -ms-background-size:240px 100%;        /*for Google Chrome、Safari*/
+    -o-background-size:240px 100%;        /*for Opera*/
+    background-size:240px 100%;        /*for IE*/
+    left: -177.5px;
+}
+
+.menu-icon-hidden {
+    padding: 34px 20px;
+    background: #124160;
+    color: #ebebeb;
+
+/* 加入使用條款確認頁 by Wine 20190926 */
+    /* 常住項 */
+    .dissapear{
+        display:none !important;
+    }
+    .law_page{
+        position:fixed;
+        z-index:99999;
+        height:100vh;
+        width:100%;
+        bottom:15px;
+        overflow:auto;
+    }
+    .black_screen{
+        position:relative;
+        height:120%;
+        width:100%;
+        background-color:rgba(0, 0, 0, 0.349);
+    }
+    .law_content{
+        position:absolute;
+        width:800px;
+        height:750px;
+        background-color:white;
+        top:0;
+        right:0;
+        bottom:0;
+        left:0;
+        margin:auto;
+        margin-top:30px;
+        display:flex;
+        flex-direction:column;
+        /* justify-content:center; */
+        align-items:center;
+    }
+    .law_content>h4, .law_content>h5{
+        width:750px;
+    }
+    .law_content>h4{
+        margin-top:25px;
+    }
+    .law_content>.law_text{
+        width:750px;
+        height:650px;
+        overflow:auto;
+        border:solid 2px #124160;	
+        border-radius:5px;	
+        padding: 40px 20px 30px 20px;
+    }
+    .law_content>h5>ul>li{
+        list-style-type: disc;
+        margin: 0px 10px 10px 30px;
+    }
+
+    .law_text>ol,.law_text>ol>li{
+        list-style-type: @lang("law.text_list_style_type");
+        margin: 0px 0px 20px 15px;
+    }
+
+    .law_text>ol>li>ul>li {
+        list-style-type: initial;
+        margin: 0px 0px 0px 28px;
+    }
+    .law_content>.check_area{
+        height:20px;
+        margin-top:5px;
+    }
+    .check_area>*{
+        font-size:15px;
+        margin:0;
+        line-height:20px;
+    }
+
+    .law_content>button{
+        background-color:#6EC4D4;
+        color:white;
+        padding: 5px 20px;
+        border-radius: 6px;
+        border: 1px solid;
+        margin: 5px;
+    }
+
+
+/* 加入使用條款確認頁 END */
+@media (min-width: 992px){
+    .col-lg-2 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 19.666667%;
+        flex: 0 0 19.666667%;
+        max-width: 19.666667%;
+    }
+}
+@media (max-width: 991px){
+    .nav-fill .nav-item{
+        height:54px ;
+    }
+}
+/* 新增分產品頁籤 */
+    .product_tabs{
+        left:15px;
+    }
+    .product_tabs>ul>li{
+        padding: 0;
+        border-top-right-radius: 18px;   
+        box-shadow:7px 0px 5px 	#BEBEBE;   
+        position: relative !important;   
+        background:#f2f2f2;   
+        transition:all 0.2s ease;
+        bottom:0;
+    }
+    .product_tabs>ul>li>div{
+        border-top: none !important;    
+                
+    }
+    .product_tabs>ul>li:nth-child(1){
+        z-index:5
+    }
+    .product_tabs>ul>li:nth-child(2){
+        z-index:4
+    }
+    .product_tabs>ul>li:nth-child(3){
+        z-index:3
+    }
+    .product_tabs>ul>li:nth-child(4){
+        z-index:2
+    }
+    .product_tabs>ul>li>div>div{
+        height: 70px;
+        font-size: 20px;
+        font-weight: bold;
+        line-height: 70px;
+        /* margin-left: 20px; */
+        text-align:center;
+    }
+    .product_tab_active{
+        background:white !important;
+        bottom:4px !important;
+    }
+    .popcorn>div>ul>li{
+        max-width: 25%;
+    }
+    .hot_today>div>ul>li{
+        max-width: 25%;
+    }
+
+/* 新增分產品頁籤 ＥＮＤ */
+
+
+
+* { padding: 0; margin: 0; }
+body { font-family: SimHei, sans-serif, "FontAwesome", Microsoft JhengHei; overflow: auto;background:#ebebeb;  }
+p,span,label,h1,h2,h3,h4,h5 {font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";}
+a { text-decoration: none; color: #00A5CC;}
+li { list-style-type: none; }
+@media  screen and (max-width:992px){
+    header {
+    width: 100%;
+    height: 68px;
+    padding-top: 68px;
+    background: #CDD6D5;
+    }
+    nav {
+    width: 90%;
+    margin: 0% 5%;
         }
-    
-        #brand {
-            float: left;
-            line-height: 50px;
-            color: #E5DAC0;
-            font-size: 25px;
-            font-weight: bolder;
-        }
-        nav a {
-            display: block;
-            padding: 15px 0;    /*側欄項目高*/
-            /*border-bottom: 1px solid #C3AA6E;*/
-            color: #ebebeb;
-        }
-    
-        nav a.menu-item-hidden:hover {
-            background: #426481;
-            color: #FFF;
-        }
-        nav li:last-child a { border-bottom: none; }
-        /*-----------------------------------------*/
-    
-        .menu-hidden {
-            width: 240px;
-            /*height: 100%;*/
-            position: absolute;
-            /*background: #D9C9A3;*/
-            background-image: url("{{ asset('/img/master/menu-background.png') }}");
-            -moz-background-size:240px 100%;        /*for Firefox*/
-            -webkit-background-size:240px 100%;        /*for Google Chrome、Safari*/
-            -ms-background-size:240px 100%;        /*for Google Chrome、Safari*/
-            -o-background-size:240px 100%;        /*for Opera*/
-            background-size:240px 100%;        /*for IE*/
-            left: -177.5px;
-        }
-    
-        .menu-icon-hidden {
-            padding: 34px 20px;
-            background: #124160;
-            color: #ebebeb;
-            cursor: pointer;
-            left:0px;
-            font-size: 25px;
-            position: absolute;
-            /*margin-top: 4px;*/
-            /*border-radius: 5px;*/
-    
-        }
-        #menuToggle { display: none; }
-    
-        .logo-hidden{
-            width: 177.5px;
-            height: 104px;
-            background: #124160;
-            position: absolute;
-            left:-177.5px;
-            /*display: block;*/
-    
-        }
-    
-        .main-body-hidden{
-            height:100%;
-            margin-left:62.5px;
-            padding: 20px 20px;
-        }
-        .small-icon{
-            /*padding-left:40px;*/
-            float:left;
-            margin-right: 10px;
-            margin-left: 30px;
-            min-width: auto;
-            min-height: 100%;
-    
-        }
-        .small-icon-hidden{
-            padding-right:22px;
-            float:right;
-        }
-        .arrow-head-right{
-            padding-right: 35px;
-            float:right;
-        }
-        .submenu-item{
-            padding-left:10px;
-            /*padding-right:60px;*/
-            /*width:50%;*/
-            text-align:center;
-            font-size: 14px;
-        }
-        .menu-item-text{
-            padding-left:50px;
-            /*width:50%;*/
-            text-align:left;
-            font-size: 16px;
-        }
-        .arrow-head-bottom{
-        padding-top:6px;
-        padding-right: 35px;
-        float:right;
-        }
-        .arrow-head-right{
-        padding-right: 35px;
-        float:right;
-        }
-    
-        /*#menuToggle:checked ~ .menu { position: absolute; left: -177.5px; }*/
-        #menuToggle:checked ~ .logo { position: absolute; left: -177.5px; }
-        </style>
-    
-        <style type="text/css">
-            a.menu-item:hover, a.menu-item-text:hover, a.submenu-item:hover {
-                text-decoration: none;
-                color: #FFFFFF;
-            }
-            a.menu-item:visited, a.menu-item-text:visited, a.submenu-item:visited{
-                text-decoration: none;
-                color: #FFFFFF;
-            }
-            a.menu-item:active, a.menu-item-text:active, a.submenu-item:active{
-                text-decoration: none;
-                color: #FFFFFF;
-            }
-            a.menu-item:link, a.menu-item-text:link, a.submenu-item:link{
-                text-decoration: none;
-                color: #FFFFFF;
-            }
-        </style>
-    
-        <style>
-        a > p:first-child {
-          color: #3e6dad;
-        }
-    
-        p:first-of-type + span:first-of-type {
-         // font-size: 0.6em;
-          font-size:0.5em;
-        }
-        label{
-          font-size:0.8em;
-        }
-    
-        .background-white {
-            background-color: white;
-            border-radius: 50px;
-        }
-        img {
-            max-width: 100%
-        }
-        /*//body {
-        //  font-size: 0.9em;
-        //}*/
-        p {
-          font-size:0.9em;
-        }
-    
-        .red {
-            background-color: #b30311;
-        }
-        a.red:link {
-            color: white;
-        }
-        .dropdown-toggle::after {
-            visibility: hidden;
-        }
-        .dropdown-menu:before,.dropdown-menu:after{
-            left: 80px !important;
-        }
-        .hello_webid{
-            display:inline-block;
-        }
-        .hello_webid>p{
-            position: relative;
-            margin: 0;
-            padding: 5px 10px;
-            border: 1px solid #426481;
-            border-radius: 3px;
-            top: 6px;
-            color: #426481;
-            transition:all 0.5s ease;
-        }
-        .hello_webid>p:hover{
-            background-color:#426481;
-            color:white;
-        }
+    nav a:hover {
+    background: #426481;
+    color: #FFF;
+    }
+    .menu {
+    width: 90%;
+    /*height: 100%;*/
+    position: absolute;
+    /*background: #D9C9A3;*/
+    background-image: url("{{ asset('/img/master/menu-background.png') }}");
+    background-size: cover;
+    -moz-background-size:100% 100%;        /*for Firefox*/
+    -webkit-background-size:100% 100%;        /*for Google Chrome、Safari*/
+    -ms-background-size:100% 100%;        /*for Google Chrome、Safari*/
+    -o-background-size:100% 100%;        /*for Opera*/
+    background-size:100% 100%;        /*for IE*/
+    top:170px;
+    /*max-height: 750px;*/
+    }
+    .menu-icon {
+    padding: 16px 6%;
+    color: #ebebeb;
+    cursor: pointer;
+    right: 0%;
+    float: right;
+    font-size: 25px;
+    position: absolute;
+    }
+    .logo{
+    width: 100%;
+    height: 68px;
+    background: #124160;
+    position: absolute;
+    left:0px;
+    }
+    .main-body{
+    width: 90%;
+    height: auto;
+    min-height:100%;
+    padding: 20px 5%;
+    margin:20px 5%;
+    position: absolute;
+    background: #ebebeb;
+    top: 150px;
+    transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    }
+    .menu-bottom{
+    width:500px;
+    height:480px;
+    display:none;
+    }
+    .logo-image{
+    float:left ;
+    margin-left:3% ;
+    margin-top:1% ;
+    }
+    .header-icon{
+    margin:3px 2.5% ;
+    float:right;
+    }
+    .header-icon-btn {
+        background-color: #ebebeb;
+        margin-top: 10px;
+        margin-right: 10px;
+    }
+}
+@media  screen and (min-width:992px){
+    header {
+    width: 100%;
+    height: 104px;
+    margin: auto;
+    background: #CDD6D5;
+    }
+    nav {
+    width: 100%;
+    }
+    nav a:hover {
+    background-image: url("{{ asset('/img/master/menu-background-ontouch.png') }}");
+    -moz-background-size:240px 100%;
+    -webkit-background-size:240px 100%;
+    -ms-background-size:240px 100%;
+    -o-background-size:240px 100%;
+    background-size:240px 100%;
+    color: #FFF;
+    }
+    .menu {
+    width: 240px;
+    min-height: 983px;
+    position: absolute;
+    /*background: #D9C9A3;*/
+    background-image: url("{{ asset('/img/master/menu-background.png') }}");
+    background-size: cover;
+    -moz-background-size:240px 100%;        /*for Firefox*/
+    -webkit-background-size:240px 100%;        /*for Google Chrome、Safari*/
+    -ms-background-size:240px 100%;        /*for Google Chrome、Safari*/
+    -o-background-size:240px 100%;        /*for Opera*/
+    background-size:240px 100%;        /*for IE*/
+    left: 0px;
+    }
+    .menu-icon {
+    padding: 34px 20px;
+    background: #124160;
+    color: #ebebeb;
+    cursor: pointer;
+    left:177.5px;
+    float: left;
+    font-size: 25px;
+    position: absolute;
+    display: none;
+    }
+    .logo{
+    width: 240px;
+    height: 104px;
+    background: #124160;
+    position: absolute;
+    left:0px;
+    }
+    .main-body{
+    margin-left:240px;
+    padding: 20px 20px;
+    }
+    .menu-bottom{
+    width:500px;
+    height:480px;
+    }
+    .logo-image{
+    float:left ;
+    margin-left:76px ;
+    margin-top:25px 
+    }
+    .logo-smallimage
+    {
+        position: absolute;
+        right:170px;
+        top: -20px;
+        width: 100px;
+        height:100px;
+
+    }
+    .header-icon{
+    /*margin:22px 2% ;*/
+    float:right;
+    /*padding-top: 18px;*/
+    padding-right: 16px;
+    }
+    .header-icon-btn {
+    background-color: #cdd6d5;
+    margin-top: 10px;
+    margin-right: 10px;
+    }
+}
+
+#brand {
+    float: left;
+    line-height: 50px;
+    color: #E5DAC0;
+    font-size: 25px;
+    font-weight: bolder;
+}
+nav a {
+    display: block;
+    padding: 15px 0;    /*側欄項目高*/
+    /*border-bottom: 1px solid #C3AA6E;*/
+    color: #ebebeb;
+}
+
+nav a.menu-item-hidden:hover {
+    background: #426481;
+    color: #FFF;
+}
+nav li:last-child a { border-bottom: none; }
+/*-----------------------------------------*/
+
+.menu-hidden {
+    width: 240px;
+    /*height: 100%;*/
+    position: absolute;
+    /*background: #D9C9A3;*/
+    background-image: url("{{ asset('/img/master/menu-background.png') }}");
+    -moz-background-size:240px 100%;        /*for Firefox*/
+    -webkit-background-size:240px 100%;        /*for Google Chrome、Safari*/
+    -ms-background-size:240px 100%;        /*for Google Chrome、Safari*/
+    -o-background-size:240px 100%;        /*for Opera*/
+    background-size:240px 100%;        /*for IE*/
+    left: -177.5px;
+}
+
+.menu-icon-hidden {
+    padding: 34px 20px;
+    background: #124160;
+    color: #ebebeb;
+    cursor: pointer;
+    left:0px;
+    font-size: 25px;
+    position: absolute;
+    /*margin-top: 4px;*/
+    /*border-radius: 5px;*/
+
+}
+#menuToggle { display: none; }
+
+.logo-hidden{
+    width: 177.5px;
+    height: 104px;
+    background: #124160;
+    position: absolute;
+    left:-177.5px;
+    /*display: block;*/
+
+}
+
+.main-body-hidden{
+    height:100%;
+    margin-left:62.5px;
+    padding: 20px 20px;
+}
+.small-icon{
+    /*padding-left:40px;*/
+    float:left;
+    margin-right: 10px;
+    margin-left: 30px;
+    min-width: auto;
+    min-height: 100%;
+
+}
+.small-icon-hidden{
+    padding-right:22px;
+    float:right;
+}
+.arrow-head-right{
+    padding-right: 35px;
+    float:right;
+}
+.submenu-item{
+    padding-left:10px;
+    /*padding-right:60px;*/
+    /*width:50%;*/
+    text-align:center;
+    font-size: 14px;
+}
+.menu-item-text{
+    padding-left:50px;
+    /*width:50%;*/
+    text-align:left;
+    font-size: 16px;
+}
+.arrow-head-bottom{
+padding-top:6px;
+padding-right: 35px;
+float:right;
+}
+.arrow-head-right{
+padding-right: 35px;
+float:right;
+}
+
+/*#menuToggle:checked ~ .menu { position: absolute; left: -177.5px; }*/
+#menuToggle:checked ~ .logo { position: absolute; left: -177.5px; }
+
+    a.menu-item:hover, a.menu-item-text:hover, a.submenu-item:hover {
+        text-decoration: none;
+        color: #FFFFFF;
+    }
+    a.menu-item:visited, a.menu-item-text:visited, a.submenu-item:visited{
+        text-decoration: none;
+        color: #FFFFFF;
+    }
+    a.menu-item:active, a.menu-item-text:active, a.submenu-item:active{
+        text-decoration: none;
+        color: #FFFFFF;
+    }
+    a.menu-item:link, a.menu-item-text:link, a.submenu-item:link{
+        text-decoration: none;
+        color: #FFFFFF;
+    }
+
+a > p:first-child {
+    color: #3e6dad;
+}
+
+p:first-of-type + span:first-of-type {
+    // font-size: 0.6em;
+    font-size:0.5em;
+}
+label{
+    font-size:0.8em;
+}
+
+.background-white {
+    background-color: white;
+    border-radius: 50px;
+}
+img {
+    max-width: 100%
+}
+/*//body {
+//  font-size: 0.9em;
+//}*/
+p {
+    font-size:0.9em;
+}
+
+.red {
+    background-color: #b30311;
+}
+a.red:link {
+    color: white;
+}
+
+/* 
+.dropdown-toggle::after {
+    visibility: hidden;
+}
+.dropdown-menu:before,.dropdown-menu:after{
+    left: 80px !important; */
+
+
+}
+.hello_webid{
+    display:inline-block;
+}
+.hello_webid>p{
+    position: relative;
+    margin: 0;
+    padding: 5px 10px;
+    border: 1px solid #426481;
+    border-radius: 3px;
+    top: 6px;
+    color: #426481;
+    transition:all 0.5s ease;
+}
+.hello_webid>p:hover{
+    background-color:#426481;
+    color:white;
+}
+    text-align:left;
+    font-size: 16px;
+}
+.arrow-head-bottom{
+padding-top:6px;
+padding-right: 35px;
+float:right;
+}
+.arrow-head-right{
+padding-right: 35px;
+float:right;
+}
+
+/*#menuToggle:checked ~ .menu { position: absolute; left: -177.5px; }*/
+#menuToggle:checked ~ .logo { position: absolute; left: -177.5px; }
+
+    a.menu-item:hover, a.menu-item-text:hover, a.submenu-item:hover {
+        text-decoration: none;
+        color: #FFFFFF;
+    }
+    a.menu-item:visited, a.menu-item-text:visited, a.submenu-item:visited{
+        text-decoration: none;
+        color: #FFFFFF;
+    }
+    a.menu-item:active, a.menu-item-text:active, a.submenu-item:active{
+        text-decoration: none;
+        color: #FFFFFF;
+    }
+    a.menu-item:link, a.menu-item-text:link, a.submenu-item:link{
+        text-decoration: none;
+        color: #FFFFFF;
+    }
+
+a > p:first-child {
+    color: #3e6dad;
+}
+
+p:first-of-type + span:first-of-type {
+    // font-size: 0.6em;
+    font-size:0.5em;
+}
+label{
+    font-size:0.8em;
+}
+
+.background-white {
+    background-color: white;
+    border-radius: 50px;
+}
+img {
+    max-width: 100%
+}
+/*//body {
+//  font-size: 0.9em;
+//}*/
+p {
+    font-size:0.9em;
+}
+
+.red {
+    background-color: #b30311;
+}
+a.red:link {
+    color: white;
+}
+/* .dropdown-toggle::after {
+    visibility: hidden;
+}
+.dropdown-menu:before,.dropdown-menu:after{
+    left: 80px !important;
+} */
+.hello_webid{
+    display:inline-block;
+}
+.hello_webid>p{
+    position: relative;
+    margin: 0;
+    padding: 5px 10px;
+    border: 1px solid #426481;
+    border-radius: 3px;
+    top: 6px;
+    color: #426481;
+    transition:all 0.5s ease;
+}
+.hello_webid>p:hover{
+    background-color:#426481;
+    color:white;
+}
+
+
