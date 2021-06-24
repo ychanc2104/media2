@@ -1,27 +1,10 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.media.base')
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-    <!-- Google Charts -->
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-
-    <!-- jQuery, ajax -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <!-- Custom script -->
-    @include('chart_js.draw')
-  </head>
     
-    <body>
-    
+    <div id="chart_div"></div>
 
-    <table class="table" border = "1">
+
+    <!-- <table class="table" border = "1">
     <tr>
     <td>Id</td>
     <td>Date</td>
@@ -29,8 +12,6 @@
     <td>Total exposures</td>
     <td>Total clicks</td>
     <td>Click rate (%)</td>
-
-
     </tr>
     @foreach ($media_data as $data)
     <tr>
@@ -40,24 +21,125 @@
     <td>{{ $data->exposures }}</td>
     <td>{{ $data->total_clicks }}</td>
     <td>{{ $data->click_rate }}</td>
-
     </tr>
     @endforeach
-    </table>
+    </table> -->
 
 
-    <div id="chart_div">
-        xxxxxxxxxxxxx
+ 
+ 
+
+
+<div class="portlet light">
+	<div>
+		<h4>@lang('default.data_overview')</h4>
+		<hr style="border: 0;height: 1px;background-color: #a7b9c6;margin: 0px;"/>
+	</div>
+	<br>
+	<div class="btn-group">
+    <span class="date_range" class="pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+      <span id="filter">{{ trans('default.time' )}}</span>
+			<b class="caret"></b>
+    </span>
+
+    <ul class="dropdown-menu">
+      <li><a onclick="change_date('year',`@lang('default.yearly')`, `@lang('default.year_select')`);">@lang('default.yearly')</a></li>
+      <li><a onclick="change_date('month',`@lang('default.monthly')`, `@lang('default.month_select')`);">@lang('default.monthly')</a></li>
+      <li><a onclick="change_date('week',`@lang('default.weekly')`, `@lang('default.week_select')`);">@lang('default.weekly')</a></li>
+		</ul>
+  </div>
+
+  <div class="btn-group" id="div_filter_year" style="display: none;">
+    <span class="date_range" class="pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="filter">@lang('default.year_select')</span>
+      <b class="caret"></b>
+    </span>
+    <ul id="filter_year" class="dropdown-menu"></ul>
+  </div>
+
+
+
+  <div class="btn-group" id="div_filter_month" style="display: none;">
+      <span class="date_range" class="pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="filter">@lang('default.month_select')</span>
+    <b class="caret"></b>
+      </span>
+      <ul id="filter_month" class="dropdown-menu" style="height:200px;overflow:auto;">
+        <li><a onclick="updateChart('1','month',`@lang('default.month_jan')`);">@lang('default.month_jan')</a></li>
+        <li><a onclick="updateChart('2','month',`@lang('default.month_feb')`);">@lang('default.month_feb')</a></li>
+        <li><a onclick="updateChart('3','month',`@lang('default.month_mar')`);">@lang('default.month_mar')</a></li>
+        <li><a onclick="updateChart('4','month',`@lang('default.month_apr')`);">@lang('default.month_apr')</a></li>
+        <li><a onclick="updateChart('5','month',`@lang('default.month_may')`);">@lang('default.month_may')</a></li>
+        <li><a onclick="updateChart('6','month',`@lang('default.month_jun')`);">@lang('default.month_jun')</a></li>
+        <li><a onclick="updateChart('7','month',`@lang('default.month_jul')`);">@lang('default.month_jul')</a></li>
+        <li><a onclick="updateChart('8','month',`@lang('default.month_aug')`);">@lang('default.month_aug')</a></li>
+        <li><a onclick="updateChart('9','month',`@lang('default.month_sep')`);">@lang('default.month_sep')</a></li>
+        <li><a onclick="updateChart('10','month',`@lang('default.month_oct')`);">@lang('default.month_oct')</a></li>
+        <li><a onclick="updateChart('11','month',`@lang('default.month_nov')`);">@lang('default.month_nov')</a></li>
+        <li><a onclick="updateChart('12','month',`@lang('default.month_dec')`);">@lang('default.month_dec')</a></li>
+		</ul>
     </div>
 
+    <div class="btn-group" id="div_filter_week" style="display: none;">
+      <span class="date_range" class="pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="filter">@lang('default.week_select')</span>
+			  <b class="caret"></b>
+      </span>
+      <ul id="filter_week" class="dropdown-menu" style="height:200px;overflow:auto;"></ul>
+    </div>
 
+    <div style="margin-top: 20px;" id="creat_table_div"></div>
 
+	  <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 product_tabs">
+        <ul class="">
+        <li class="col-12 col-lg-2 product_tab_active">
+          <div id="likr_tab">
+            <div class="tab_title" onclick="showTable('likr')">@lang('default.likr_push')</div>
+          </div>
+        </li>
+        </ul>
+		  </div>
+      <!-- 報表tabs與圖 -->
+      <div class="col-12 likr">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 likr_chart">
+          <ul class="nav nav-tabs nav-fill">          
+            <li class="active nav-item  col-12 col-lg-2">              
+              <div class="new_tab selected" style="border-top-color: #4267b8;">             
+                <div style="padding-left: 20px;">aaaaNT$</div>
+                <div class="number"></div>
+              </div>         
+              <a data-toggle="tab" href="#likr_menu1" style="background-color: #426481;">@lang('default.total_revenue')</a>
+            </li>
 
-    </body>
-</html>
+            <li class="nav-item  col-12 col-lg-2">
+              <div class="new_tab" style="border-top-color: #6bc0b8;">            
+                <div class="tab_title">zzzzz@lang('default.total_impression')：</div>
+                <div class="number"></div>
+              </div>
+              <a style="background-color: #426481;" data-toggle="tab" href="#likr_menu2">zzz@lang('default.total_impression')</a>
+            </li>
 
- 
- 
+            <li class="nav-item  col-12 col-lg-2">
+              <div class="new_tab" style="border-top-color: #ff9011;">
+                <div class="tab_title">zzzz@lang('default.total_click')：</div>
+                <div class="number"></div>
+              </div>
+              <a style="background-color: #426481;" data-toggle="tab" href="#likr_menu3">zzzz@lang('default.total_click')</a>
+            </li>
 
+            <li class="nav-item  col-12 col-lg-2">
+              <div class="new_tab" style="border-top-color: #f0c875;">
+                <div class="tab_title">zzzzz@lang('default.click_through_rate')：</div>
+                <div class="number"></div>
+              </div>
+              <a style="background-color: #426481;" data-toggle="tab" href="#likr_menu4">zzzzzz@lang('default.click_through_rate')</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-
+  </div>
+</div>
