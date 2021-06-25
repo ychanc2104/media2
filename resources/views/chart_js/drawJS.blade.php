@@ -11,9 +11,6 @@
 
 
         function drawAxisTickColors() {
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Month of Year');
-            data.addColumn('number', 'Incomes');
 
             // get chart data from url:/home/get_chart
             $.ajax({
@@ -22,15 +19,24 @@
                 dateType: 'json',
                 success: function(chart_data)
                 {
-                    show_chart(data, chart_data)
+                    show_chart(chart_data, 'profit', 'tab_total_profit')
+                    show_chart(chart_data, 'impression', 'tab_total_impression')
+
+                    show_chart(chart_data, 'click_rate', 'tab_click_rate')
+
+
                 },
             });
         }
 
-        function show_chart(data, chart_data) {
+        function show_chart(chart_data, query, id) {
+
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Month of Year');
+            data.addColumn('number', query);
 
             var x_axis = JSON.parse(chart_data)['day'];
-            var y_axis = JSON.parse(chart_data)['profit'];
+            var y_axis = JSON.parse(chart_data)[query];
             // var x_axis = ['1','2','3','4'];
             // var y_axis = [15,36,12,10];
             for (let i = 0; i < x_axis.length; i++) {
@@ -41,9 +47,21 @@
             var options = {
                 // width:'100%',
                 height:500,
+                width:1600, 
+                // max-width: calc(100% - 20px),
             }
 
-            var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+            // var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+            var chart = new google.visualization.ColumnChart(document.getElementById(id));
+
+            
             chart.draw(data, options);
         }
+
+
+        function get_chart_type(data, chart_data) {
+            
+        }
+
+
     </script>
