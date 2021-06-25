@@ -30,5 +30,7 @@ Route::get('/login', function () {
 // });
 
 Route::get('home', [HomeController::class, 'show']);
-Route::get('/home/get_chart',[HomeController::class, 'get_chart']);
+Route::get('/home/get_chart_data',[HomeController::class, 'transmit_chart_data']);
+Route::get('/home/get_total_data',[HomeController::class, 'transmit_total_data']);
+
 

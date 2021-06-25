@@ -35,6 +35,8 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
     <!-- Custom script -->
-    @include('chart_js.draw')
+    @include('chart_js.drawJS')
+    @include('chart_js.GetTotalJS')
+
 </head>
 

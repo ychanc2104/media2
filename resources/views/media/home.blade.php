@@ -16,14 +16,19 @@
     @foreach ($media_data as $data)
     <tr>
     <td>{{ $data->id }}</td>
-    <td>{{ $data->Date }}</td>
-    <td>{{ $data->incomes }}</td>
-    <td>{{ $data->exposures }}</td>
-    <td>{{ $data->total_clicks }}</td>
+    <td>{{ $data->date_time }}</td>
+    <td>{{ $data->profit }}</td>
+    <td>{{ $data->impression }}</td>
+    <td>{{ $data->total_click }}</td>
     <td>{{ $data->click_rate }}</td>
     </tr>
     @endforeach
     </table> -->
+
+    
+  
+
+
 
 
  
@@ -43,7 +48,7 @@
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
       <li><a class="dropdown-item" href="#">年份</a></li>
       <li><a class="dropdown-item" href="#">月份</a></li>
-      <li><a class="dropdown-item" href="#">週</a></li>
+      <li><a class="dropdown-item" href="#">週次</a></li>
     </ul>
   </div>
 
@@ -91,12 +96,13 @@
     <div style="margin-top: 20px;" id="creat_table_div"></div>
 
 	  <div class="row">
+      <!-- likr title -->
 
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 product_tabs">
         <ul class="">
           <li class="col-12 col-lg-2 product_tab_active">
             <div id="likr_tab">
-              <div class="tab_title" onclick="showTable('likr')">@lang('default.likr_push')</div>
+              <div class="tab_title">Likr推播</div>
             </div>
           </li>
         </ul>
@@ -106,35 +112,36 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 likr_chart">
           <ul class="nav nav-tabs nav-fill">        
             <li class="active nav-item  col-12 col-lg-2">              
-              <div class="new_tab selected" style="border-top-color: #4267b8;">             
-                <div style="padding-left: 20px;">aaaaNT$</div>
-                <div class="number"></div>
+              <div class="new_tab selected" style="border-top-color: #4267b8;">
+                <div class="tab_title">總收益（含稅）NT$：</div>             
+                <!-- <div style="padding-left: 20px;">NT$</div> -->
+                <div id="likr_tab_total_profit"></div>
               </div>         
-              <a data-toggle="tab" href="#likr_menu1" style="background-color: #426481;">@lang('default.total_revenue')</a>
+              <a data-toggle="tab" href="#incomes" style="background-color: #426481;">@lang('default.total_revenue')</a>
             </li>
 
             <li class="nav-item  col-12 col-lg-2">
-              <div class="new_tab" style="border-top-color: #6bc0b8;">            
-                <div class="tab_title">zzzzz@lang('default.total_impression')：</div>
-                <div class="number"></div>
+              <div class="new_tab" style="border-top-color: #6bc0b8;">                    
+                <div class="tab_title">總露出：</div>
+                <div id="likr_tab_total_impression"></div>
               </div>
-              <a style="background-color: #426481;" data-toggle="tab" href="#likr_menu2">zzz@lang('default.total_impression')</a>
+              <a style="background-color: #426481;" data-toggle="tab" href="#exposures">zzz@lang('default.total_impression')</a>
             </li>
 
             <li class="nav-item  col-12 col-lg-2">
               <div class="new_tab" style="border-top-color: #ff9011;">
-                <div class="tab_title">zzzz@lang('default.total_click')：</div>
-                <div class="number"></div>
+                <div class="tab_title">總點擊：</div>
+                <div id="likr_tab_total_click"></div>
               </div>
-              <a style="background-color: #426481;" data-toggle="tab" href="#likr_menu3">zzzz@lang('default.total_click')</a>
+              <a style="background-color: #426481;" data-toggle="tab" href="#direct_clicks#indirect_clicks">zzzz@lang('default.total_click')</a>
             </li>
 
             <li class="nav-item  col-12 col-lg-2">
               <div class="new_tab" style="border-top-color: #f0c875;">
-                <div class="tab_title">zzzzz@lang('default.click_through_rate')：</div>
-                <div class="number"></div>
+                <div class="tab_title">點擊率%：</div>
+                <div id="likr_tab_total_click_rate"></div>
               </div>
-              <a style="background-color: #426481;" data-toggle="tab" href="#likr_menu4">zzzzzz@lang('default.click_through_rate')</a>
+              <a style="background-color: #426481;" data-toggle="tab" href="#clicks_rate">zzzzzz@lang('default.click_through_rate')</a>
             </li>
           </ul>
 

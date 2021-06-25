@@ -18,7 +18,7 @@
             // get chart data from url:/home/get_chart
             $.ajax({
                 type: 'get',
-                url: '/home/get_chart',
+                url: '/home/get_chart_data',
                 dateType: 'json',
                 success: function(chart_data)
                 {
@@ -29,8 +29,8 @@
 
         function show_chart(data, chart_data) {
 
-            var x_axis = JSON.parse(chart_data).day;
-            var y_axis = JSON.parse(chart_data).incomes;
+            var x_axis = JSON.parse(chart_data)['day'];
+            var y_axis = JSON.parse(chart_data)['profit'];
             // var x_axis = ['1','2','3','4'];
             // var y_axis = [15,36,12,10];
             for (let i = 0; i < x_axis.length; i++) {

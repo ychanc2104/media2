@@ -33,7 +33,31 @@ return [
     |
     */
 
+
     'connections' => [
+        'crescent_media' => [
+            'driver'    => 'mysql',
+            'host'      => '172.16.32.13',
+            'database'  => 'crescent_media',
+            'username'  => 'hodo_user',
+            'password'  => 'hodomobile*777',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'port'      => '3306',
+        ],
+
+        'test_media' => [
+            'driver'    => 'mysql',
+            'host'      => '127.10.0.1',
+            'database'  => 'test',
+            'username'  => 'root',
+            'password'  => '00000000',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'port'      => '3306',
+        ],
 
         'sqlite' => [
             'driver' => 'sqlite',
@@ -46,7 +70,7 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => env('DB_HOST', '127.10.0.1'),
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'test'),
             'username' => env('DB_USERNAME', 'root'),

@@ -6,15 +6,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use App\Libraries\GetData;
+
 
 class HomeController extends Controller
 {
-    public function show()
+    public function show() 
     {
-        $media_data = DB::select('select * from media_data');
+        // $media_data = DB::select('SELECT * FROM media_data');
+        $query = 'SELECT * FROM lkr_media';
+        $media_data = DB::connection('test_media')->select($query);
         foreach ($media_data as $data) {
-            $data->total_clicks = $data->direct_clicks + $data->direct_clicks;
-            $data->click_rate = 100*$data->total_clicks/$data->exposures;
+            $data->total_click = $data->direct_click + $data->clip_click;
+            $data->click_rate = 100*$data->total_click/$data->impression;
         }
 
         return view('media.home', [
@@ -22,26 +26,20 @@ class HomeController extends Controller
         ]);
     }
 
-    public function get_chart()
+    // use for transmitting to certain page and read by ajax
+    public function transmit_chart_data() 
     {
-        $media_data = DB::select('select * from media_data');
-        $day = [];
-        $incomes = [];
-
-        foreach ($media_data as $data) {
-            // $month[] = date("m", strtotime($data->Date));
-            $day[] = date("d", strtotime($data->Date));
-
-            $incomes[] = $data->incomes;
-
-            // $chart_data->month = date("m", strtotime($data->Date));
-            // $chart_data->incomes = $data->incomes;
-
-            // $data->total_clicks = $data->direct_clicks + $data->direct_clicks;
-            // $data->click_rate = 100*$data->total_clicks/$data->exposures;
-        }
-        $chart_data = array('day'=>$day, 'incomes'=>$incomes);
+        $chart_data = GetData::get_chart_data();
 
         return json_encode($chart_data);
     }
+
+
+    public function transmit_total_data() 
+    {
+        $total_data = GetData::get_total_data();
+
+        return json_encode($total_data);
+    }
+
 }
