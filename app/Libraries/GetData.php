@@ -12,11 +12,9 @@ class GetData
         // $select_mode=1.'default', 2.'year', 3.'month'
         if ($select_mode == "year")
         {
-            console.log('year mode');
             $query = "SELECT * FROM `lkr_media` WHERE YEAR(date_time)=:year GROUP BY MONTH(date_time)";
             $media_data = DB::connection('test_media')->select($query, ['year' => $year]);
-            $chart_data = compute_chart_data($select_mode, $media_data);
-
+            $chart_data = self::compute_chart_data($select_mode, $media_data);
 
         }
         else
@@ -26,6 +24,13 @@ class GetData
                      FROM lkr_media WHERE date_time BETWEEN DATE_ADD(CURDATE(), INTERVAL -6 day) AND CURDATE()";
             $media_data = DB::connection('test_media')->select($query);
             $chart_data = $media_data;
+
+
+
+
+            // $query = "SELECT * FROM `lkr_media` WHERE YEAR(date_time)=:year GROUP BY MONTH(date_time)";
+            // $media_data = DB::connection('test_media')->select($query, ['year' => 2021]);
+            // $chart_data = self::compute_chart_data($select_mode, $media_data);
             // $day = [];
             // // array to show (four charts)
             // $profit = [];
@@ -116,12 +121,12 @@ class GetData
     public static function compute_chart_data($select_mode, $media_data) 
     {
         $x_axis = [];
+        // $month = [];
         // array to show (four charts)
         $profit = [];
         $impression = [];
         $direct_click = $clip_click = $clicks = [];
         $click_rate = [];
-        
         $i = 0;
         foreach ($media_data as $data) {
             // x-axis of chart
@@ -132,9 +137,13 @@ class GetData
             else
             {
                 $x_axis[] = date("d", strtotime($data->date_time));
+                // $x_axis[] = date("m", strtotime($data->date_time));
+                // $x_axis[] = $data->date_time;
+
+
             }
             
-            // $month[] = date("m", strtotime($data->Date));
+            // $month[] = date("m", strtotime($data->date_time));
 
             // y-axis of chart
             $profit[] = $data->profit;

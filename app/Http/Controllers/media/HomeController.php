@@ -31,7 +31,6 @@ class HomeController extends Controller
     {
         $year = $inputData->input('year');
         $select_mode = $inputData->input('select_mode');
-
         $chart_data = GetData::get_chart_data($select_mode, $year);
 
         return json_encode($chart_data);
@@ -64,6 +63,7 @@ class HomeController extends Controller
         $total_data->year_smallest = $year_smallest;
         $total_data->year_search = $year;
 
+        // dd($chart_data);
         return json_encode([$chart_data, $total_data]);// return[0]: chart_data, return[0]: total_data 
     }
 

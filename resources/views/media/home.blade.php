@@ -50,7 +50,9 @@
         success: function(chart_total_data_json)
         {
           change_4div_value(JSON.parse(chart_total_data_json)[1])
+          // draw_4_charts(clicked_id, clicked_value)
           var chart_data = JSON.parse(chart_total_data_json)[0]
+          // console.log(chart_data)
           show_chart(chart_data, ['profit'], ['總收益（含稅）'], 'tab_total_profit')
           show_chart(chart_data, ['impression'], ['總露出'], 'tab_total_impression')
           show_chart(chart_data, ['direct_click', 'clip_click', 'clicks'], ['直推點擊', '夾報點擊', '總點擊'], 'tab_total_click')
@@ -64,7 +66,7 @@
   function show_div(id) 
   {
     var x = document.getElementById(id);
-    if (x.style.display === "none") 
+    if (x.style.display === "none")
     {
       x.style.display = "block";
     }
@@ -107,7 +109,6 @@
               }
               $("#month_li").html(myHTML);
             }
-
 
 
             // else
