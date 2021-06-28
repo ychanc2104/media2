@@ -1,14 +1,16 @@
 
 
 #tab_total_attr{
-    width: 400px; 
+    width: 320px;
     max-width: calc(100% - 20px);
     border-width: 5px 0px 0px 0px;
     color: black;
 }
 
 
-
+#drop_item{
+    cursor: pointer;
+}
 
 
 
