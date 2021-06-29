@@ -25,16 +25,15 @@ class HomeController extends Controller
     {
         $select_mode = $inputData->input('select_mode');
         $year = $inputData->input('year');
-        // $month = $inputData->input('month');
+        $month = $inputData->input('month');
 
-        
-
-        $chart_data = GetData::get_chart_data($select_mode, $year);
-
-        $total_data = GetData::get_total_data($select_mode, $year);
+        $chart_data = GetData::get_chart_data($select_mode, $year, $month);
+        $total_data = GetData::get_total_data($select_mode, $year, $month);
         $year_smallest = GetData::get_year_smallest();
         $total_data->year_smallest = $year_smallest;
-        $total_data->year_search = $year;
+        $total_data->year_search = strval($year);
+        $total_data->month_search = strval($month);
+        $total_data->select_mode = $select_mode;
 
         // dd($chart_data);
         return json_encode([$chart_data, $total_data]);// return[0]: chart_data, return[0]: total_data 

@@ -5,108 +5,8 @@
 
 <script type="text/javascript">
 
-  function return_data_select(clicked_id, clicked_value) 
-  {
-    // we set clicked_id as select_mode use for determining filtering mode,
-    // clicked_value as number of year or month
-    var year = clicked_value;
-    $.ajax({
-        type: 'get',
-        url: '/home/get_chart_total_data',
-        dateType: 'json',
-        data: 
-        {
-          select_mode: clicked_id,
-          year: year,
-		    },
-        success: function(chart_total_data_json)
-        {
-          var chart_total_data = JSON.parse(chart_total_data_json)
-          var chart_data = chart_total_data[0]
-          var total_data = chart_total_data[1]
-          // four statistical values
-          change_4div_value(total_data)
 
-          // four Google Charts
-          show_chart(chart_data, ['profit'], ['總收益（含稅）'], 'tab_total_profit')
-          show_chart(chart_data, ['impression'], ['總露出'], 'tab_total_impression')
-          show_chart(chart_data, ['direct_click', 'clip_click', 'clicks'], ['直推點擊', '夾報點擊', '總點擊'], 'tab_total_click')
-          show_chart(chart_data, ['click_rate'], ['點擊率'], 'tab_total_click_rate')
-
-        }
-    });
-  }
-
-
-  function show_div(id) 
-  {
-    var x = document.getElementById(id);
-    if (x.style.display === "none")
-    {
-      x.style.display = "block";
-    }
-    else
-    {
-      x.style.display = "none";
-    }
-  }
-
-  function show_date_manu(select_mode, id) 
-  {
-    // get chart data from url:/home/get_chart
-    $.ajax(
-      {
-        type: 'get',
-        url: '/home/get_chart_total_data',
-        dateType: 'json',
-        success: function(chart_total_data_json)
-        {
-          show_div(id) // display that div(year, month or week) first
-          
-          $(document).ready(function(){
-            var myHTML = '';
-            if (select_mode == 'year')
-            {              
-              // for selecting year
-              var total_data = JSON.parse(chart_total_data_json)[1]
-              var year_now = new Date().getFullYear();
-              var year_smallest = total_data['year_smallest']
-              for (var i = 0; i < year_now-year_smallest+1; i++) {
-                myHTML += '<li id="year" value='+(year_now-i)+' onClick="return_data_select(this.id, this.value)"><a id="drop_item" class="dropdown-item">' + (year_now-i) + '</a></li>';
-              }
-              $("#year_li").html(myHTML);
-            }
-            else if (select_mode == 'month')
-            {
-              // for selecting month
-              for (var i = 1; i < 13; i++) {
-                myHTML += '<li id="month" value='+(i)+' onClick="return_data_select(this.id, this.value)"><a id="drop_item" class="dropdown-item">' + (i) + '月</a></li>';
-              }
-              $("#month_li").html(myHTML);
-            }
-
-            // else
-            // {
-            //   // for selecting year
-            //   var total_data = JSON.parse(total_data_json)
-            //   var year_now = new Date().getFullYear();
-            //   var year_smallest = total_data['year_smallest']
-            //   for (var i = 0; i < year_now-year_smallest+1; i++) {
-            //     myHTML += '<li id="year" value='+(year_now-i)+' onClick="return_data_select(this.id, this.value)"><a id="drop_item" class="dropdown-item">' + (year_now-i) + '</a></li>';
-            //   }
-            //   $("#year_li").html(myHTML);
-            // }
-
-          });
-        },
-        error: function()
-        {
-          console.log("發生錯誤: ");
-        }
-      });
-  }
   
-
 </script>
 
 
@@ -138,7 +38,7 @@
       <!-- year -->
       <div id="div_filter_year" class="col" style="display: none;">
         <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            <button id="year_picker" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
               選擇年份
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -149,7 +49,7 @@
       <!-- month -->
       <div id="div_filter_month" class="col" style="display: none;">
         <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            <button id="month_picker" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
               選擇月份
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -189,44 +89,47 @@
 
       <!-- 報表tabs與圖 -->
       <!-- for control tabs -->
-      <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button id="tab_total_attr" style="border-top-color: #4267b8;" class="nav-link active" id="tab_total_profit-tab" data-bs-toggle="tab" data-bs-target="#tab_total_profit" type="button" role="tab" aria-controls="tab_total_profit" aria-selected="true">
-            總收益（含稅）NT$：
-            <!-- total value -->
-            <div id="likr_tab_total_profit"></div>
-          </button>
-          
-        </li>
-        <li class="nav-item" role="presentation">
-          <button id="tab_total_attr" style="border-top-color: #6bc0b8;" class="nav-link" id="tab_total_impression-tab" data-bs-toggle="tab" data-bs-target="#tab_total_impression" type="button" role="tab" aria-controls="tab_total_impression" aria-selected="false">
-            總露出：
-            <!-- total value -->
-            <div id="likr_tab_total_impression"></div>
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button id="tab_total_attr" style="border-top-color: #ff9011;" class="nav-link" id="tab_total_click-tab" data-bs-toggle="tab" data-bs-target="#tab_total_click" type="button" role="tab" aria-controls="tab_total_click" aria-selected="false">
-            總點擊：
-            <!-- total value -->
-            <div id="likr_tab_total_click"></div>
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button id="tab_total_attr" style="border-top-color: #f0c875;" class="nav-link" id="tab_total_click_rate-tab" data-bs-toggle="tab" data-bs-target="#tab_total_click_rate" type="button" role="tab" aria-controls="tab_total_click_rate" aria-selected="false">
-            點擊率%：
-            <!-- total value -->
-            <div id="likr_tab_total_click_rate"></div>
-          </button>
-        </li>
-      </ul>
-      <!-- Google Charts below -->
-      <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="tab_total_profit" role="tabpanel" aria-labelledby="tab_total_profit-tab"></div>
-        <div class="tab-pane fade" id="tab_total_impression" role="tabpanel" aria-labelledby="tab_total_impression-tab"></div>
-        <div class="tab-pane fade" id="tab_total_click" role="tabpanel" aria-labelledby="tab_total_click-tab"></div>
-        <div class="tab-pane fade" id="tab_total_click_rate" role="tabpanel" aria-labelledby="tab_total_click_rate-tab"></div>
-      </div>
+      <!-- <div class="container"> -->
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button id="tab_total_attr" style="border-top-color: #4267b8;" class="nav-link active" id="tab_total_profit-tab" data-bs-toggle="tab" data-bs-target="#tab_total_profit" type="button" role="tab" aria-controls="tab_total_profit" aria-selected="true">
+              總收益（含稅）NT$：
+              <!-- total value -->
+              <div id="likr_tab_total_profit"></div>
+            </button>
+            
+          </li>
+          <li class="nav-item" role="presentation">
+            <button id="tab_total_attr" style="border-top-color: #6bc0b8;" class="nav-link" id="tab_total_impression-tab" data-bs-toggle="tab" data-bs-target="#tab_total_impression" type="button" role="tab" aria-controls="tab_total_impression" aria-selected="false">
+              總露出：
+              <!-- total value -->
+              <div id="likr_tab_total_impression"></div>
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button id="tab_total_attr" style="border-top-color: #ff9011;" class="nav-link" id="tab_total_click-tab" data-bs-toggle="tab" data-bs-target="#tab_total_click" type="button" role="tab" aria-controls="tab_total_click" aria-selected="false">
+              總點擊：
+              <!-- total value -->
+              <div id="likr_tab_total_click"></div>
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button id="tab_total_attr" style="border-top-color: #f0c875;" class="nav-link" id="tab_total_click_rate-tab" data-bs-toggle="tab" data-bs-target="#tab_total_click_rate" type="button" role="tab" aria-controls="tab_total_click_rate" aria-selected="false">
+              點擊率%：
+              <!-- total value -->
+              <div id="likr_tab_total_click_rate"></div>
+            </button>
+          </li>
+        </ul>
+        
+        <!-- Google Charts below -->
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="tab_total_profit" role="tabpanel" aria-labelledby="tab_total_profit-tab"></div>
+          <div class="tab-pane fade" id="tab_total_impression" role="tabpanel" aria-labelledby="tab_total_impression-tab"></div>
+          <div class="tab-pane fade" id="tab_total_click" role="tabpanel" aria-labelledby="tab_total_click-tab"></div>
+          <div class="tab-pane fade" id="tab_total_click_rate" role="tabpanel" aria-labelledby="tab_total_click_rate-tab"></div>
+        </div>
 
 
     </div>

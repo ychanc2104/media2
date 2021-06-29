@@ -29,26 +29,25 @@
     <!-- <link rel="stylesheet" type="text/css" href="{{ asset('/css/media/daterangepicker.css')}}" /> -->
 
     <!-- Google Charts -->
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-        //載入Visualization API，括號裡第一個參數是版本名稱或數字
-        // load google API once
-        google.charts.load("current", {
-            packages: ["corechart", "bar"], //第二個packages是要顯示的圖表類型
-            "language": "zh-cn"      //第三個是語言，有時會影響日期格式等等
-        });
+    <!-- <script type="text/javascript" src="https://www.google.com/jsapi"></script> -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', {packages: ['corechart']});
     </script>
+
 
     <!-- jQuery, ajax -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <!-- Custom script -->
-    @include('chart_js.drawJS')
-    @include('chart_js.GetTotalJS')
-
+    
     <!-- Default running and setting script -->
     @include('chart_js.defaultJS')
+
+    <!-- Custom script -->
+    @include('chart_js.drawJS')
+    @include('chart_js.updateJS')
+
 
 </head>
 
