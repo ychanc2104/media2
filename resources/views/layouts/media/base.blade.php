@@ -30,6 +30,14 @@
 
     <!-- Google Charts -->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        //載入Visualization API，括號裡第一個參數是版本名稱或數字
+        // load google API once
+        google.charts.load("current", {
+            packages: ["corechart", "bar"], //第二個packages是要顯示的圖表類型
+            "language": "zh-cn"      //第三個是語言，有時會影響日期格式等等
+        });
+    </script>
 
     <!-- jQuery, ajax -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

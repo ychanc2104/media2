@@ -1,8 +1,5 @@
 <script type="text/javascript">
 
-    
-
-
     // update tab statistical value in each tab
     function change_4div_value(total_data) {
         var total_data = total_data;

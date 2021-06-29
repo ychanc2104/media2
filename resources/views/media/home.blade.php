@@ -1,34 +1,6 @@
 @extends('layouts.media.base')
 
 @section('content')
-<!-- <div id="chart_div"></div> -->
-
-
-    <!-- <table class="table" border = "1">
-    <tr>
-    <td>Id</td>
-    <td>Date</td>
-    <td>Total incomes</td>
-    <td>Total exposures</td>
-    <td>Total clicks</td>
-    <td>Click rate (%)</td>
-    </tr>
-    @foreach ($media_data as $data)
-    <tr>
-    <td>{{ $data->id }}</td>
-    <td>{{ $data->date_time }}</td>
-    <td>{{ $data->profit }}</td>
-    <td>{{ $data->impression }}</td>
-    <td>{{ $data->total_click }}</td>
-    <td>{{ $data->click_rate }}</td>
-    </tr>
-    @endforeach
-    </table> -->
-
-
-
-
-
 
 
 <script type="text/javascript">
@@ -49,10 +21,13 @@
 		    },
         success: function(chart_total_data_json)
         {
-          change_4div_value(JSON.parse(chart_total_data_json)[1])
-          // draw_4_charts(clicked_id, clicked_value)
-          var chart_data = JSON.parse(chart_total_data_json)[0]
-          // console.log(chart_data)
+          var chart_total_data = JSON.parse(chart_total_data_json)
+          var chart_data = chart_total_data[0]
+          var total_data = chart_total_data[1]
+          // four statistical values
+          change_4div_value(total_data)
+
+          // four Google Charts
           show_chart(chart_data, ['profit'], ['總收益（含稅）'], 'tab_total_profit')
           show_chart(chart_data, ['impression'], ['總露出'], 'tab_total_impression')
           show_chart(chart_data, ['direct_click', 'clip_click', 'clicks'], ['直推點擊', '夾報點擊', '總點擊'], 'tab_total_click')
@@ -82,9 +57,9 @@
     $.ajax(
       {
         type: 'get',
-        url: '/home/get_total_data',
+        url: '/home/get_chart_total_data',
         dateType: 'json',
-        success: function(total_data_json)
+        success: function(chart_total_data_json)
         {
           show_div(id) // display that div(year, month or week) first
           
@@ -93,7 +68,7 @@
             if (select_mode == 'year')
             {              
               // for selecting year
-              var total_data = JSON.parse(total_data_json)
+              var total_data = JSON.parse(chart_total_data_json)[1]
               var year_now = new Date().getFullYear();
               var year_smallest = total_data['year_smallest']
               for (var i = 0; i < year_now-year_smallest+1; i++) {
@@ -109,7 +84,6 @@
               }
               $("#month_li").html(myHTML);
             }
-
 
             // else
             // {
@@ -183,30 +157,7 @@
             </ul>
           </div>
       </div>
-
-      <!-- <div id="div_filter_month" class="col" style="display: none;">
-        <div class="btn-group">
-            <span class="date_range" class="pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="filter">@lang('default.month_select')</span>
-          <b class="caret"></b>
-            </span>
-            <ul id="filter_month" class="dropdown-menu" style="height:200px;overflow:auto;">
-              <li><a onclick="updateChart('1','month',`@lang('default.month_jan')`);">@lang('default.month_jan')</a></li>
-              <li><a onclick="updateChart('2','month',`@lang('default.month_feb')`);">@lang('default.month_feb')</a></li>
-              <li><a onclick="updateChart('3','month',`@lang('default.month_mar')`);">@lang('default.month_mar')</a></li>
-              <li><a onclick="updateChart('4','month',`@lang('default.month_apr')`);">@lang('default.month_apr')</a></li>
-              <li><a onclick="updateChart('5','month',`@lang('default.month_may')`);">@lang('default.month_may')</a></li>
-              <li><a onclick="updateChart('6','month',`@lang('default.month_jun')`);">@lang('default.month_jun')</a></li>
-              <li><a onclick="updateChart('7','month',`@lang('default.month_jul')`);">@lang('default.month_jul')</a></li>
-              <li><a onclick="updateChart('8','month',`@lang('default.month_aug')`);">@lang('default.month_aug')</a></li>
-              <li><a onclick="updateChart('9','month',`@lang('default.month_sep')`);">@lang('default.month_sep')</a></li>
-              <li><a onclick="updateChart('10','month',`@lang('default.month_oct')`);">@lang('default.month_oct')</a></li>
-              <li><a onclick="updateChart('11','month',`@lang('default.month_nov')`);">@lang('default.month_nov')</a></li>
-              <li><a onclick="updateChart('12','month',`@lang('default.month_dec')`);">@lang('default.month_dec')</a></li>
-          </ul>
-        </div>
-      </div> -->
-
+      <!-- week -->
       <div id="div_filter_week" class="col" style="display: none;">
         <div class="btn-group">
           <span class="date_range" class="pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -219,6 +170,7 @@
       </div>
     </div>
   </div>
+
 
   <div class="container">
 	  <div class="row">
