@@ -27,7 +27,7 @@
     }
     else if (clicked_id == 'month')
     {
-      var year = 2021;
+      var year = get_text("year_picker");
       var month = clicked_value;
     }
 
@@ -62,7 +62,6 @@
                 update_text("month_picker", month+"月");
             }
             
-
         }
     });
   }
@@ -72,6 +71,15 @@
     {
     document.getElementById(id).innerHTML = text;
     }
+
+    // get inner text of element
+    function get_text(id) 
+    {
+        text = document.getElementById(id).innerHTML;
+        value = text.slice(0, -1)
+        return value;
+    }
+
 
     // show year or month sub-menu by click mode-picker, get oldest year from DB using ajax
     function show_date_manu(select_mode, id) 

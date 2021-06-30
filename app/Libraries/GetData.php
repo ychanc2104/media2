@@ -6,7 +6,35 @@ use Illuminate\Support\Facades\DB;
 
 
 class GetData
-{
+{    
+    // for four Google Charts
+    public static function get_daily_data($y_start, $y_end, $m_start, $m_end) 
+    {
+        // $year_start = $query_start[1];
+        // $year_end = $query_end[1];
+        // $month_start = $query_start[0];
+        // $month_end = $query_end[0];
+        $date_start_str = $y_start."-".$m_start."-"."1";
+        $date_end_str = $y_end."-".$m_end."-"."1";
+
+        $date_start = date('Y-m-d',strtotime($date_start_str));
+        $date_end = date('Y-m-t',strtotime($date_end_str));
+        
+        // $date_start = date('Y-m-d', strtotime('2021-01-01'));
+        // $date_end = date('Y-m-d', strtotime('2021-05-01'));
+
+        $query = "SELECT * FROM `lkr_media` WHERE date_time BETWEEN '$date_start' AND '$date_end' ORDER BY date_time";
+        // $query = "SELECT * FROM `lkr_media` WHERE date_time BETWEEN '2021-01-01' AND '2021-05-01' ORDER BY date_time";
+
+        $media_data = DB::connection('test_media')->select(DB::raw($query));
+        $daily_data = self::compute_daily_data($media_data);
+        // dd($y_start);
+
+
+        return $daily_data;
+    }
+        
+
     // for four Google Charts
     public static function get_chart_data($select_mode, $year, $month) 
     {
@@ -133,4 +161,18 @@ class GetData
 
     }
 
+
+
+        // Make data from SQL query structurize
+        public static function compute_daily_data($daily_data) 
+        {
+            foreach ($daily_data as $data) {
+                $data->clicks = $data->direct_click + $data->clip_click;
+                $data->click_rate = number_format(round(100*$data->clicks/$data->impression,3),3)."%";
+                $data->date = date("Y-m-d", strtotime($data->date_time));
+            }
+
+            return $daily_data;
+    
+        }
 }

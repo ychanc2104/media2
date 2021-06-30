@@ -29,6 +29,9 @@ Route::get('/login', function () {
 //     return view('welcome2');
 // });
 
-Route::get('home', [HomeController::class, 'show']);
+Route::get('/home', [HomeController::class, 'home']);
 Route::get('/home/get_chart_total_data',[HomeController::class, 'transmit_chart_total_data']);
+Route::get('daily_report', [HomeController::class, 'daily_report']);
+Route::get('daily_report/data', [HomeController::class, 'transmit_daily_report']);
+
 
