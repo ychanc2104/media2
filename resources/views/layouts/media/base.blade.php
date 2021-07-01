@@ -21,8 +21,11 @@
 
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/media/chart_table.css')}}" />
-    <!-- <link rel="stylesheet" type="text/css" href="{{ asset('/css/media/daterangepicker.css')}}" /> -->
+    <!-- <link rel="stylesheet" type="text/css" href="{{ asset('/css/media/chart_table.css')}}" /> -->
+    <link rel="stylesheet" type="text/css" href="/css/media/chart_table.css" /> <!-- path to be check -->
+
+    <!-- <link href="../css/app.css" rel="stylesheet" /> -->
+    <!-- <link rel="stylesheet" type="text/css" href="{{ asset('/css/media/daterangepicker.css')}}" />  -->
 
     <!-- Google Charts -->
     <!-- <script type="text/javascript" src="https://www.google.com/jsapi"></script> -->

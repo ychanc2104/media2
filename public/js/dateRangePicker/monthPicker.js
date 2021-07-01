@@ -6,12 +6,12 @@ $(function () {
 
   startMonth = new Date().getMonth();
   startYear = new Date().getFullYear();
-  endMonth = new Date().getMonth()-1;
+  endMonth = new Date().getMonth();
   endYear = new Date().getFullYear();
   // My adding
 
-  document.getElementById("show_start").innerHTML = startMonth + "月" + startYear;
-  document.getElementById("show_end").innerHTML = startMonth+1 + "月" + startYear;
+  document.getElementById("show_start").innerHTML = startMonth + "月 " + startYear;
+  document.getElementById("show_end").innerHTML = startMonth + "月 " + startYear;
   // 
   fiscalMonth = 7;
   if(startMonth < 10)
@@ -74,7 +74,7 @@ $(function () {
         }
     
       paintMonths();
-      transmit_query();
+      transmit_query('1');
   });
   
   
@@ -117,7 +117,7 @@ $(function () {
         paintMonths();
         $('.mpr-calendar').find('.mpr-MonthsWrapper').fadeIn(175);
         // my adding
-        transmit_query()
+        transmit_query('1')
     });
   });
   
@@ -135,7 +135,7 @@ $(function () {
         paintMonths();
         $('.mpr-calendar').find('.mpr-MonthsWrapper').fadeIn(175);
         // my adding
-        transmit_query()
+        transmit_query('1')
     });
   });
   
@@ -168,7 +168,7 @@ $(function () {
         paintMonths();
         $('.mpr-calendar').find('.mpr-MonthsWrapper').fadeIn(175);
         // my adding
-        transmit_query()
+        transmit_query('1')
     });
   });
   
@@ -200,7 +200,7 @@ $(function () {
         paintMonths();
         $('.mpr-calendar').find('.mpr-MonthsWrapper').fadeIn(175);
         // my adding
-        transmit_query()
+        transmit_query('1')
     });
   });
   
@@ -250,7 +250,7 @@ $(function () {
 
   // $(document).on('click','#mpr-calendar-1', function(e){
 
-  //   transmit_query()
+  //   transmit_query('1')
   //   // var element_start = document.getElementById("#show_start");
   //   // element_start.addEventListener('DOMSubtreeModified', transmit_query);
   //   // var element_end = document.getElementById("#show_end");

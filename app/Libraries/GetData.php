@@ -7,28 +7,29 @@ use Illuminate\Support\Facades\DB;
 
 class GetData
 {    
-    // for four Google Charts
+    // for daily report
     public static function get_daily_data($y_start, $y_end, $m_start, $m_end) 
     {
-        // $year_start = $query_start[1];
-        // $year_end = $query_end[1];
-        // $month_start = $query_start[0];
-        // $month_end = $query_end[0];
         $date_start_str = $y_start."-".$m_start."-"."1";
         $date_end_str = $y_end."-".$m_end."-"."1";
 
         $date_start = date('Y-m-d',strtotime($date_start_str));
-        $date_end = date('Y-m-t',strtotime($date_end_str));
+        $date_end = date('Y-m-t',strtotime($date_end_str)); // ending day of a month
         
         // $date_start = date('Y-m-d', strtotime('2021-01-01'));
         // $date_end = date('Y-m-d', strtotime('2021-05-01'));
 
-        $query = "SELECT * FROM `lkr_media` WHERE date_time BETWEEN '$date_start' AND '$date_end' ORDER BY date_time";
+        // $query = "SELECT * FROM (SELECT  ROW_NUMBER() OVER (ORDER BY date_time) AS row_num, date_time, profit, impression, direct_click, clip_click, (direct_click+clip_click) AS clicks, 100*(direct_click+clip_click)/impression AS click_rate FROM `lkr_media`) AS newtable
+        // WHERE row_num BETWEEN 1 AND 20";
+
+        // $query = "SELECT * FROM `lkr_media` WHERE date_time BETWEEN '$date_start' AND '$date_end' ORDER BY date_time";
+        $query = "SELECT DATE(date_time) AS date, profit, impression, direct_click, clip_click, (direct_click+clip_click) AS clicks, 100*(direct_click+clip_click)/impression AS click_rate FROM `lkr_media` WHERE date_time BETWEEN '$date_start' AND '$date_end' ORDER BY date_time";
         // $query = "SELECT * FROM `lkr_media` WHERE date_time BETWEEN '2021-01-01' AND '2021-05-01' ORDER BY date_time";
+        // $query = "SELECT date_time, profit, impression, direct_click, clip_click, (direct_click+clip_click) AS clicks, 100*(direct_click+clip_click)/impression AS click_rate FROM `lkr_media` WHERE date_time BETWEEN '2021-01-01' AND '2021-05-01' ORDER BY date_time";
 
         $media_data = DB::connection('test_media')->select(DB::raw($query));
         $daily_data = self::compute_daily_data($media_data);
-        // dd($y_start);
+        // dd($daily_data_page);
 
 
         return $daily_data;
@@ -163,16 +164,43 @@ class GetData
 
 
 
-        // Make data from SQL query structurize
-        public static function compute_daily_data($daily_data) 
-        {
-            foreach ($daily_data as $data) {
-                $data->clicks = $data->direct_click + $data->clip_click;
-                $data->click_rate = number_format(round(100*$data->clicks/$data->impression,3),3)."%";
-                $data->date = date("Y-m-d", strtotime($data->date_time));
-            }
+    // Make data from SQL query structurize
+    public static function compute_daily_data($daily_data) 
+    {
+        foreach ($daily_data as $data) {
+            // $data->clicks = $data->direct_click + $data->clip_click;
+            // $data->click_rate = number_format(round(100*$data->clicks/$data->impression,3),3)."%";
+            // $data->date = date("Y-m-d", strtotime($data->date_time));
 
-            return $daily_data;
-    
+            $data->click_rate = number_format(round($data->click_rate,3),3)."%";
         }
+
+        return $daily_data;
+
+    }
+
+    // custom-made paginator
+    public static function paginator($data, $page, $n_option)
+    {
+        $n_data = (int)count($data);
+        $page = (int)$page;
+        
+        if ($n_option == 'All' || $n_option == '選擇')
+        {
+            $n_option = $n_data;
+        }
+        else
+        {
+            $n_option = (int)$n_option;
+        }
+
+        $n_page = (int)ceil($n_data/$n_option); // total pages
+
+        $index_range = range(($page-1)*$n_option, min($page*$n_option-1, $n_data-1));
+        $keys_page = array_combine($index_range, $index_range);// build an array with keys are indexes to be paginate
+        $data_page = array_values(array_intersect_key($data, $keys_page)); // get paginated data from index_range, only get value (with bug if not using array_values, keys missing at page1)
+        return $data_page;
+        
+    } 
+
 }
