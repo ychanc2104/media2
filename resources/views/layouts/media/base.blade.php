@@ -27,12 +27,7 @@
     <!-- <link href="../css/app.css" rel="stylesheet" /> -->
     <!-- <link rel="stylesheet" type="text/css" href="{{ asset('/css/media/daterangepicker.css')}}" />  -->
 
-    <!-- Google Charts -->
-    <!-- <script type="text/javascript" src="https://www.google.com/jsapi"></script> -->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-        google.charts.load('current', {packages: ['corechart']});
-    </script>
+
 
 
     <!-- jQuery, ajax -->
@@ -40,12 +35,21 @@
     <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
     
+
+    
+    <!-- Google Charts -->
+    <!-- <script type="text/javascript" src="https://www.google.com/jsapi"></script> -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {packages: ['corechart']});
+    </script>
+
     <!-- Default running and setting script -->
-    @include('chart_js.defaultJS')
+    @include('Home_js.defaultJS')
 
     <!-- Custom script -->
-    @include('chart_js.drawJS')
-    @include('chart_js.updateJS')
+    @include('Home_js.drawJS')
+    @include('Home_js.updateJS')
 
     <!-- dateRangePicker -->
     <!-- month Picker -->
