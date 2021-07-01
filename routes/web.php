@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\media\HomeController;
+use App\Http\Controllers\media\DailyReportController;
 
 
 /*
@@ -31,7 +32,7 @@ Route::get('/login', function () {
 
 Route::get('/home', [HomeController::class, 'home']);
 Route::get('/home/get_chart_total_data',[HomeController::class, 'transmit_chart_total_data']);
-Route::get('daily_report', [HomeController::class, 'daily_report']);
-Route::get('daily_report/data', [HomeController::class, 'transmit_daily_report']);
+Route::get('daily_report', [DailyReportController::class, 'daily_report']);
+Route::get('daily_report/data', [DailyReportController::class, 'transmit_daily_report']);
 
 

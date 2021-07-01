@@ -1,3 +1,4 @@
+<script type="text/javascript">
 
 // var MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 var MONTHS = ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"];
@@ -258,47 +259,63 @@ $(function () {
   // });
 });
 
-function setViewToCurrentYears(){
-    var startyear = parseInt(startDate / 100);
-    var endyear = parseInt(endDate / 100);
-    $('.mpr-calendar h5 span').eq(0).html(startyear);
-    $('.mpr-calendar h5 span').eq(1).html(endyear);
-}
+    function setViewToCurrentYears()
+    {
+        var startyear = parseInt(startDate / 100);
+        var endyear = parseInt(endDate / 100);
+        $('.mpr-calendar h5 span').eq(0).html(startyear);
+        $('.mpr-calendar h5 span').eq(1).html(endyear);
+    }
 
-function paintMonths(){
-    $('.mpr-calendar').each(function(){
-      var $cal = $(this);
-      var year = $('h5 span',$cal).html();
-      $('.mpr-month',$cal).each(function(i){
-        if((i+1) > 9)
-          cDate = parseInt("" + year + (i+1));
-        else
-          cDate = parseInt("" + year+ '0' + (i+1));
-        if(cDate >= startDate && cDate <= endDate){
-            $(this).addClass('mpr-selected');
-        }else{
-          $(this).removeClass('mpr-selected');
-        }
-      });
-    });
-  $('.mpr-calendar .mpr-month').css("background","");
-    //Write Text
-    var startyear = parseInt(startDate / 100);
-    var startmonth = parseInt(safeRound((startDate / 100 - startyear)) * 100);
-    var endyear = parseInt(endDate / 100);
-    var endmonth = parseInt(safeRound((endDate / 100 - endyear)) * 100);
-    $('.mrp-monthdisplay .mrp-lowerMonth').html(MONTHS[startmonth - 1] + " " + startyear);
-    $('.mrp-monthdisplay .mrp-upperMonth').html(MONTHS[endmonth - 1] + " " + endyear);
-    $('.mpr-lowerDate').val(startDate);
-    $('.mpr-upperDate').val(endDate);
-    if(startyear == parseInt($('.mpr-calendar:first h5 span').html()))
-      $('.mpr-calendar:first .mpr-selected:first').css("background","#40667A");
-    if(endyear == parseInt($('.mpr-calendar:last h5 span').html()))
-      $('.mpr-calendar:last .mpr-selected:last').css("background","#40667A");
-  }
+    function paintMonths()
+    {
+        $('.mpr-calendar').each(function()
+        {
+            var $cal = $(this);
+            var year = $('h5 span',$cal).html();
 
-  function safeRound(val){
+            $('.mpr-month',$cal).each(function(i)
+            {            
+                if((i+1) > 9)
+                cDate = parseInt("" + year + (i+1));
+                else
+                cDate = parseInt("" + year+ '0' + (i+1));
+                if(cDate >= startDate && cDate <= endDate)
+                {
+                    $(this).addClass('mpr-selected');
+                }else{
+                    $(this).removeClass('mpr-selected');
+                }
+            });
+        });       
+            
+        $('.mpr-calendar .mpr-month').css("background","");
+            //Write Text
+            var startyear = parseInt(startDate / 100);
+            var startmonth = parseInt(safeRound((startDate / 100 - startyear)) * 100);
+            var endyear = parseInt(endDate / 100);
+            var endmonth = parseInt(safeRound((endDate / 100 - endyear)) * 100);
+            $('.mrp-monthdisplay .mrp-lowerMonth').html(MONTHS[startmonth - 1] + " " + startyear);
+            $('.mrp-monthdisplay .mrp-upperMonth').html(MONTHS[endmonth - 1] + " " + endyear);
+            $('.mpr-lowerDate').val(startDate);
+            $('.mpr-upperDate').val(endDate);
+            if(startyear == parseInt($('.mpr-calendar:first h5 span').html()))
+            $('.mpr-calendar:first .mpr-selected:first').css("background","#40667A");
+            if(endyear == parseInt($('.mpr-calendar:last h5 span').html()))
+            $('.mpr-calendar:last .mpr-selected:last').css("background","#40667A");
+    }
+
+  function safeRound(val)
+  {
     return Math.round(((val)+ 0.00001) * 100) / 100;
   }
 
   
+
+
+
+
+
+
+
+</script>
