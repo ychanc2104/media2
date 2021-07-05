@@ -1,15 +1,32 @@
+
+
 @extends('layouts.media.base')
+
+
+@section('title')
+
+Home test
+
+@stop
+
+
+
 
 @section('content')
 
 
 <script type="text/javascript">
-
-
+  $(function() {
+    console.log(document.title);
+  });
 
 </script>
 
 
+<!-- take session -->
+@if(session()->has('web_id'))
+<h1>Login Success</h1>
+@endif
 
 
 <div class="container">

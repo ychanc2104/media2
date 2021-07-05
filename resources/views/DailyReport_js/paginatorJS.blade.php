@@ -140,44 +140,27 @@
   function build_page_index(page, n_page)
   {
     var page_index = [];
-    var page_state = []
+    var page_state = [];
+
     for (i=0;i<n_page+2;i++)
     {
-      if (i == 0) // Previous case
+      if (i == 0) // "Previous" case
       {
         page_index.push('Previous');
-        if (page == 1)
-        {
-          page_state.push('disabled');
-        }
-        else
-        {
-          page_state.push('');
-        }
+        (page == 1 ? page_state.push('disabled') : page_state.push(''));
+
       }
-      else if (i == n_page+1) // Next case
+      else if (i == n_page+1) // "Next" case
       {
         page_index.push('Next');
-        if (n_page == 1 || page == n_page)
-        {
-          page_state.push('disabled');
-        }
-        else
-        {
-          page_state.push('');
-        }
+        (n_page == 1 || page == n_page ? page_state.push('disabled') : page_state.push(''));
+
       }
       else // page number case
       {        
         page_index.push(i);
-        if (i == page)
-        {
-          page_state.push('active');
-        }
-        else
-        {
-          page_state.push('');
-        }
+        (i == page ? page_state.push('active') : page_state.push(''));
+
       }
     }
     return [page_index, page_state];

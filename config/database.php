@@ -34,11 +34,26 @@ return [
     */
 
 
+
+
+
     'connections' => [
         'crescent_media' => [
             'driver'    => 'mysql',
             'host'      => '172.16.32.13',
             'database'  => 'crescent_media',
+            'username'  => 'hodo_user',
+            'password'  => 'hodomobile*777',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'port'      => '3306',
+        ],
+
+        'account' => [
+            'driver'    => 'mysql',
+            'host'      => '172.16.32.14',
+            'database'  => 'account',
             'username'  => 'hodo_user',
             'password'  => 'hodomobile*777',
             'charset'   => 'utf8',

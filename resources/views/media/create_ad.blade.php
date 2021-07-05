@@ -513,12 +513,50 @@ function myfunction()
         });
 }
 
-
-
-
-
 </script>
 
 
 
+
+
+	<!-- default insert uppon #footer -->
+	<footer id="footer">
+
+	</footer>
+
+
 </body>
+
+
+
+
+
+
+<script type="text/javascript">
+var AviviD = {
+	settings: {
+		ad_block_enabled: 1
+	},
+	web_id: "ohohfresh",
+
+	status: {
+		avivid_css: 1,
+	},
+
+};
+
+
+// console.log(window.location.href)
+
+</script>
+
+<!-- <script type="text/javascript" src="https://avivid.likr.tw/api/ios_water_webpush_v19.min.js"></script> -->
+
+<script type="text/javascript" src="{{ asset('/js/recommendation/recommendation_core.js')}}"></script>
+<script type="text/javascript" src="{{ asset('/js/recommendation/config.js')}}"></script>
+
+<script type="text/javascript">
+	console.log(AviviD.block_setting.index.block.block_like.tpl_render_function);
+	// AviviD.navigation_bar()
+	// AviviD.force_display_sider_bar(1)
+</script>

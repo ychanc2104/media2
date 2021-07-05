@@ -14,7 +14,7 @@ class HomeController extends Controller
     public function home() 
     {
 
-        return view('media.home');
+        return view('media/home');
     }
 
     // use for transmitting to certain page and read by ajax
