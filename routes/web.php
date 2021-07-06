@@ -6,6 +6,7 @@ use App\Http\Controllers\media\LoginController;
 use App\Http\Controllers\media\HomeController;
 use App\Http\Controllers\media\DailyReportController;
 use App\Http\Controllers\media\ADController;
+use App\Http\Controllers\AdKey\AdKeyController;
 
 
 /*
@@ -42,5 +43,8 @@ Route::get('daily_report', [DailyReportController::class, 'daily_report'])
     ->middleware(['login.required']);
 Route::get('daily_report/data', [DailyReportController::class, 'transmit_daily_report']);
 Route::get('/create_ad', [ADController::class, 'index']);
+
+
+Route::get('/render_url', [AdKeyController::class, 'render_ad_url']);
 
 

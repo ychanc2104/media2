@@ -533,17 +533,35 @@ function myfunction()
 
 
 <script type="text/javascript">
-var AviviD = {
-	settings: {
-		ad_block_enabled: 1
-	},
-	web_id: "ohohfresh",
+	var AviviD = {
+		settings: {
+			ad_block_enabled: 1
+		},
+		web_id: "ohohfresh",
 
-	status: {
-		avivid_css: 1,
-	},
+		status: {
+			avivid_css: 1,
+		},
 
-};
+	};
+
+    $.ajax({
+        type: 'get',
+        url: '/render_url',
+        dateType: 'json',
+        data:
+        {
+            'title': "國安特勤夾帶萬條私菸回台 吳宗憲遭重判10年4月 - 社會",
+		}, 
+        success: function(url_keyword_json)
+        {
+            const url = JSON.parse(url_keyword_json)[0];
+			const keyword = JSON.parse(url_keyword_json)[1];
+
+			console.log(keyword)
+        },
+    });
+
 
 
 // console.log(window.location.href)

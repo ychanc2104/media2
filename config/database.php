@@ -38,10 +38,24 @@ return [
 
 
     'connections' => [
-        'crescent_media' => [
+        'media' => [
             'driver'    => 'mysql',
-            'host'      => '172.16.32.13',
+            // 'host'      => '172.16.32.13', // settings for running server
+            'host'      => '104.199.175.43',
             'database'  => 'crescent_media',
+            'username'  => 'hodo_user',
+            'password'  => 'hodomobile*777',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'port'      => '3306',
+        ],
+
+        'ad_host' => [
+            'driver'    => 'mysql',
+            // 'host'      => 'localhost', // settings for running server
+            'host'      => '104.199.175.43',
+            'database'  => 'crescent_ad_host',
             'username'  => 'hodo_user',
             'password'  => 'hodomobile*777',
             'charset'   => 'utf8',
@@ -52,7 +66,8 @@ return [
 
         'account' => [
             'driver'    => 'mysql',
-            'host'      => '172.16.32.14',
+            // 'host'      => '172.16.32.14',
+            'host'      => '34.80.131.210',
             'database'  => 'account',
             'username'  => 'hodo_user',
             'password'  => 'hodomobile*777',

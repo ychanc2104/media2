@@ -46,16 +46,21 @@ class GetData
             $query = "SELECT date_time, SUM(profit) AS profit, SUM(impression) AS impression, SUM(direct_click) AS direct_click, 
                     SUM(clip_click) AS clip_click, SUM(clip_click+direct_click) AS clicks, 
                     SUM(clip_click+direct_click)/SUM(impression) AS click_rate FROM `lkr_media` 
-                    WHERE YEAR(date_time)=:year GROUP BY MONTH(date_time);";
-            $media_data = DB::connection('test_media')->select($query, ['year' => $year]);
+                    WHERE YEAR(date_time)='$year' GROUP BY MONTH(date_time);";
+            
+            $media_data = DB::connection('test_media')->select($query);
             $chart_data = self::compute_chart_data($select_mode, $media_data);
 
         }
         // month case
         else if ($select_mode == "month")
         {
-            $query = "SELECT * FROM `lkr_media` WHERE YEAR(date_time)=$year AND MONTH(date_time)=$month";
-            $media_data = DB::connection('test_media')->select(DB::raw($query));
+            // $query = "SELECT * FROM `lkr_media` WHERE YEAR(date_time)=$year AND MONTH(date_time)=$month";
+            // $media_data = DB::connection('test_media')->select(DB::raw($query));
+
+            $query = "SELECT * FROM `lkr_media` WHERE YEAR(date_time)='$year' AND MONTH(date_time)='$month'";
+            $media_data = DB::connection('test_media')->select($query);
+
             $chart_data = self::compute_chart_data($select_mode, $media_data);
         }
         // default case for showing latest 7 days
@@ -107,6 +112,7 @@ class GetData
         return $total_data[0];
     }
 
+    
     // For rendering all years in DB
     public static function get_year_smallest() 
     {

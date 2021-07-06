@@ -21,7 +21,6 @@
 		}, 
         success: function(chart_total_data_json)
         {
-
             var chart_total_data = JSON.parse(chart_total_data_json);
             var chart_data = chart_total_data[0];
             var total_data = chart_total_data[1];
