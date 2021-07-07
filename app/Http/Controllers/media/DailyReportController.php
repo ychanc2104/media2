@@ -26,10 +26,10 @@ class DailyReportController extends Controller
         $page = $inputData->input('page');
 
         $daily_data = GetData::get_daily_data($y_start, $y_end, $m_start, $m_end);
+        
         // $daily_data = GetData::get_daily_data('2021','2021','1','5');
-        $n_data = count($daily_data);
-        $daily_data_page = GetData::paginator($daily_data, $page, $n_option);
-
+        $n_data = count($daily_data['date']);
+        $daily_data_page = GetData::paginator($daily_data, $page, $n_option, $n_data);
         return json_encode([$daily_data_page, $n_data]);
     }
 }

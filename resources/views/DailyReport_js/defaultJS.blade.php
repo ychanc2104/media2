@@ -10,29 +10,30 @@
     {
       y_start: new Date().getFullYear(),
       y_end: new Date().getFullYear(),
-      m_start: new Date().getMonth(),              
-      m_end: new Date().getMonth(),
+      m_start: new Date().getMonth()+1, // current month Jan = 0              
+      m_end: new Date().getMonth()+1,
       n_option: 'All',
       page: 1
     },
     success: function(daily_report_data_json)
     {
+
       var daily_report_data = JSON.parse(daily_report_data_json)[0];
       var n_data = JSON.parse(daily_report_data_json)[1];
-      // var n_option = correct_option(n_option, n_data);
-      // var n_page = Math.ceil(n_data/n_option);
 
-      myHTML = ''
-      daily_report_data.forEach(function(item, i) 
+
+      myHTML = '';
+      for (i=0; i<n_data; i++)
       {
         myHTML += '<tr>' +
-                  '<td>' + item['date']       + '</td>' +
-                  '<td>' + item['profit']     + '</td>' +
-                  '<td>' + item['impression'] + '</td>' +
-                  '<td>' + item['clicks']     + '</td>' +
-                  '<td>' + item['click_rate'] + '</td>' +
+                  '<td>' + daily_report_data['date'][i]       + '</td>' +
+                  '<td>' + daily_report_data['profit'][i]     + '</td>' +
+                  '<td>' + daily_report_data['impression'][i] + '</td>' +
+                  '<td>' + daily_report_data['clicks'][i]     + '</td>' +
+                  '<td>' + daily_report_data['click_rate'][i] + '</td>' +
                   '</tr>';
-      });
+      }
+      // });
       $("#daily_report_table").html(myHTML);
       
       update_page_indicator(n_data, 1, 1)

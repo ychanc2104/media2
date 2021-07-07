@@ -10,27 +10,31 @@ class GetData
     // for daily report
     public static function get_daily_data($y_start, $y_end, $m_start, $m_end) 
     {
+        $web_id = 'upmedia';
         $date_start_str = $y_start."-".$m_start."-"."1";
         $date_end_str = $y_end."-".$m_end."-"."1";
 
         $date_start = date('Y-m-d',strtotime($date_start_str));
         $date_end = date('Y-m-t',strtotime($date_end_str)); // ending day of a month
-        
-        // $date_start = date('Y-m-d', strtotime('2021-01-01'));
-        // $date_end = date('Y-m-d', strtotime('2021-05-01'));
 
-        // $query = "SELECT * FROM (SELECT  ROW_NUMBER() OVER (ORDER BY date_time) AS row_num, date_time, profit, impression, direct_click, clip_click, (direct_click+clip_click) AS clicks, 100*(direct_click+clip_click)/impression AS click_rate FROM `lkr_media`) AS newtable
-        // WHERE row_num BETWEEN 1 AND 20";
+        // dsp_likrPush_report_daily from crescent_media
+        $query_1 = "SELECT log_date AS date_time, profit, impression, click as clicks FROM dsp_likrPush_report_daily 
+                    WHERE log_date BETWEEN '$date_start' AND '$date_end' AND web_id='$web_id' ORDER BY log_date ASC";
 
-        // $query = "SELECT * FROM `lkr_media` WHERE date_time BETWEEN '$date_start' AND '$date_end' ORDER BY date_time";
-        $query = "SELECT DATE(date_time) AS date, profit, impression, direct_click, clip_click, (direct_click+clip_click) AS clicks, 100*(direct_click+clip_click)/impression AS click_rate FROM `lkr_media` WHERE date_time BETWEEN '$date_start' AND '$date_end' ORDER BY date_time";
-        // $query = "SELECT * FROM `lkr_media` WHERE date_time BETWEEN '2021-01-01' AND '2021-05-01' ORDER BY date_time";
-        // $query = "SELECT date_time, profit, impression, direct_click, clip_click, (direct_click+clip_click) AS clicks, 100*(direct_click+clip_click)/impression AS click_rate FROM `lkr_media` WHERE date_time BETWEEN '2021-01-01' AND '2021-05-01' ORDER BY date_time";
+        // daily report real from crescent_media
+        $query_2 = "SELECT date_time, pay AS profit, impression, clip_click, direct_click, click as clicks FROM daily_report_real 
+                    WHERE date_time BETWEEN '$date_start' AND '$date_end' AND web_id='$web_id' ORDER BY date_time ASC";
 
-        $media_data = DB::connection('test_media')->select(DB::raw($query));
-        $daily_data = self::compute_daily_data($media_data);
-        // dd($daily_data_page);
+        // streaming daily report from crescent_ad_host
+        $query_3 = "SELECT data_time AS date_time, revenue AS profit FROM streaming_profit_daily_report 
+                    WHERE data_time BETWEEN '$date_start' AND '$date_end' AND web_id='$web_id' ORDER BY data_time ASC";
 
+        $media_data_1 = DB::connection('crescent_media')->select($query_1);
+        $media_data_2 = DB::connection('crescent_media')->select($query_2);
+        $media_data_3 = DB::connection('crescent_ad_host')->select($query_3);
+        $media_data = array_merge($media_data_1, $media_data_2, $media_data_3);
+
+        $daily_data = self::click_rate_to_str(self::compute_chart_data('month', $media_data));
 
         return $daily_data;
     }
@@ -47,23 +51,15 @@ class GetData
             // dsp_likrPush_report_daily from crescent_media
             $query_1 = "SELECT log_date AS date_time, SUM(profit) AS profit, SUM(impression) AS impression, SUM(click) as clicks
                         FROM dsp_likrPush_report_daily WHERE YEAR(log_date)='$year' AND web_id='$web_id' GROUP BY month";
-            $media_data_1 = DB::connection('crescent_media')->select($query_1);
 
             // daily report real from crescent_media
             $query_2 = "SELECT date_time, SUM(pay) AS profit, SUM(impression) AS impression, 
                         SUM(clip_click) AS clip_click, SUM(direct_click) AS direct_click, SUM(click) as clicks
                         FROM daily_report_real WHERE YEAR(date_time)='$year' AND web_id='$web_id' GROUP BY MONTH(date_time)";
-            $media_data_2 = DB::connection('crescent_media')->select($query_2);
 
             // streaming daily report from crescent_ad_host
             $query_3 = "SELECT data_time AS date_time, SUM(revenue) AS profit FROM streaming_profit_daily_report 
                         WHERE YEAR(data_time)='$year' AND web_id='$web_id' GROUP BY MONTH(data_time)";
-            $media_data_3 = DB::connection('crescent_ad_host')->select($query_3);
-
-            // merge all array
-            $media_data = array_merge($media_data_1, $media_data_2, $media_data_3);
-            $chart_data = self::compute_chart_data($select_mode, $media_data);
-            // dd($chart_data);
 
         }
         // month case
@@ -73,55 +69,41 @@ class GetData
             // dsp_likrPush_report_daily from crescent_media
             $query_1 = "SELECT log_date AS date_time, profit, impression, click as clicks FROM dsp_likrPush_report_daily 
             WHERE YEAR(log_date)='$year' AND MONTH(log_date)='$month' AND web_id='$web_id'";
-            $media_data_1 = DB::connection('crescent_media')->select($query_1);
 
             // daily report real from crescent_media
             $query_2 = "SELECT date_time, pay AS profit, impression, clip_click, direct_click, click as clicks
                         FROM daily_report_real WHERE YEAR(date_time)='$year' AND MONTH(date_time)='$month' AND web_id='$web_id'";
-            $media_data_2 = DB::connection('crescent_media')->select($query_2);
 
             // streaming daily report from crescent_ad_host
             $query_3 = "SELECT data_time AS date_time, revenue AS profit FROM streaming_profit_daily_report 
                         WHERE YEAR(data_time)='$year' AND MONTH(data_time)='$month' AND web_id='$web_id'";
-            $media_data_3 = DB::connection('crescent_ad_host')->select($query_3);
-
-            // merge all array
-            $media_data = array_merge($media_data_1, $media_data_2, $media_data_3);
-            $chart_data = self::compute_chart_data($select_mode, $media_data);
-            // dd($chart_data);
 
         }
         // default case for showing latest 7 days
         else 
         {
-            // $query = "SELECT date_time, profit as profit, impression as impression, direct_click as direct_click, 
-            //          clip_click as clip_click, (direct_click+clip_click) as clicks, 100*(direct_click+clip_click)/impression as click_rate
-            //          FROM lkr_media WHERE date_time BETWEEN DATE_ADD(CURDATE(), INTERVAL -6 day) AND CURDATE()";
-            // $media_data = DB::connection('test_media')->select($query);
-            // $chart_data = self::compute_chart_data($select_mode, $media_data);
-
-
             // dsp_likrPush_report_daily from crescent_media
             $query_1 = "SELECT log_date AS date_time, profit, impression, click as clicks FROM dsp_likrPush_report_daily 
-                        WHERE log_date BETWEEN DATE_ADD(CURDATE(), INTERVAL -6 day) AND CURDATE() AND web_id='$web_id'";
-            $media_data_1 = DB::connection('crescent_media')->select($query_1);
-            // dd($media_data_1);
+                        WHERE log_date BETWEEN DATE_ADD(CURDATE(), INTERVAL -7 day) AND CURDATE() AND web_id='$web_id'";
 
             // daily report real from crescent_media
             $query_2 = "SELECT date_time, pay AS profit, impression, clip_click, direct_click, click as clicks
-                        FROM daily_report_real WHERE date_time BETWEEN DATE_ADD(CURDATE(), INTERVAL -6 day) AND CURDATE() AND web_id='$web_id'";
-            $media_data_2 = DB::connection('crescent_media')->select($query_2);
+                        FROM daily_report_real WHERE date_time BETWEEN DATE_ADD(CURDATE(), INTERVAL -7 day) AND CURDATE() AND web_id='$web_id'";
 
             // streaming daily report from crescent_ad_host
             $query_3 = "SELECT data_time AS date_time, SUM(revenue) AS profit FROM streaming_profit_daily_report 
-                        WHERE data_time BETWEEN DATE_ADD(CURDATE(), INTERVAL -6 day) AND CURDATE() AND web_id='$web_id' group by day(data_time)";
-            $media_data_3 = DB::connection('crescent_ad_host')->select($query_3);
+                        WHERE data_time BETWEEN DATE_ADD(CURDATE(), INTERVAL -7 day) AND CURDATE() AND web_id='$web_id' group by day(data_time)";
 
-            $media_data = array_merge($media_data_1, $media_data_2, $media_data_3);
-
-            $chart_data = self::compute_chart_data($select_mode, $media_data);
 
         }
+
+        // collect three tables into one table
+        $media_data_1 = DB::connection('crescent_media')->select($query_1);
+        $media_data_2 = DB::connection('crescent_media')->select($query_2);
+        $media_data_3 = DB::connection('crescent_ad_host')->select($query_3);
+        $media_data = array_merge($media_data_1, $media_data_2, $media_data_3);
+        $chart_data = self::compute_chart_data($select_mode, $media_data);
+
         // dd($chart_data);
         return $chart_data;
         
@@ -149,29 +131,7 @@ class GetData
             $query_3 = "SELECT data_time AS date_time, SUM(revenue) AS profit FROM streaming_profit_daily_report 
                         WHERE YEAR(data_time)='$year' AND web_id='$web_id'";
             $total_data_3 = DB::connection('crescent_ad_host')->select($query_3);
-        
-            // $total_data_all = array_merge($total_data_1, $total_data_2, $total_data_3);
 
-            // $total_profit = $total_impression = $total_click = $total_click_rate = 0;
-            
-            // foreach ($total_data_all as $data)
-            // {
-            //     $total_profit += (isset($data->profit)? (int)$data->profit : 0); // add zero, if data not existing
-            //     $total_impression += (isset($data->impression)? (int)$data->impression : 0); // add zero, if data not existing
-            //     $total_click += (isset($data->clicks)? (int)$data->clicks : 0); // add zero, if data not existing
-            // }
-            // $total_click_rate = number_format(round(100*$total_click/$total_impression, 3), 3) . '%';
-
-            // dd($total_data);
-            
-
-            // dd($total_data);
-
-            // $query = "SELECT SUM(profit) as total_profit, SUM(impression) as total_impression, 
-            //         SUM(direct_click+clip_click) as total_click, 100*SUM(direct_click+clip_click)/SUM(impression) as total_click_rate
-            //         FROM lkr_media WHERE YEAR(date_time) =:year";
-
-            // $total_data = DB::connection('test_media')->select($query, ['year' => $year]);
         }
         // month case
         else if ($select_mode == "month")
@@ -215,11 +175,9 @@ class GetData
 
         }
 
-
         $total_data_all = array_merge($total_data_1, $total_data_2, $total_data_3);
 
         $total_profit = $total_impression = $total_click = $total_click_rate = 0;
-            
         foreach ($total_data_all as $data)
         {
             $total_profit += (isset($data->profit)? (int)$data->profit : 0); // add zero, if data not existing
@@ -228,9 +186,8 @@ class GetData
         }
         $total_click_rate = number_format(round(100*$total_click/$total_impression, 3), 3) . '%';
 
-
         $year_smallest = self::get_year_smallest();
-
+        // build array
         $total_data = array('total_profit'=>$total_profit, 'total_impression'=>$total_impression,
                             'total_click'=>$total_click, 'total_click_rate'=>$total_click_rate, 
                             'year_smallest'=>$year_smallest);
@@ -284,38 +241,33 @@ class GetData
                 $x_lim = 31;
                 $symbol = 'd';
         }
-        // $x_lim = 12;
+        $x_lim = 13*31;
+        // number of days in that month
+        $n_day_of_month = (int)date("t", strtotime($media_data[0]->date_time));
+        // initialize array, max range to be store
+        $date = array_fill(0,$x_lim, 0);
         $x_axis = array_fill(0,$x_lim, 0);
-        // $month = array_fill(0,12, 0);
         $profit = $impression = $clip_click = array_fill(0,$x_lim, 0);
         $direct_click = $clicks = $click_rate = array_fill(0,$x_lim, 0);
+
         foreach ($media_data as $data)
         {
             // choose index to be added according to its month or day.
-            $index = (int)date($symbol, strtotime($data->date_time))-1;
-            if ($select_mode == 'year'||$select_mode == 'month')
-            {
-                $x_axis[$index] = $index+1;
+            $day = (int)date('d', strtotime($data->date_time));
+            $month = (int)date('m', strtotime($data->date_time));
+            $index = $month*$n_day_of_month + $day;
 
-            }
-            else // 7-day case to prevent 1/31 in front of 7/1, re-order 7-days
-            {
-                $x_order = (int)date('m', strtotime($data->date_time))*31 + (int)date('d', strtotime($data->date_time));
-                $x_axis[$x_order] = $x_axis[$index];
-                unset($x_axis[$index]);
-                $x_axis[$index] = $index+1;
+            // add to that key(index) to collect data with same date
+            $date[$index] = $data->date_time;
+            $x_axis[$index] = (int)date($symbol, strtotime($data->date_time));
+            $profit[$index] += (int)$data->profit; // all tables with attr. "profit"
+            $impression[$index] += (isset($data->impression)? (int)$data->impression : 0); // add 0 if attr not existing
+            $clip_click[$index] += (isset($data->clip_click)? (int)$data->clip_click : 0); // add 0 if attr not existing
+            $direct_click[$index] += (isset($data->direct_click)? (int)$data->direct_click : 0); // add 0 if attr not existing
+            $clicks[$index] += (isset($data->clicks)? (int)$data->clicks : 0); // add 0 if attr not existing
 
-            }
-
-            $profit[$index] += (int)$data->profit;
-            $impression[$index] += (isset($data->impression)? (int)$data->impression : 1); // add 0 if attr not existing
-            $clip_click[$index] += (isset($data->clip_click)? (int)$data->clip_click : 1); // add 0 if attr not existing
-            $direct_click[$index] += (isset($data->direct_click)? (int)$data->direct_click : 1); // add 0 if attr not existing
-            $clicks[$index] += (isset($data->clicks)? (int)$data->clicks : 1); // add 0 if attr not existing
         }
-
-        // bug here
-        $x_axis = array_values(array_filter($x_axis,"self::remove_zero"));
+        // bug here, to be refined, remove 0
         for ($i=0; $i < count($impression); $i++)
         {
             $click_rate[$i] = ($impression[$i] !== 0? 
@@ -323,8 +275,8 @@ class GetData
                                     : 0); // if True, choose front statement
         }
 
-        // dd(array_filter($profit,"self::remove_zero"));
-        
+        $date = array_values(array_filter($date,"self::remove_zero"));
+        $x_axis = array_values(array_filter($x_axis,"self::remove_zero"));
         $profit = array_values(array_filter($profit,"self::remove_zero"));
         $impression = array_values(array_filter($impression,"self::remove_zero"));
         $clip_click = array_values(array_filter($clip_click,"self::remove_zero"));
@@ -332,82 +284,38 @@ class GetData
         $clicks = array_values(array_filter($clicks,"self::remove_zero"));
         $click_rate = array_values(array_filter($click_rate,"self::remove_zero"));
 
-        $x_axis = array_slice($x_axis,0,count($click_rate));
-        $direct_click = array_slice($direct_click,0,count($click_rate));
+        // $x_axis = array_slice($x_axis,0,count($click_rate));
+        // $direct_click = array_slice($direct_click,0,count($click_rate));
+        // 
 
-
-        $chart_data = array('x_axis'=>$x_axis, 'profit'=>$profit, 'impression'=>$impression, 
+        $chart_data = array('date'=>$date, 'x_axis'=>$x_axis, 'profit'=>$profit, 'impression'=>$impression, 
         'direct_click'=>$direct_click, 'clip_click'=>$clip_click, 'clicks'=>$clicks,
         'click_rate'=>$click_rate);
 
         // dd($chart_data);
 
-
-
-        // $x_axis = [];
-        // // array to show (four charts)
-        // $profit = [];
-        // $impression = [];
-        // $direct_click = $clip_click = $clicks = [];
-        // $click_rate = [];
-        // $i = 0;
-        // foreach ($media_data as $data) {
-        //     // x-axis of chart
-        //     // year case
-        //     if ($select_mode == "year")
-        //     {
-        //         $x_axis[] = date("m", strtotime($data->date_time));
-        //     }
-        //     else if ($select_mode == "month")
-        //     {
-        //         $x_axis[] = date("d", strtotime($data->date_time));
-        //     }
-        //     // default is shown latest 7 days
-        //     else
-        //     {
-        //         $x_axis[] = date("d", strtotime($data->date_time));
-
-        //     }
-        //     // y-axis of chart
-        //     $profit[] = (int)$data->profit;
-        //     $impression[] = (int)$data->impression;
-        //     $direct_click[] = (int)$data->direct_click;
-        //     $clip_click[] = (int)$data->clip_click;
-        //     $clicks[] = $data->direct_click + $data->clip_click;
-        //     $click_rate[] = round(100*$clicks[$i]/$impression[$i], 3);
-
-        //     // counter
-        //     $i += 1;
-        // }
-
-        // $chart_data = array('x_axis'=>$x_axis, 'profit'=>$profit, 'impression'=>$impression, 
-        //                 'direct_click'=>$direct_click, 'clip_click'=>$clip_click, 'clicks'=>$clicks,
-        //                 'click_rate'=>$click_rate);
         return $chart_data;
 
     }
 
 
     // Make data from SQL query structurize
-    public static function compute_daily_data($daily_data) 
+    public static function click_rate_to_str($daily_data) 
     {
-        foreach ($daily_data as $data) {
-            // $data->clicks = $data->direct_click + $data->clip_click;
-            // $data->click_rate = number_format(round(100*$data->clicks/$data->impression,3),3)."%";
-            // $data->date = date("Y-m-d", strtotime($data->date_time));
-
-            $data->click_rate = number_format(round($data->click_rate,3),3)."%";
+        for ($i=0; $i < count($daily_data['date']); $i++) 
+        {
+            $daily_data['click_rate'][$i] = number_format(round($daily_data['click_rate'][$i], 3), 3)."%";
         }
 
         return $daily_data;
-
     }
 
     // custom-made paginator
-    public static function paginator($data, $page, $n_option)
+    public static function paginator($data, $page, $n_option, $n_data)
     {
-        $n_data = (int)count($data);
+        // $n_data = (int)count($data);
         $page = (int)$page;
+        // dd($data);
         
         if ($n_option == 'All' || $n_option == '選擇')
         {
@@ -421,8 +329,20 @@ class GetData
         $n_page = (int)ceil($n_data/$n_option); // total pages
 
         $index_range = range(($page-1)*$n_option, min($page*$n_option-1, $n_data-1));
+        
         $keys_page = array_combine($index_range, $index_range);// build an array with keys are indexes to be paginate
-        $data_page = array_values(array_intersect_key($data, $keys_page)); // get paginated data from index_range, only get value (with bug if not using array_values, keys missing at page1)
+        
+        // $data_page = array_values(array_intersect_key($data, $keys_page)); // get paginated data from index_range, only get value (with bug if not using array_values, keys missing at page1)
+        
+        // remove keys
+        $date = array_values(array_intersect_key($data['date'], $keys_page));
+        $profit = array_values(array_intersect_key($data['profit'], $keys_page));
+        $impression = array_values(array_intersect_key($data['impression'], $keys_page));
+        $clicks = array_values(array_intersect_key($data['clicks'], $keys_page));
+        $click_rate = array_values(array_intersect_key($data['click_rate'], $keys_page));
+        $data_page = array('date'=>$date, 'profit'=>$profit, 'impression'=>$impression, 
+                            'clicks'=>$clicks, 'click_rate'=> $click_rate);
+
         return $data_page;
         
     } 

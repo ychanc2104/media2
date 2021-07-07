@@ -49,16 +49,16 @@
           
           // update tables
           myHTML = '';
-          daily_report_data.forEach(function(item, i)
+          for (i=0; i<daily_report_data['date'].length; i++)
           {
             myHTML += '<tr>' +
-                      '<td>' + item['date']       + '</td>' +
-                      '<td>' + item['profit']     + '</td>' +
-                      '<td>' + item['impression'] + '</td>' +
-                      '<td>' + item['clicks']     + '</td>' +
-                      '<td>' + item['click_rate'] + '</td>' +
+                      '<td>' + daily_report_data['date'][i]       + '</td>' +
+                      '<td>' + daily_report_data['profit'][i]     + '</td>' +
+                      '<td>' + daily_report_data['impression'][i] + '</td>' +
+                      '<td>' + daily_report_data['clicks'][i]     + '</td>' +
+                      '<td>' + daily_report_data['click_rate'][i] + '</td>' +
                       '</tr>';
-          });
+          }
           $("#daily_report_table").html(myHTML);
           
           // update page indicator
