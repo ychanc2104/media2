@@ -53,9 +53,11 @@
 
         
         // set figure style
-        var options = {
+        var options = {            
             height:500,
-            width:1250, 
+            width:1250,
+            bar: { groupWidth: "40%" }, 
+ 
         }
 
         var chart = new google.visualization.ColumnChart(document.getElementById(id));

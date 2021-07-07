@@ -94,7 +94,6 @@ class GetData
             $query_3 = "SELECT data_time AS date_time, SUM(revenue) AS profit FROM streaming_profit_daily_report 
                         WHERE data_time BETWEEN DATE_ADD(CURDATE(), INTERVAL -7 day) AND CURDATE() AND web_id='$web_id' group by day(data_time)";
 
-
         }
 
         // collect three tables into one table
@@ -108,6 +107,88 @@ class GetData
         return $chart_data;
         
     }
+
+    // Make data from SQL query more structurized
+    public static function compute_chart_data($select_mode, $media_data) 
+    {
+        // in year case, use 'm'(month) to be index, and others use 'd'(day)
+        $symbol =($select_mode == 'year'? 'm' : 'd');
+        // max index
+        $x_lim = 13*31; 
+        // number of days in that month
+        $n_day_of_month = (int)date("t", strtotime($media_data[0]->date_time));
+        // initialize array, max range to be store
+        $date = array_fill(0,$x_lim, 0);
+        $x_axis = array_fill(0,$x_lim, 0);
+        $profit = $impression = $clip_click = array_fill(0,$x_lim, 0);
+        $direct_click = $clicks = $click_rate = array_fill(0,$x_lim, 0);
+        // collect data
+        foreach ($media_data as $data)
+        {
+            // choose index to be added according to its month or day.
+            $day = (int)date('d', strtotime($data->date_time));
+            $month = (int)date('m', strtotime($data->date_time));
+            if ($select_mode == 'year') // in year case, month is the index
+            {
+                $index = $month;
+            }
+            else // in month or 7-days case, (month*n_day_of_month + day) is the index
+            {
+                $index = $month*$n_day_of_month + $day;
+            }
+
+            // add to that key(index) to collect data with same date
+            $date[$index] = $data->date_time;
+            $x_axis[$index] = (int)date($symbol, strtotime($data->date_time));
+            $profit[$index] += (int)$data->profit; // all tables with attr. "profit"
+            $impression[$index] += (isset($data->impression)? (int)$data->impression : 0); // add 0 if attr not existing
+            $clip_click[$index] += (isset($data->clip_click)? (int)$data->clip_click : 0); // add 0 if attr not existing
+            $direct_click[$index] += (isset($data->direct_click)? (int)$data->direct_click : 0); // add 0 if attr not existing
+            $clicks[$index] += (isset($data->clicks)? (int)$data->clicks : 0); // add 0 if attr not existing
+
+        }
+        // bug here, to be refined, remove 0
+        for ($i=0; $i < count($impression); $i++)
+        {
+            $click_rate[$i] = ($impression[$i] !== 0? 
+                                    round(100*$clicks[$i]/$impression[$i],3) 
+                                    : 0); // if True, choose front statement
+        }
+
+        $date = array_values(array_filter($date,"self::remove_zero"));
+        $x_axis = array_values(array_filter($x_axis,"self::remove_zero"));
+        $profit = array_values(array_filter($profit,"self::remove_zero"));
+        $impression = array_values(array_filter($impression,"self::remove_zero"));
+        $clip_click = array_values(array_filter($clip_click,"self::remove_zero"));
+        $direct_click = array_values(array_filter($direct_click,"self::remove_zero"));
+        $clicks = array_values(array_filter($clicks,"self::remove_zero"));
+        $click_rate = array_values(array_filter($click_rate,"self::remove_zero"));
+
+        // $x_axis = array_slice($x_axis,0,count($click_rate));
+        // $direct_click = array_slice($direct_click,0,count($click_rate));
+        // 
+
+        // build array to be transmitted
+        $chart_data = array('date'=>$date, 'x_axis'=>$x_axis, 'profit'=>$profit, 'impression'=>$impression, 
+        'direct_click'=>$direct_click, 'clip_click'=>$clip_click, 'clicks'=>$clicks,
+        'click_rate'=>$click_rate);
+
+        return $chart_data;
+
+    }
+
+
+    // Make click_rate in data to be string type with 3 digits
+    public static function click_rate_to_str($daily_data) 
+    {
+        for ($i=0; $i < count($daily_data['date']); $i++) 
+        {
+            $daily_data['click_rate'][$i] = number_format(round($daily_data['click_rate'][$i], 3), 3)."%";
+        }
+        return $daily_data;
+    }
+
+
     // for four statistical values
     public static function get_total_data($select_mode, $year, $month) 
     {
@@ -175,8 +256,10 @@ class GetData
 
         }
 
+        // connect three tables
         $total_data_all = array_merge($total_data_1, $total_data_2, $total_data_3);
 
+        // collect three tables with same date
         $total_profit = $total_impression = $total_click = $total_click_rate = 0;
         foreach ($total_data_all as $data)
         {
@@ -186,6 +269,7 @@ class GetData
         }
         $total_click_rate = number_format(round(100*$total_click/$total_impression, 3), 3) . '%';
 
+        // get the smallest year in DB tables
         $year_smallest = self::get_year_smallest();
         // build array
         $total_data = array('total_profit'=>$total_profit, 'total_impression'=>$total_impression,
@@ -194,6 +278,7 @@ class GetData
 
         return $total_data;
     }
+
 
 
     // For rendering all years in DB
@@ -212,134 +297,40 @@ class GetData
         // streaming daily report from crescent_ad_host
         $query_3 = "SELECT MIN(YEAR(data_time)) as year_smallest FROM streaming_profit_daily_report WHERE web_id='$web_id'";
         $year_smallest_3 = DB::connection('crescent_ad_host')->select($query_3);
-        // dd($year_smallest_1[0]);
+
         $year_smallest = min($year_smallest_1, $year_smallest_2, $year_smallest_3)[0]->year_smallest;
-        // dd($year_smallest);
 
         return $year_smallest;
     }
 
+    // use for array_filter
     public static function remove_zero($x)
     {
         return ($x !== 0);
     }  
 
-    // Make data from SQL query more structurized
-    public static function compute_chart_data($select_mode, $media_data) 
-    {
-        switch($select_mode)
-        {
-            case 'year':
-                $x_lim = 12;
-                $symbol = 'm';
-                break;
-            case 'month':
-                $x_lim = (int)date("t", strtotime($media_data[0]->date_time));
-                $symbol = 'd';
-                break;
-            default:
-                $x_lim = 31;
-                $symbol = 'd';
-        }
-        $x_lim = 13*31;
-        // number of days in that month
-        $n_day_of_month = (int)date("t", strtotime($media_data[0]->date_time));
-        // initialize array, max range to be store
-        $date = array_fill(0,$x_lim, 0);
-        $x_axis = array_fill(0,$x_lim, 0);
-        $profit = $impression = $clip_click = array_fill(0,$x_lim, 0);
-        $direct_click = $clicks = $click_rate = array_fill(0,$x_lim, 0);
-
-        foreach ($media_data as $data)
-        {
-            // choose index to be added according to its month or day.
-            $day = (int)date('d', strtotime($data->date_time));
-            $month = (int)date('m', strtotime($data->date_time));
-            $index = $month*$n_day_of_month + $day;
-
-            // add to that key(index) to collect data with same date
-            $date[$index] = $data->date_time;
-            $x_axis[$index] = (int)date($symbol, strtotime($data->date_time));
-            $profit[$index] += (int)$data->profit; // all tables with attr. "profit"
-            $impression[$index] += (isset($data->impression)? (int)$data->impression : 0); // add 0 if attr not existing
-            $clip_click[$index] += (isset($data->clip_click)? (int)$data->clip_click : 0); // add 0 if attr not existing
-            $direct_click[$index] += (isset($data->direct_click)? (int)$data->direct_click : 0); // add 0 if attr not existing
-            $clicks[$index] += (isset($data->clicks)? (int)$data->clicks : 0); // add 0 if attr not existing
-
-        }
-        // bug here, to be refined, remove 0
-        for ($i=0; $i < count($impression); $i++)
-        {
-            $click_rate[$i] = ($impression[$i] !== 0? 
-                                    round(100*$clicks[$i]/$impression[$i],3) 
-                                    : 0); // if True, choose front statement
-        }
-
-        $date = array_values(array_filter($date,"self::remove_zero"));
-        $x_axis = array_values(array_filter($x_axis,"self::remove_zero"));
-        $profit = array_values(array_filter($profit,"self::remove_zero"));
-        $impression = array_values(array_filter($impression,"self::remove_zero"));
-        $clip_click = array_values(array_filter($clip_click,"self::remove_zero"));
-        $direct_click = array_values(array_filter($direct_click,"self::remove_zero"));
-        $clicks = array_values(array_filter($clicks,"self::remove_zero"));
-        $click_rate = array_values(array_filter($click_rate,"self::remove_zero"));
-
-        // $x_axis = array_slice($x_axis,0,count($click_rate));
-        // $direct_click = array_slice($direct_click,0,count($click_rate));
-        // 
-
-        $chart_data = array('date'=>$date, 'x_axis'=>$x_axis, 'profit'=>$profit, 'impression'=>$impression, 
-        'direct_click'=>$direct_click, 'clip_click'=>$clip_click, 'clicks'=>$clicks,
-        'click_rate'=>$click_rate);
-
-        // dd($chart_data);
-
-        return $chart_data;
-
-    }
-
-
-    // Make data from SQL query structurize
-    public static function click_rate_to_str($daily_data) 
-    {
-        for ($i=0; $i < count($daily_data['date']); $i++) 
-        {
-            $daily_data['click_rate'][$i] = number_format(round($daily_data['click_rate'][$i], 3), 3)."%";
-        }
-
-        return $daily_data;
-    }
 
     // custom-made paginator
     public static function paginator($data, $page, $n_option, $n_data)
     {
-        // $n_data = (int)count($data);
         $page = (int)$page;
-        // dd($data);
-        
-        if ($n_option == 'All' || $n_option == '選擇')
-        {
-            $n_option = $n_data;
-        }
-        else
-        {
-            $n_option = (int)$n_option;
-        }
+        // in All and default case, show all data, otherwise show number of option
+        $n_option = ($n_option == 'All' || $n_option == '選擇'? (int)$n_data : (int)$n_option);   
 
+        // get data index to be transmitted
         $n_page = (int)ceil($n_data/$n_option); // total pages
-
         $index_range = range(($page-1)*$n_option, min($page*$n_option-1, $n_data-1));
-        
         $keys_page = array_combine($index_range, $index_range);// build an array with keys are indexes to be paginate
         
         // $data_page = array_values(array_intersect_key($data, $keys_page)); // get paginated data from index_range, only get value (with bug if not using array_values, keys missing at page1)
         
-        // remove keys
+        // choose data in clicked page and remove keys
         $date = array_values(array_intersect_key($data['date'], $keys_page));
         $profit = array_values(array_intersect_key($data['profit'], $keys_page));
         $impression = array_values(array_intersect_key($data['impression'], $keys_page));
         $clicks = array_values(array_intersect_key($data['clicks'], $keys_page));
         $click_rate = array_values(array_intersect_key($data['click_rate'], $keys_page));
+        // build array
         $data_page = array('date'=>$date, 'profit'=>$profit, 'impression'=>$impression, 
                             'clicks'=>$clicks, 'click_rate'=> $click_rate);
 

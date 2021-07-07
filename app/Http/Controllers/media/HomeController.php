@@ -13,7 +13,6 @@ class HomeController extends Controller
 {
     public function home() 
     {
-
         return view('media/home');
     }
 
@@ -30,7 +29,6 @@ class HomeController extends Controller
         // array_merge($total_data, $year_smallest);
         // dd($year_smallest);
         
-
         // $total_data->year_smallest = ['year'=>2000];
         // dd($total_data);
         // $total_data->year_search = strval($year);

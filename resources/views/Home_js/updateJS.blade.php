@@ -30,6 +30,12 @@
       var year = get_text("year_picker");
       var month = clicked_value;
     }
+    else // choose '近七日', hidden year and month picker
+    {
+        show_date_manu(clicked_id, 'xxx')
+    }
+
+
 
     $.ajax({
         type: 'get',
@@ -57,10 +63,14 @@
             {
                 update_text("year_picker", year+"年");
             }
-            else
+            else if (clicked_id == 'month')
             {
                 update_text("month_picker", month+"月");
             }
+            // else
+            // {
+
+            // }
             
         }
     });
@@ -98,33 +108,47 @@
             // },
             success: function(chart_total_data_json)
             {                
-                show_div(id) // display that div(year, month or week) first
                 
                 $(document).ready(function(){
                     var myHTML = '';
                     if (select_mode == 'year')
-                    {              
-                    // for selecting year
-                    var total_data = JSON.parse(chart_total_data_json)[1]
-                    var year_now = new Date().getFullYear();
-                    var year_smallest = total_data['year_smallest']
-                    // console.log(year_smallest)
+                    {          
+                        show_div(id) // display that div(year, month or week) first
+        
+                        // for selecting year
+                        var total_data = JSON.parse(chart_total_data_json)[1]
+                        var year_now = new Date().getFullYear();
+                        var year_smallest = total_data['year_smallest']
+                        // console.log(year_smallest)
 
-                    // var total_data = JSON.parse(chart_total_data_json)[1]
-                    // var year_now = new Date().getFullYear();
-                    // var year_smallest = total_data['year_smallest']
-                    for (var i = 0; i < year_now-year_smallest+1; i++) {
-                        myHTML += '<li id="year" value='+(year_now-i)+' onClick="return_data_select(this.id, this.value)"><a id="drop_item" class="dropdown-item">' + (year_now-i) + '</a></li>';
-                    }
-                    $("#year_li").html(myHTML);
+                        // var total_data = JSON.parse(chart_total_data_json)[1]
+                        // var year_now = new Date().getFullYear();
+                        // var year_smallest = total_data['year_smallest']
+                        for (var i = 0; i < year_now-year_smallest+1; i++) 
+                        {
+                            myHTML += '<li id="year" value='+(year_now-i)+' onClick="return_data_select(this.id, this.value)"><a id="drop_item" class="dropdown-item">' + (year_now-i) + '</a></li>';
+                        }
+                        $("#year_li").html(myHTML);
                     }
                     else if (select_mode == 'month')
                     {
-                    // for selecting month
-                    for (var i = 1; i < 13; i++) {
-                        myHTML += '<li id="month" value='+(i)+' onClick="return_data_select(this.id, this.value)"><a id="drop_item" class="dropdown-item">' + (i) + '月</a></li>';
+                        show_div(id) // display that div(year, month or week) first
+
+                        // for selecting month
+                        for (var i = 1; i < 13; i++) 
+                        {
+                            myHTML += '<li id="month" value='+(i)+' onClick="return_data_select(this.id, this.value)"><a id="drop_item" class="dropdown-item">' + (i) + '月</a></li>';
+                        }
+                        $("#month_li").html(myHTML);
                     }
-                    $("#month_li").html(myHTML);
+
+                    else
+                    {
+                        const year = document.getElementById('div_filter_year');
+                        const month = document.getElementById('div_filter_month');
+                        year.style.display = "none";
+                        month.style.display = "none";
+
                     }
 
                     // else
