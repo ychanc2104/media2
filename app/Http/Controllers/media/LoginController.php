@@ -27,7 +27,6 @@ class LoginController extends Controller
         $account = $inputData->input('email');
         $password = $inputData->input('password');
 
-
         $query = "SELECT src_web_id, password, salt FROM `media_account` WHERE account='$account'";
         $media_account = DB::connection('account')->select($query)[0];
         $salt = $media_account->salt;

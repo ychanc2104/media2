@@ -21,16 +21,20 @@
 		}, 
         success: function(chart_total_data_json)
         {
+            
             var chart_total_data = JSON.parse(chart_total_data_json);
-            var chart_data = chart_total_data[0];
-            var total_data = chart_total_data[1];
+            var chart_data = JSON.parse(chart_total_data_json)[0];
+            var total_data = JSON.parse(chart_total_data_json)[1];
+
+
             // four statistical values
             change_4div_value(total_data);
 
             // four Google Charts
             draw_four_charts(chart_data);
+        }
 
-        },
+
     });
 
 </script>

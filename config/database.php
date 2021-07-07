@@ -38,7 +38,7 @@ return [
 
 
     'connections' => [
-        'media' => [
+        'crescent_media' => [
             'driver'    => 'mysql',
             // 'host'      => '172.16.32.13', // settings for running server
             'host'      => '104.199.175.43',
@@ -51,7 +51,7 @@ return [
             'port'      => '3306',
         ],
 
-        'ad_host' => [
+        'crescent_ad_host' => [
             'driver'    => 'mysql',
             // 'host'      => 'localhost', // settings for running server
             'host'      => '104.199.175.43',

@@ -40,7 +40,7 @@
           select_mode: clicked_id,
           year: year,
           month: month,
-		    },
+		},
         success: function(chart_total_data_json)
         {
             var chart_total_data = JSON.parse(chart_total_data_json);
@@ -90,43 +90,54 @@
             type: 'get',
             url: '/home/get_chart_total_data',
             dateType: 'json',
+            // data: 
+            // {
+            // select_mode: select_mode,
+            // year: year,
+            // month: month,
+            // },
             success: function(chart_total_data_json)
-            {
-            show_div(id) // display that div(year, month or week) first
-            
-            $(document).ready(function(){
-                var myHTML = '';
-                if (select_mode == 'year')
-                {              
-                // for selecting year
-                var total_data = JSON.parse(chart_total_data_json)[1]
-                var year_now = new Date().getFullYear();
-                var year_smallest = total_data['year_smallest']
-                for (var i = 0; i < year_now-year_smallest+1; i++) {
-                    myHTML += '<li id="year" value='+(year_now-i)+' onClick="return_data_select(this.id, this.value)"><a id="drop_item" class="dropdown-item">' + (year_now-i) + '</a></li>';
-                }
-                $("#year_li").html(myHTML);
-                }
-                else if (select_mode == 'month')
-                {
-                // for selecting month
-                for (var i = 1; i < 13; i++) {
-                    myHTML += '<li id="month" value='+(i)+' onClick="return_data_select(this.id, this.value)"><a id="drop_item" class="dropdown-item">' + (i) + '月</a></li>';
-                }
-                $("#month_li").html(myHTML);
-                }
+            {                
+                show_div(id) // display that div(year, month or week) first
+                
+                $(document).ready(function(){
+                    var myHTML = '';
+                    if (select_mode == 'year')
+                    {              
+                    // for selecting year
+                    var total_data = JSON.parse(chart_total_data_json)[1]
+                    var year_now = new Date().getFullYear();
+                    var year_smallest = total_data['year_smallest']
+                    // console.log(year_smallest)
 
-                // else
-                // {
-                //   // for selecting year
-                //   var total_data = JSON.parse(total_data_json)
-                //   var year_now = new Date().getFullYear();
-                //   var year_smallest = total_data['year_smallest']
-                //   for (var i = 0; i < year_now-year_smallest+1; i++) {
-                //     myHTML += '<li id="year" value='+(year_now-i)+' onClick="return_data_select(this.id, this.value)"><a id="drop_item" class="dropdown-item">' + (year_now-i) + '</a></li>';
-                //   }
-                //   $("#year_li").html(myHTML);
-                // }
+                    // var total_data = JSON.parse(chart_total_data_json)[1]
+                    // var year_now = new Date().getFullYear();
+                    // var year_smallest = total_data['year_smallest']
+                    for (var i = 0; i < year_now-year_smallest+1; i++) {
+                        myHTML += '<li id="year" value='+(year_now-i)+' onClick="return_data_select(this.id, this.value)"><a id="drop_item" class="dropdown-item">' + (year_now-i) + '</a></li>';
+                    }
+                    $("#year_li").html(myHTML);
+                    }
+                    else if (select_mode == 'month')
+                    {
+                    // for selecting month
+                    for (var i = 1; i < 13; i++) {
+                        myHTML += '<li id="month" value='+(i)+' onClick="return_data_select(this.id, this.value)"><a id="drop_item" class="dropdown-item">' + (i) + '月</a></li>';
+                    }
+                    $("#month_li").html(myHTML);
+                    }
+
+                    // else
+                    // {
+                    //   // for selecting year
+                    //   var total_data = JSON.parse(total_data_json)
+                    //   var year_now = new Date().getFullYear();
+                    //   var year_smallest = total_data['year_smallest']
+                    //   for (var i = 0; i < year_now-year_smallest+1; i++) {
+                    //     myHTML += '<li id="year" value='+(year_now-i)+' onClick="return_data_select(this.id, this.value)"><a id="drop_item" class="dropdown-item">' + (year_now-i) + '</a></li>';
+                    //   }
+                    //   $("#year_li").html(myHTML);
+                    // }
 
             });
             },

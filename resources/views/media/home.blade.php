@@ -46,7 +46,7 @@ Home test
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <li id='year' onclick="show_date_manu(this.id, 'div_filter_year')"><a id="drop_item" class="dropdown-item">年份</a></li>
             <li id='month' onclick="show_date_manu(this.id, 'div_filter_month')"><a id="drop_item" class="dropdown-item">月份</a></li>
-            <li onclick="show_div('div_filter_week')"><a id="drop_item" class="dropdown-item" style="cursor: pointer;">任意區間</a></li>
+            <li id='default' onclick="return_data_select(this.id, 1)"><a id="drop_item" class="dropdown-item" style="cursor: pointer;">近七日</a></li>
           </ul>
         </div>
       </div>
@@ -74,7 +74,7 @@ Home test
             </ul>
           </div>
       </div>
-      <!-- week -->
+      <!-- week
       <div id="div_filter_week" class="col" style="display: none;">
         <div class="btn-group">
           <span class="date_range" class="pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -84,7 +84,8 @@ Home test
           <ul id="filter_week" class="dropdown-menu" style="height:200px;overflow:auto;"></ul>
         </div>
         <div id="creat_table_div"></div>
-      </div>
+      </div> -->
+
     </div>
   </div>
 

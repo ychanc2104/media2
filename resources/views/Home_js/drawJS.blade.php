@@ -23,13 +23,19 @@
 
         var data = new google.visualization.DataTable();
         var x_axis = chart_data['x_axis'];
+
+
+        
         data.addColumn('string', 'Day or Month');
         keys.forEach(function(item, i) {
             data.addColumn('number', col_name[i])
+            // data.addColumn(typeof chart_data[item][0], col_name[i])
+
         });
 
-        for (let i = 0; i < x_axis.length; i++) 
+        for (let i = 0; i < x_axis.length; i++)
         {
+            // console.log(x_axis)
             if (keys.length == 3)
             {
                 data.addRow([String(x_axis[i]), chart_data[keys[0]][i], chart_data[keys[1]][i], chart_data[keys[2]][i]]);
@@ -44,6 +50,7 @@
             }
 
         } 
+
         
         // set figure style
         var options = {
