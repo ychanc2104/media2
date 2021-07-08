@@ -38,6 +38,33 @@ return [
 
 
     'connections' => [
+
+        'ad_record' => [
+            'driver'    => 'mysql',
+            // 'host'      => '172.16.32.13', // settings for running server
+            'host'      => '34.80.211.104',
+            'database'  => 'ad_record',
+            'username'  => 'hodo_user',
+            'password'  => 'hodomobile*777',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'port'      => '3306',
+        ],
+
+        'crescent_hodo' => [
+            'driver'    => 'mysql',
+            // 'host'      => '172.16.32.13', // settings for running server
+            'host'      => '104.199.175.43',
+            'database'  => 'crescent_hodo',
+            'username'  => 'hodo_user',
+            'password'  => 'hodomobile*777',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'port'      => '3306',
+        ],
+
         'crescent_media' => [
             'driver'    => 'mysql',
             // 'host'      => '172.16.32.13', // settings for running server
