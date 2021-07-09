@@ -10,7 +10,9 @@
 <meta property="og:url" itemprop="url" content="https://www.chinatimes.com/realtimenews/20210611002493-260410?chdtv">
 <!-- <meta property="og:title" itemprop="name" content="1、2字頭占優勢 八德房市交易熱 磁吸北客比價移居 - 財經"> -->
 <!-- <meta property="og:title" itemprop="name" content="央行數位貨幣 陳冲：不能坐等看迦納車尾燈 - 財經"> -->
-<meta property="og:title" itemprop="name" content="3星座女天生是賺錢專家 富貴在天不愁吃穿 - 星座">
+<!-- <meta property="og:title" itemprop="name" content="3星座女天生是賺錢專家 富貴在天不愁吃穿 - 星座"> -->
+<meta property="og:title" itemprop="name" content="PLG》共同抗疫！攻城獅捐10％球衣收入給醫護人員 - 籃球">
+
 
 <meta property="og:image" itemprop="image" content="https://images.chinatimes.com/newsphoto/2021-06-11/1024/20210611002496.jpg">
 <meta property="og:image:width" content="1024">
@@ -68,30 +70,41 @@
 <link rel="stylesheet" href="https://static.chinatimes.com/css-main/2020/stock-info-prompt2020.css">
 
 
-<style type="text/css" media = "screen">
-        .page-link{
-        cursor: pointer;
-        }
+<style type="text/css">
 
-		
-		#keyword
-		{
-			color: #00008B;
-			text-align: center;
-			font-weight: 500;
-			font-size: 18px;
-
-			background-color: #F0FFFF;
-			border-radius:20px;
-			width:fit-content;
-			min-width: 5em;
-			margin: auto;
-			cursor: pointer; 
-			display: inline-block;
-			margin: 0 0 0 0px;
+    .page-link{
+    cursor: pointer;
+    }
 
 
-		}
+    .avivid_ad{
+        display: inline-block;
+        border-radius: 20px;
+        cursor: pointer; 
+        margin: 0 0 0 0px;
+        box-shadow: 0px 3px 6px 0px #D3D3D3;
+        padding: 5px 5px 5px 5px;
+        margin: 5px 5px 5px 5px;
+
+    }
+    .avivid_keyword
+    {
+        color: #A1A1A1;
+        font-weight: 500;
+        font-size: 20px;
+        text-align: center;
+        padding: 5px 5px 5px 0px;
+    }        
+
+    .avivid_PR{
+        color: #A1A1A1;
+        min-width: calc(100% - 60px);
+        font-weight: 350;
+        font-size: 14px;
+        margin-top: 8px;
+        text-align: left;
+    }
+
 </style>
 
 
@@ -119,16 +132,23 @@
 
 				const kw_block = 
 				`
-				<div class="keyword_class" id="keyword" onclick="redirect_url('`+url+`')"># `+keyword+`</div>
+                <span class="avivid_ad">                
+				<span class="avivid_keyword" id="keyword" onclick="redirect_url('`+url+`')">`+keyword+`</span>
+                <span class="avivid_PR">PR</span>
+                </span>
 				`;
+
                 // insert our div below #keyword
 				$(kw_block).insertAfter(".article-hash-tag");
+
+
 
                 // use for append <span> alongside with #keyword
                 let node_tag = document.createElement("span");
                 node_tag.classList.add("hash-tag");
                 let node_tag_label = document.createElement("span");
                 node_tag_label.classList.add("hash-tag-label");
+
                 let textnode_hash = document.createTextNode("#");
 
                 let node_a = document.createElement("a");
@@ -176,6 +196,7 @@
 	$(document).ready(function(){
 		render_ad_keyword();
 	});
+    
 </script>
 
 

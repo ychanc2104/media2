@@ -4,14 +4,10 @@
 
 @section('cdn_css')
 @include('cdn_js_css.home_css')
-
-
 @stop
 
 @section('cdn_js')
 @include('cdn_js_css.home_js')
-
-
 @stop
 
 @section('title')
@@ -27,9 +23,9 @@ Overview
 <div>
 
   <!-- take session -->
-  @if(session()->has('web_id'))
+  <!-- @if(session()->has('web_id'))
   <p>Login Success</p>
-  @endif
+  @endif -->
 
 
 	<!-- <div> -->
@@ -81,7 +77,7 @@ Overview
 	<!-- </div> -->
 
   <!-- <div style="height: 80vh; background-color: #2F4F4F ;"> -->
-  <div style="height: 110vh; width: 80vw; background-color: white;">
+  <div style="height: 80vh; width: 80vw; background-color: white;">
 
 	  <div class="row" style="margin: 0 0vw 0 0;">
       <!-- likr title -->

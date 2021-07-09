@@ -22,18 +22,9 @@ use App\Http\Controllers\AdKey\AdKeyController;
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/post-login', [LoginController::class, 'postLogin'])->name('login.post');
+Route::get('/clear/session', [LoginController::class, 'clearSessionKey'])->name('clear.session.key');
 
 
-// Route::get('/login/account', [LoginController::class, 'get_account']);
-
-
-// Route::get('/pg1', function () {
-//     return view('pg1');
-// });
-
-// Route::get('/2', function () {
-//     return view('welcome2');
-// });
 
 Route::get('/home', [HomeController::class, 'home'])
     ->middleware(['login.required']);
@@ -51,3 +42,13 @@ Route::get('/ad_demo', [AdKeyController::class, 'index']);
 Route::get('/render_url', [AdKeyController::class, 'render_ad_url']);
 
 
+// Route::get('/login/account', [LoginController::class, 'get_account']);
+
+
+// Route::get('/pg1', function () {
+//     return view('pg1');
+// });
+
+// Route::get('/2', function () {
+//     return view('welcome2');
+// });

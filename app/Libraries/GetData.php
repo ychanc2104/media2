@@ -3,14 +3,16 @@
 namespace App\Libraries;
 
 use Illuminate\Support\Facades\DB;
+use Session;
 
 
 class GetData
 {    
     // for daily report
     public static function get_daily_data($y_start, $y_end, $m_start, $m_end) 
-    {
-        $web_id = 'upmedia';
+    {   
+        // get web_id from previous login cookie
+        $web_id = Session::get('web_id');
         $date_start_str = $y_start."-".$m_start."-"."1";
         $date_end_str = $y_end."-".$m_end."-"."1";
 
@@ -43,7 +45,9 @@ class GetData
     // for four Google Charts
     public static function get_chart_data($select_mode, $year, $month) 
     {
-        $web_id = 'upmedia';
+        // $web_id = 'upmedia';
+        $web_id = Session::get('web_id');
+
         // $select_mode=1.'default', 2.'year', 3.'month'
         if ($select_mode == "year")
         {
@@ -108,91 +112,11 @@ class GetData
         
     }
 
-    // Make data from SQL query more structurized
-    public static function compute_chart_data($select_mode, $media_data) 
-    {
-        // in year case, use 'm'(month) to be index, and others use 'd'(day)
-        $symbol =($select_mode == 'year'? 'm' : 'd');
-        // max index
-        $x_lim = 13*31; 
-        // number of days in that month
-        $n_day_of_month = (int)date("t", strtotime($media_data[0]->date_time));
-        // initialize array, max range to be store
-        $date = array_fill(0,$x_lim, 0);
-        $x_axis = array_fill(0,$x_lim, 0);
-        $profit = $impression = $clip_click = array_fill(0,$x_lim, 0);
-        $direct_click = $clicks = $click_rate = array_fill(0,$x_lim, 0);
-        // collect data
-        foreach ($media_data as $data)
-        {
-            // choose index to be added according to its month or day.
-            $day = (int)date('d', strtotime($data->date_time));
-            $month = (int)date('m', strtotime($data->date_time));
-            if ($select_mode == 'year') // in year case, month is the index
-            {
-                $index = $month;
-            }
-            else // in month or 7-days case, (month*n_day_of_month + day) is the index
-            {
-                $index = $month*$n_day_of_month + $day;
-            }
-
-            // add to that key(index) to collect data with same date
-            $date[$index] = $data->date_time;
-            $x_axis[$index] = (int)date($symbol, strtotime($data->date_time));
-            $profit[$index] += (int)$data->profit; // all tables with attr. "profit"
-            $impression[$index] += (isset($data->impression)? (int)$data->impression : 0); // add 0 if attr not existing
-            $clip_click[$index] += (isset($data->clip_click)? (int)$data->clip_click : 0); // add 0 if attr not existing
-            $direct_click[$index] += (isset($data->direct_click)? (int)$data->direct_click : 0); // add 0 if attr not existing
-            $clicks[$index] += (isset($data->clicks)? (int)$data->clicks : 0); // add 0 if attr not existing
-
-        }
-        // bug here, to be refined, remove 0
-        for ($i=0; $i < count($impression); $i++)
-        {
-            $click_rate[$i] = ($impression[$i] !== 0? 
-                                    round(100*$clicks[$i]/$impression[$i],3) 
-                                    : 0); // if True, choose front statement
-        }
-
-        $date = array_values(array_filter($date,"self::remove_zero"));
-        $x_axis = array_values(array_filter($x_axis,"self::remove_zero"));
-        $profit = array_values(array_filter($profit,"self::remove_zero"));
-        $impression = array_values(array_filter($impression,"self::remove_zero"));
-        $clip_click = array_values(array_filter($clip_click,"self::remove_zero"));
-        $direct_click = array_values(array_filter($direct_click,"self::remove_zero"));
-        $clicks = array_values(array_filter($clicks,"self::remove_zero"));
-        $click_rate = array_values(array_filter($click_rate,"self::remove_zero"));
-
-        // $x_axis = array_slice($x_axis,0,count($click_rate));
-        // $direct_click = array_slice($direct_click,0,count($click_rate));
-        // 
-
-        // build array to be transmitted
-        $chart_data = array('date'=>$date, 'x_axis'=>$x_axis, 'profit'=>$profit, 'impression'=>$impression, 
-        'direct_click'=>$direct_click, 'clip_click'=>$clip_click, 'clicks'=>$clicks,
-        'click_rate'=>$click_rate);
-
-        return $chart_data;
-
-    }
-
-
-    // Make click_rate in data to be string type with 3 digits
-    public static function click_rate_to_str($daily_data) 
-    {
-        for ($i=0; $i < count($daily_data['date']); $i++) 
-        {
-            $daily_data['click_rate'][$i] = number_format(round($daily_data['click_rate'][$i], 3), 3)."%";
-        }
-        return $daily_data;
-    }
-
-
     // for four statistical values
     public static function get_total_data($select_mode, $year, $month) 
     {
-        $web_id = 'upmedia';
+        // $web_id = 'upmedia';
+        $web_id = Session::get('web_id');
 
         // $select_mode=1.'default', 2.'year', 3.'month'
         if ($select_mode == "year")
@@ -278,6 +202,90 @@ class GetData
 
         return $total_data;
     }
+
+
+
+    // Make data from SQL query more structurized
+    public static function compute_chart_data($select_mode, $media_data) 
+    {
+        // in year case, use 'm'(month) to be index, and others use 'd'(day)
+        $symbol =($select_mode == 'year'? 'm' : 'd');
+        // max index
+        $x_lim = 13*31; 
+        // number of days in that month
+        $n_day_of_month = (int)date("t", strtotime($media_data[0]->date_time));
+        // initialize array, max range to be store
+        $date = array_fill(0,$x_lim, 0);
+        $x_axis = array_fill(0,$x_lim, 0);
+        $profit = $impression = $clip_click = array_fill(0,$x_lim, 0);
+        $direct_click = $clicks = $click_rate = array_fill(0,$x_lim, 0);
+        // collect data
+        foreach ($media_data as $data)
+        {
+            // choose index to be added according to its month or day.
+            $day = (int)date('d', strtotime($data->date_time));
+            $month = (int)date('m', strtotime($data->date_time));
+            if ($select_mode == 'year') // in year case, month is the index
+            {
+                $index = $month;
+            }
+            else // in month or 7-days case, (month*n_day_of_month + day) is the index
+            {
+                $index = $month*$n_day_of_month + $day;
+            }
+
+            // add to that key(index) to collect data with same date
+            $date[$index] = $data->date_time;
+            $x_axis[$index] = (int)date($symbol, strtotime($data->date_time));
+            $profit[$index] += (int)$data->profit; // all tables with attr. "profit"
+            $impression[$index] += (isset($data->impression)? (int)$data->impression : 0); // add 0 if attr not existing
+            $clip_click[$index] += (isset($data->clip_click)? (int)$data->clip_click : 0); // add 0 if attr not existing
+            $direct_click[$index] += (isset($data->direct_click)? (int)$data->direct_click : 0); // add 0 if attr not existing
+            $clicks[$index] += (isset($data->clicks)? (int)$data->clicks : 0); // add 0 if attr not existing
+
+        }
+        // bug here, to be refined, remove 0
+        for ($i=0; $i < count($impression); $i++)
+        {
+            $click_rate[$i] = ($impression[$i] !== 0? 
+                                    round(100*$clicks[$i]/$impression[$i],3) 
+                                    : 0); // if True, choose front statement
+        }
+
+        $date = array_values(array_filter($date,"self::remove_zero"));
+        $x_axis = array_values(array_filter($x_axis,"self::remove_zero"));
+        $profit = array_values(array_filter($profit,"self::remove_zero"));
+        $impression = array_values(array_filter($impression,"self::remove_zero"));
+        $clip_click = array_values(array_filter($clip_click,"self::remove_zero"));
+        $direct_click = array_values(array_filter($direct_click,"self::remove_zero"));
+        $clicks = array_values(array_filter($clicks,"self::remove_zero"));
+        $click_rate = array_values(array_filter($click_rate,"self::remove_zero"));
+
+        // $x_axis = array_slice($x_axis,0,count($click_rate));
+        // $direct_click = array_slice($direct_click,0,count($click_rate));
+        // 
+
+        // build array to be transmitted
+        $chart_data = array('date'=>$date, 'x_axis'=>$x_axis, 'profit'=>$profit, 'impression'=>$impression, 
+        'direct_click'=>$direct_click, 'clip_click'=>$clip_click, 'clicks'=>$clicks,
+        'click_rate'=>$click_rate);
+
+        return $chart_data;
+
+    }
+
+
+    // Make click_rate in data to be string type with 3 digits
+    public static function click_rate_to_str($daily_data) 
+    {
+        for ($i=0; $i < count($daily_data['date']); $i++) 
+        {
+            $daily_data['click_rate'][$i] = number_format(round($daily_data['click_rate'][$i], 3), 3)."%";
+        }
+        return $daily_data;
+    }
+
+
 
 
 

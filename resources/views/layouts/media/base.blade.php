@@ -44,6 +44,38 @@
 
 <body style="background-color: #CDD6D5;">
 
+
+    <div class="container profile">
+        <div class="row">
+                
+            <div class="col-6 account">
+            @if(session()->has('web_id'))
+            {{ Session::get('web_id') }}
+            @endif
+            <!-- Username -->
+            </div>
+
+            <div class="col-4 dropdown">
+                <img class="btn btn-secondary dropdown-toggle profile_logo" type="button" id="profileButton" data-bs-toggle="dropdown" aria-expanded="false" src='img/master/b2c-pic.png'>
+
+                <ul class="dropdown-menu" style="top: 10px; left: -45px;" aria-labelledby="profileButton">
+                    <li> <a class="dropdown-item" href="#">會員資料修改</a></li>
+                    <li> <a class="dropdown-item" href="#">修改密碼</a></li>
+                    <!-- <hr style="margin:auto;"> -->
+                    <li> <a onclick="logout()" class="dropdown-item" style="cursor: pointer;">登出</a></li>
+                </ul>
+            </div>
+            
+            <div class="col-1 language">
+                <img src="country/TW.imageset/TW@2x.png" style="width:20px; height: 17px;">
+            </div>
+        </div>
+            
+
+    </div>
+
+
+
     
 
     <div class="sidebar_base">
@@ -69,7 +101,7 @@
                     廣告伺服器 <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="collapse" id="adserver_button">
-                    <a class="dropdown-item-text" href="adsetting">廣告上稿設定</a>
+                    <a class="dropdown-item-text" href="/create_ad">廣告上稿設定</a>
                     <a class="dropdown-item-text" href="admiddle" class="dropdown_list">廣告執行中</a>
                     <a class="dropdown-item-text" href="ad1" class="dropdown_list">廣告待執行</a>
                     <a class="dropdown-item-text" href="ad2" class="dropdown_list">廣告已執行</a>
@@ -102,7 +134,7 @@
 
 
 
-<script>
+<!-- <script type="text/javascript">
     $(function() {
 
         
@@ -133,59 +165,43 @@
             });
 
     });
-    </script>
+    </script> -->
 
 
 
-    <script>
-    /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
-    var dropdown = document.getElementsByClassName("sidebar_words");
-    var i;
 
-    for (i = 0; i < dropdown.length; i++) {
-    dropdown[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var dropdownContent = this.nextElementSibling;
-    if (dropdownContent.style.display === "block") {
-    dropdownContent.style.display = "none";
-    } else {
-    dropdownContent.style.display = "block";
+
+ <script type="text/javascript">
+
+    function logout()
+    {
+        console.log('xxxxx')
+        $.ajax({
+            type: "GET",
+            url: "/clear/session",
+            dataType: "json",
+            data: 
+            {
+                key: "web_id",
+            },
+            success: function()
+            {
+                window.location.replace('/login');
+            },
+            error: function() {
+                window.location.replace('/login');    
+
+            },
+                    
+        });
+
     }
-    });
-    }
+
+    // $(document).ready(function () {
+
     
-    </script>
-    <script>
-    $(document).ready(function () {
-  $('#increment').click(function(){
-      var width = $("#email1");
-      var input;
-      var input = $("<input>").attr("type","text").attr("name","email[]");
-      var br = $("<br>");
-      width.append(br);
-      width.append(input);
-    });
-    });
+    // });
 </script>
 
-<script>
-    var myApp = new function () {
-this.printData = function ()
-{
-   var divToPrint=document.getElementById("table");
-   var style = "<style>";
-                style = style + "table {width: 100%;font: 17px Calibri;}";
-                style = style + "table, th, td {border: solid 1px #DDD; border-collapse: collapse;";
-                style = style + "padding: 2px 3px;text-align: center;}";
-                style = style + "</style>";
 
-    var win = window.open('', '', 'height=800,width=700');
-    win.document.write(style);  
-   win.document.write(divToPrint.outerHTML);
-   win.print();
-   win.close();
-}}
-
-
-</script>
 
