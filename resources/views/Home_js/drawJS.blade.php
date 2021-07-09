@@ -54,8 +54,8 @@
         
         // set figure style
         var options = {            
-            height:500,
-            width:1250,
+            height: 500,
+            width: 1250,
             bar: { groupWidth: "40%" }, 
  
         }
