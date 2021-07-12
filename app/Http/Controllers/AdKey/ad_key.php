@@ -1,59 +1,47 @@
 <?php
 
-namespace App\Http\Controllers\AdKey;
+include '/home/user/Desktop/media2/app/Http/Controllers/AdKey/DBHelper.php';
+    // include '/var/www/html/likr_library/Helper.php';
+    // include '/var/www/html/likr_library/DBHelper.php';
 
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
-
-
-class AdKeyController extends Controller
-{
-    public function index(){
-
-        return view('ad_demo');
-    }
+    // lacking default ad
+    echo render_ad_url();
 
 
-
-    public static function render_ad_url(Request $inputData)
+    function render_ad_url()
     {
-
         //// input parameters
         //// media should input two parameters
-        $title = $inputData->input('title');
-        $web_id = $inputData->input('web_id');
 
-        // $title = $_GET('title');
-        // $web_id = $_GET('web_id');
-        // dd($title);
+        $title = $_GET['title'];
+        $web_id = $_GET['web_id'];
 
         // $uuid = $inputData->input('uuid');
 
         $query = "SELECT meta_title, web_id, keyword_ad FROM NewsTitleKeyword WHERE meta_title='$title'";
 
         // choose index 0, one title map to one keyword_ad
-        $keyword_data = DB::connection('ad_record')->select($query)[0];
+        $ad_record = DBHelper::connection('ad_record');
+        $keyword_data = DBHelper::select($ad_record, $query)[0];
 
-        $ad_id = explode('_', $keyword_data->keyword_ad)[0]; //get id(banner_id without _n) of ad
-        $keyword = explode('_', $keyword_data->keyword_ad)[1]; // keyword
-        $web_id_backup = $keyword_data->web_id;
-        // $ad_id = 'adhub20191031524906';
+        $ad_id = explode('_', $keyword_data['keyword_ad'])[0]; //get id(banner_id without _n) of ad
+        $keyword = explode('_', $keyword_data['keyword_ad'])[1]; // keyword
+        $web_id_backup = $keyword_data['web_id'];
         
         $query = "SELECT id, url FROM banner_data WHERE list_id='$ad_id' AND banner_status=1";
 
         // maybe get many urls, random choose one to put
-        $id_url_data = DB::connection('crescent_hodo')->select($query);
+        $crescent_hodo = DBHelper::connection('crescent_hodo');
+        $id_url_data = DBHelper::select($crescent_hodo, $query);
         $index_to_pick = (int)rand(0,count($id_url_data)-1);
 
-        $url = $id_url_data[$index_to_pick]->url;
-        $pre_banner_id = $id_url_data[$index_to_pick]->id;
+        $url = $id_url_data[$index_to_pick]['url'];
+        $pre_banner_id = $id_url_data[$index_to_pick]['id'];
         //// count click (計算點擊)
         //// collect data /usr/share/nginx/html/pushServer/redirect/redirect_click.php need
         //// 10 slots in total, avivid_data = [push_type, web_id, category_id, user_id, url, banner_id, time_stamp, action, is_clip, cust_push_id]
         $push_type = 1; // cluster_news_page
-        $web_id = ($inputData->input('web_id')!==null? $inputData->input('web_id') : $web_id_backup); // input by media
+        $web_id = ($_GET['web_id']!==null? $_GET['web_id'] : $web_id_backup); // input by media
         $category_id = 0;
         $user_id = 0;
         $url = urlencode($url);
@@ -67,49 +55,44 @@ class AdKeyController extends Controller
                         .(string)$is_clip.','.$cust_push_id;
         // input parameter for redirect_click.php API
         $avivid_code = base64_encode((string)$avivid_data);
-        // dd($banner_id);
         $render_url = 'https://clk-satellite.advividnetwork.com/pushServer/redirect/redirect_click.php?avivid_code='.$avivid_code;
 
         //// count impression (計算露出)
-        $uuid = self::create_uuid(); // generate uuid
-        $os_browser_array = self::get_os_browser_type();
+        $uuid = create_uuid(); // generate uuid
+        $os_browser_array = get_os_browser_type();
         $os_type = $os_browser_array[0];
         $browser_type = $os_browser_array[1];
-        $client_ip = self::get_client_ip();
+        $client_ip = get_client_ip();
         $log_date = date('Y-m-d');
         $log_hour = date('H');
         $add_time = date('Y-m-d H:i:s');
 
-        // dd($browser_type);
-        // dd(preg_match('/linux/i', $user_agent));
-        // dd($_SERVER['HTTP_USER_AGENT']);
-        // $query_impression = "INSERT INTO impression_log
-        //                      SET banner_id = '$banner_id',
-        //                          push_type = '$push_type',
-        //                          os_type   = '$os_type',
-        //                          web_id = '$web_id',
-        //                          uuid = '$uuid',
-        //                          ip        = '$client_ip',
-        //                          is_clip   = '$is_clip',
-        //                          url       = '_',
-        //                          browser   = '$browser_type',
-        //                          log_date = '$log_date',
-        //                          log_hour = '$log_hour',
-        //                          add_time = '$add_time',
-        //                     ";
+
+        $query_impression = "INSERT INTO impression_log
+                             SET banner_id = '$banner_id',
+                                 push_type = '$push_type',
+                                 os_type   = '$os_type',
+                                 web_id = '$web_id',
+                                 uuid = '$uuid',
+                                 ip        = '$client_ip',
+                                 is_clip   = '$is_clip',
+                                 url       = '_',
+                                 browser   = '$browser_type',
+                                 log_date = '$log_date',
+                                 log_hour = '$log_hour',
+                                 add_time = '$add_time',
+                            ";
         // $SQL_connect = DBHelper::connect('');
-        // DBHelper::insert($SQL_connect, $query);
+        // DBHelper::insert($SQL_connect, $query_impression);
         
 
         return json_encode([$render_url, $keyword]);
-
     }
 
 
 
 
-
-    public static function create_uuid($prefix=""){
+    function create_uuid($prefix=""){
         $chars = md5(uniqid(mt_rand(), true));
         $uuid = substr ( $chars, 0, 8 ) . '-'
             . substr ( $chars, 8, 4 ) . '-'
@@ -119,7 +102,7 @@ class AdKeyController extends Controller
         return $prefix.$uuid ;
     }
 
-    public static function get_os_browser_type(){
+    function get_os_browser_type(){
         $user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '_';
         $os_type  = "unknown";
         $os_array     = array(
@@ -180,7 +163,7 @@ class AdKeyController extends Controller
 
 
 
-    public static function get_client_ip(){
+    function get_client_ip(){
 
         if (!empty($_SERVER['HTTP_CLIENT_IP'])){
             return $_SERVER['HTTP_CLIENT_IP'];
@@ -197,4 +180,5 @@ class AdKeyController extends Controller
 
 
 
-}
+
+?>
