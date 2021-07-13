@@ -15,6 +15,10 @@ class AdKeyController extends Controller
         return view('ad_demo');
     }
 
+    public function test_1(){
+
+        return view('test_1');
+    }
 
 
     public static function render_ad_url(Request $inputData)

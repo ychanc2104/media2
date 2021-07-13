@@ -20,20 +20,10 @@
     <!-- <link rel="stylesheet" type="text/css" href="{{ asset('/css/media/chart_table.css')}}" /> -->
     <link rel="stylesheet" type="text/css" href="/css/media/chart_table.css" />
 
-    
-    <!-- Google Charts -->
-    <!-- <script type="text/javascript" src="https://www.google.com/jsapi"></script> -->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-        google.charts.load('current', {packages: ['corechart']});
-    </script>
+    <!-- Custom JS -->
+    @yield('custom_js')
 
-    <!-- Default running and setting script -->
-    @include('Home_js.defaultJS')
 
-    <!-- Custom script -->
-    @include('Home_js.drawJS')
-    @include('Home_js.updateJS')
 
     <!-- dateRangePicker -->
     <!-- month Picker -->

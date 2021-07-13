@@ -98,7 +98,6 @@
 
 
 
-
 <script type="text/javascript" defer>
 
 	function render_ad_keyword()
@@ -107,7 +106,7 @@
 		console.log('title is '+title)
 		$.ajax({
 			type: 'get',
-			url: '/render_url',
+			url: 'http://35.194.177.54/api/clare/ad_key.php',
 			dateType: 'json',
 			data:
 			{
@@ -115,6 +114,8 @@
 			}, 
 			success: function(url_keyword_json)
 			{
+				console.log(url_keyword_json);
+
 				const url = String(JSON.parse(url_keyword_json)[0]);
 				console.log(url);
 				const keyword = JSON.parse(url_keyword_json)[1];

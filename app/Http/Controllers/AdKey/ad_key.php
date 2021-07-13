@@ -1,11 +1,10 @@
 <?php
 
-include '/home/user/Desktop/media2/app/Http/Controllers/AdKey/DBHelper.php';
-    // include '/var/www/html/likr_library/Helper.php';
-    // include '/var/www/html/likr_library/DBHelper.php';
+    include '/usr/share/nginx/html/api/clare/DBHelper.php';
 
     // lacking default ad
     echo render_ad_url();
+
 
 
     function render_ad_url()
@@ -13,8 +12,18 @@ include '/home/user/Desktop/media2/app/Http/Controllers/AdKey/DBHelper.php';
         //// input parameters
         //// media should input two parameters
 
-        $title = $_GET['title'];
+        $title = ($_GET['title']!==null? $_GET['title'] : '1、2字頭占優勢 八德房市交易熱 磁吸北客比價移居 - 財經');
         $web_id = $_GET['web_id'];
+        // $uuid = ($_GET['uuid']!==null? $_GET['uuid'] : create_uuid());
+
+        // $uuid = $_COOKIE['AviviD_uuid'];
+
+
+        // $uuid = ($_COOKIE['AviviD_uuid']!==null? $_COOKIE['AviviD_uuid'] : '_');
+        $uuid = isset($_COOKIE['AviviD_uuid']) ? $_COOKIE['AviviD_uuid'] : '_';
+        // echo $uuid;
+        
+
 
         // $uuid = $inputData->input('uuid');
 
@@ -37,6 +46,7 @@ include '/home/user/Desktop/media2/app/Http/Controllers/AdKey/DBHelper.php';
 
         $url = $id_url_data[$index_to_pick]['url'];
         $pre_banner_id = $id_url_data[$index_to_pick]['id'];
+
         //// count click (計算點擊)
         //// collect data /usr/share/nginx/html/pushServer/redirect/redirect_click.php need
         //// 10 slots in total, avivid_data = [push_type, web_id, category_id, user_id, url, banner_id, time_stamp, action, is_clip, cust_push_id]
@@ -57,8 +67,9 @@ include '/home/user/Desktop/media2/app/Http/Controllers/AdKey/DBHelper.php';
         $avivid_code = base64_encode((string)$avivid_data);
         $render_url = 'https://clk-satellite.advividnetwork.com/pushServer/redirect/redirect_click.php?avivid_code='.$avivid_code;
 
+
         //// count impression (計算露出)
-        $uuid = create_uuid(); // generate uuid
+        // $uuid = create_uuid(); // generate uuid
         $os_browser_array = get_os_browser_type();
         $os_type = $os_browser_array[0];
         $browser_type = $os_browser_array[1];
@@ -67,25 +78,30 @@ include '/home/user/Desktop/media2/app/Http/Controllers/AdKey/DBHelper.php';
         $log_hour = date('H');
         $add_time = date('Y-m-d H:i:s');
 
-
         $query_impression = "INSERT INTO impression_log
                              SET banner_id = '$banner_id',
                                  push_type = '$push_type',
                                  os_type   = '$os_type',
-                                 web_id = '$web_id',
-                                 uuid = '$uuid',
+                                 web_id    = '$web_id',
+                                 uuid      = '$uuid',
                                  ip        = '$client_ip',
                                  is_clip   = '$is_clip',
                                  url       = '_',
+                               user_gcm_id = '',
                                  browser   = '$browser_type',
-                                 log_date = '$log_date',
-                                 log_hour = '$log_hour',
-                                 add_time = '$add_time',
+                                 log_date  = '$log_date',
+                                 log_hour  = '$log_hour',
+                                 add_time  = '$add_time'
                             ";
-        // $SQL_connect = DBHelper::connect('');
-        // DBHelper::insert($SQL_connect, $query_impression);
-        
+        // echo $query_impression;
 
+        $SQL_connect = DBHelper::connection('meteor_hodo_cloud'); 
+        // echo $SQL_connect;
+
+        $status = DBHelper::insert($SQL_connect, $query_impression);
+
+        // echo $status;
+        
         return json_encode([$render_url, $keyword]);
     }
 

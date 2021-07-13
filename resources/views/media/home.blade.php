@@ -16,9 +16,17 @@ Overview
 
 
 
+@section('custom_js')
+<!-- Default running and setting script -->
+@include('Home_js.defaultJS')
+<!-- Custom script -->
+@include('Home_js.drawJS')
+@include('Home_js.updateJS')
+@stop
+
+
 
 @section('content')
-
 
 <div>
 

@@ -4,13 +4,13 @@
 var MONTHS = ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"];
 
 $(function () {
-
+  
   startMonth = new Date().getMonth()+1; // 0 is Jan., 1 is Feb.
   startYear = new Date().getFullYear();
   endMonth = new Date().getMonth()+1;
   endYear = new Date().getFullYear();
   // My adding
-
+  console.log(endYear);
   document.getElementById("show_start").innerHTML = startMonth + "月 " + startYear;
   document.getElementById("show_end").innerHTML = startMonth + "月 " + startYear;
   // 

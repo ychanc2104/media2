@@ -10,8 +10,8 @@
 <meta property="og:url" itemprop="url" content="https://www.chinatimes.com/realtimenews/20210611002493-260410?chdtv">
 <!-- <meta property="og:title" itemprop="name" content="1、2字頭占優勢 八德房市交易熱 磁吸北客比價移居 - 財經"> -->
 <!-- <meta property="og:title" itemprop="name" content="央行數位貨幣 陳冲：不能坐等看迦納車尾燈 - 財經"> -->
-<!-- <meta property="og:title" itemprop="name" content="3星座女天生是賺錢專家 富貴在天不愁吃穿 - 星座"> -->
-<meta property="og:title" itemprop="name" content="PLG》共同抗疫！攻城獅捐10％球衣收入給醫護人員 - 籃球">
+<meta property="og:title" itemprop="name" content="3星座女天生是賺錢專家 富貴在天不愁吃穿 - 星座">
+<!-- <meta property="og:title" itemprop="name" content="PLG》共同抗疫！攻城獅捐10％球衣收入給醫護人員 - 籃球"> -->
 
 
 <meta property="og:image" itemprop="image" content="https://images.chinatimes.com/newsphoto/2021-06-11/1024/20210611002496.jpg">
@@ -117,7 +117,7 @@
 		console.log('title is '+title)
 		$.ajax({
 			type: 'get',
-			url: '/render_url',
+			url: 'http://35.194.177.54/api/clare/ad_key.php',
 			dateType: 'json',
 			data:
 			{

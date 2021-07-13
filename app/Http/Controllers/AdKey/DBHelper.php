@@ -20,18 +20,19 @@ class DBHelper
      */
     public static $db_list = array(
         'ad_record' => array(
-                'host' => '34.80.211.104',
+                'host' => '172.16.47.246', // internal IP
+                // 'host' => '34.80.211.104',
                 'dbname' => 'ad_record',
                 'username' => 'hodo_user',
                 'password' => 'hodomobile*777',
             ),
 
-        'crescent_hodo' => array(
-            'host' => '104.199.175.43',
-            'dbname' => 'crescent_hodo',
-            'username' => 'hodo_user',
-            'password' => 'hodomobile*777',
-        ),
+        // 'crescent_hodo' => array(
+        //     'host' => '104.199.175.43',
+        //     'dbname' => 'crescent_hodo',
+        //     'username' => 'hodo_user',
+        //     'password' => 'hodomobile*777',
+        // ),
 
         'localhost_web_push' => array(
             'host' => 'localhost',
@@ -148,12 +149,12 @@ class DBHelper
                  'username' => 'hodo_user',
                  'password' => 'hodomobile*777',
             ),
-    // 'crescent_hodo' => array(
-    //              'host' => '172.16.32.13',
-    //              'dbname' => 'crescent_hodo',
-    //              'username' => 'hodo_user',
-    //              'password' => 'hodomobile*777',
-    //         ),
+    'crescent_hodo' => array(
+                 'host' => '172.16.32.13',
+                 'dbname' => 'crescent_hodo',
+                 'username' => 'hodo_user',
+                 'password' => 'hodomobile*777',
+            ),
     'crescent_media' => array(
                  'host' => '172.16.32.13',
                  'dbname' => 'crescent_media',
@@ -215,8 +216,11 @@ class DBHelper
                  'password' => 'hodomobile*777',
             ),
     'meteor_hodo_cloud' => array(
-                 'host' => '10.108.160.193',
-                 'dbname' => 'crescent_hodo',
+                //  'host' => '10.108.160.193',
+                 'host' => '10.108.160.3',
+
+                //  'host' => '172.16.32.25',
+                 'dbname' => 'crescent_db',
                  'username' => 'hodo_user',
                  'password' => 'hodomobile*777',
             ),

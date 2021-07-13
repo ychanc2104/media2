@@ -37,6 +37,9 @@ Route::get('daily_report/data', [DailyReportController::class, 'transmit_daily_r
 Route::get('/create_ad', [ADController::class, 'index']);
 Route::get('/ad_demo', [AdKeyController::class, 'index']);
 
+Route::get('/test_1', [AdKeyController::class, 'test_1']);
+
+
 
 
 Route::get('/render_url', [AdKeyController::class, 'render_ad_url']);

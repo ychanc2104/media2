@@ -1,23 +1,30 @@
 
 
-<!doctype html>
-<html>
-<head>
 
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.media.base')
+
+
+
+@section('cdn_css')
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css"/>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+
   <link rel="stylesheet" type="text/css" href="{{ asset('/css/dateRangePicker/monthPicker.css')}}" />
 
+@stop
+
+@section('cdn_js')
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-  
-  <!-- <script type="text/javascript" src="{{ asset('/js/dateRangePicker/monthPicker.js') }}"></script> -->
 
+
+@stop
+
+
+
+@section('custom_js')
   <!-- default running script-->
   @include('DailyReport_js.defaultJS')
 
@@ -26,6 +33,19 @@
 
   <!-- Paginator script -->
   @include('DailyReport_js.paginatorJS')
+@stop
+
+
+  <!-- <script type="text/javascript" src="{{ asset('/js/dateRangePicker/monthPicker.js') }}"></script> -->
+
+  <!-- @section('cdn_css')
+  @include('cdn_js_css.home_css')
+  @stop
+
+  @section('cdn_js')
+  @include('cdn_js_css.home_js')
+  @stop -->
+
 
 
   <style type="text/css">
@@ -34,15 +54,14 @@
     }
   </style>
 
-</head>
 
 
 
 
 
 
+@section('content')
 
-<body>
 
 <div class="container">
   <div class="row">
@@ -58,6 +77,8 @@
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <!-- <div class="collapse show"> -->
+
         <div id="sla-data-range" class="mrp-container nav navbar-nav">
             <span class="mrp-icon"><i class="fa fa-calendar"></i></span>
             <div class="mrp-monthdisplay">
@@ -69,7 +90,7 @@
           <input id="date_end" type="hidden" value="201408" id="mrp-upperDate" />
         </div>
 
-      </div><!-- /.navbar-collapse -->
+      </div><!--/.navbar-collapse-->
     </div><!-- /.container-fluid -->
 
     <div class="container">
@@ -122,9 +143,9 @@
 
 
 
-</body>
+@stop
 
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 
-</script>
+</script> -->
