@@ -26,13 +26,13 @@ Route::get('/clear/session', [LoginController::class, 'clearSessionKey'])->name(
 
 
 
-Route::get('/home', [HomeController::class, 'home'])
+Route::get('/home', [HomeController::class, 'home'])->name('home')
     ->middleware(['login.required']);
-Route::get('/home/get_chart_total_data',[HomeController::class, 'transmit_chart_total_data']);
+Route::get('/home/get_chart_total_data',[HomeController::class, 'transmit_chart_total_data'])->name('chart.total.data');
 
-Route::get('daily_report', [DailyReportController::class, 'daily_report'])
+Route::get('daily_report', [DailyReportController::class, 'daily_report'])->name('daily.report')
     ->middleware(['login.required']);
-Route::get('daily_report/data', [DailyReportController::class, 'transmit_daily_report']);
+Route::get('daily_report/data', [DailyReportController::class, 'transmit_daily_report'])->name('daily.report.data');
 
 Route::get('/create_ad', [ADController::class, 'index']);
 Route::get('/ad_demo', [AdKeyController::class, 'index']);

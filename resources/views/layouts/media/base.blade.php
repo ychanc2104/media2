@@ -18,7 +18,9 @@
 
     <!-- Custom CSS -->
     <!-- <link rel="stylesheet" type="text/css" href="{{ asset('/css/media/chart_table.css')}}" /> -->
-    <link rel="stylesheet" type="text/css" href="/css/media/chart_table.css" />
+    @include('custom_css')
+
+    <!-- <link rel="stylesheet" type="text/css" href="../css/media/chart_table.css" /> -->
 
     <!-- Custom JS -->
     @yield('custom_js')
@@ -71,7 +73,7 @@
     <div class="sidebar_base">
         
             <div class="sidebar_base_upper">
-                <a href="/home"><img id="hodo_logo" src="img/master/master_logo.png"></a>
+                <a href="{{ route('home') }}"><img id="hodo_logo" src="img/master/master_logo.png"></a>
             </div>
 
             <li>                        
@@ -80,8 +82,8 @@
                 </button>
 
                 <div class="collapse" id="daily_button">
-                    <a class="dropdown-item-text dropdown-manu" href="/home" >數據總覽</a>
-                    <a class="dropdown-item-text dropdown-manu" href="/daily_report" >每日報表</a>
+                    <a class="dropdown-item-text dropdown-manu" href="{{ route('home') }}" >數據總覽</a>
+                    <a class="dropdown-item-text dropdown-manu" href="{{ route('daily.report') }}" >每日報表</a>
                     <a class="dropdown-item-text dropdown-manu" href="#">聯播網上檔廣告</a>
                 </div>
             </li>

@@ -44,7 +44,7 @@ class LoginController extends Controller
                     '密碼驗證錯誤',
                 ],
             ];
-            return redirect('/login') 
+            return redirect('login') 
             ->withErrors($error_msg)
             ->withInput();
         }
@@ -54,7 +54,7 @@ class LoginController extends Controller
             Session::put('web_id', $media_account->src_web_id);
             Session::put('account', $media_account->src_web_id);
 
-            return redirect()->intended('/home');
+            return redirect()->intended('home');
         }
 
     }

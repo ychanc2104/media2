@@ -13,7 +13,7 @@
     <div class="profile">
         <!-- <img style="height: 150px; width: 150px;" src="img/master/people_icon.png"> -->
 
-        <form action="/post-login" method="post">
+        <form action="{{ route('login.post') }}" method="post">
             @csrf
             <span class="login_accout_form_span"><input type="text" class="login_input_style" name="email" placeholder=" 請輸入帳號"></span>
             <span class="login_accout_form_span"><input type="password" class="login_input_style" name="password" placeholder=" 請輸入密碼"></span>

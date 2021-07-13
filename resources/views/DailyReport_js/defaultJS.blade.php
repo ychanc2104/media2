@@ -4,7 +4,7 @@
   $.ajax
   ({
     type: 'get',
-    url: '/daily_report/data',
+    url: '{{ route('daily.report.data') }}',
     dateType: 'json',
     data: 
     {

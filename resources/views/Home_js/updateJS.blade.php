@@ -39,7 +39,7 @@
 
     $.ajax({
         type: 'get',
-        url: '/home/get_chart_total_data',
+        url: '{{ route('chart.total.data') }}',
         dateType: 'json',
         data: 
         {
@@ -98,7 +98,7 @@
         $.ajax(
         {
             type: 'get',
-            url: '/home/get_chart_total_data',
+            url: '{{ route('chart.total.data') }}',
             dateType: 'json',
             // data: 
             // {
