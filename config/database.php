@@ -39,6 +39,19 @@ return [
 
     'connections' => [
 
+        'cloud_crescent' => [
+            'driver'    => 'mysql',
+            // 'host'      => '172.16.32.13', // settings for running server
+            'host'      => '10.108.160.3',
+            'database'  => 'crescent_db',
+            'username'  => 'hodo_user',
+            'password'  => 'hodomobile*777',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'port'      => '3306',
+        ],
+
         'ad_record' => [
             'driver'    => 'mysql',
             // 'host'      => '172.16.32.13', // settings for running server

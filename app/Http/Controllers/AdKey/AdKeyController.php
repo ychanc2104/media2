@@ -20,6 +20,10 @@ class AdKeyController extends Controller
         return view('test_1');
     }
 
+    public function test_2(){
+
+        return view('test_2');
+    }
 
     public static function render_ad_url(Request $inputData)
     {
@@ -29,10 +33,12 @@ class AdKeyController extends Controller
         $title = $inputData->input('title');
         $web_id = $inputData->input('web_id');
 
+        $uuid = isset($_COOKIE['AviviD_uuid']) ? $_COOKIE['AviviD_uuid'] : '_';
+
         // $title = $_GET('title');
         // $web_id = $_GET('web_id');
-        // dd($title);
-
+        // dd($_COOKIE['AviviD_uuid']);
+        
         // $uuid = $inputData->input('uuid');
 
         $query = "SELECT meta_title, web_id, keyword_ad FROM NewsTitleKeyword WHERE meta_title='$title'";

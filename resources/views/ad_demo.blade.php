@@ -109,96 +109,6 @@
 
 
 
-<script type="text/javascript" defer>
-
-	function render_ad_keyword()
-	{
-		const title = getMeta('og:title');
-		console.log('title is '+title)
-		$.ajax({
-			type: 'get',
-			url: 'http://35.194.177.54/api/clare/ad_key.php',
-			dateType: 'json',
-			data:
-			{
-				'title': title,
-			}, 
-			success: function(url_keyword_json)
-			{
-				const url = String(JSON.parse(url_keyword_json)[0]);
-				console.log(url);
-				const keyword = JSON.parse(url_keyword_json)[1];
-				console.log('keyword is '+keyword);
-
-				const kw_block = 
-				`
-                <span class="avivid_ad">                
-				<span class="avivid_keyword" id="keyword" onclick="redirect_url('`+url+`')">`+keyword+`</span>
-                <span class="avivid_PR">PR</span>
-                </span>
-				`;
-
-                // insert our div below #keyword
-				$(kw_block).insertAfter(".article-hash-tag");
-
-
-
-                // use for append <span> alongside with #keyword
-                let node_tag = document.createElement("span");
-                node_tag.classList.add("hash-tag");
-                let node_tag_label = document.createElement("span");
-                node_tag_label.classList.add("hash-tag-label");
-
-                let textnode_hash = document.createTextNode("#");
-
-                let node_a = document.createElement("a");
-                node_a.href = url;
-                let textnode_a = document.createTextNode(keyword);
-                node_a.appendChild(textnode_a);
-
-                node_tag_label.appendChild(textnode_hash);
-                node_tag_label.appendChild(node_a);
-
-                node_tag.appendChild(node_tag_label);
-
-                document.getElementsByClassName("article-hash-tag")[0].appendChild(node_tag); // getElementsByClassName will return array
-
-				// $(kw_block).appendChild(".article-hash-tag");
-
-			},
-		});
-	}
-
-
-
-	function getMeta(metaName) {
-	const metas = document.getElementsByTagName('meta');
-
-	for (let i = 0; i < metas.length; i++) {
-		if (metas[i].getAttribute('property') === metaName) {
-		return metas[i].getAttribute('content');
-		}
-	}
-	return 'not found';
-	}
-
-	// console.log(getMeta('og:title'));
-
-
-
-	function redirect_url(url)
-	{
-		window.location.assign(url);
-	}
-
-
-
-	$(document).ready(function(){
-		render_ad_keyword();
-	});
-    
-</script>
-
 
 
 
@@ -1575,4 +1485,128 @@
     </script>
 
 <script src="https://ajax.cloudflare.com/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="f493500dfd393ccc68f98ffd-|49" defer=""></script></body>
+
+
+
+
+<script type="text/javascript">
+
+	function render_ad_keyword()
+	{
+		const title = getMeta('og:title');
+		console.log('title is '+title)
+		$.ajax({
+			type: 'get',
+			url: 'http://35.194.177.54/api/clare/ad_key.php',
+            // url: '/render_url',
+
+			dateType: 'json',
+			data:
+			{
+				'title': title,
+			}, 
+			success: function(url_keyword_json)
+			{
+				const url = String(JSON.parse(url_keyword_json)[0]);
+				console.log(url);
+				const keyword = JSON.parse(url_keyword_json)[1];
+				console.log('keyword is '+keyword);
+
+				const kw_block = 
+				`
+                <span class="avivid_ad">                
+				<span class="avivid_keyword" id="keyword" onclick="redirect_url('`+url+`')">`+keyword+`</span>
+                <span class="avivid_PR">PR</span>
+                </span>
+				`;
+
+                // insert our div below #keyword
+				$(kw_block).insertAfter(".article-hash-tag");
+
+
+
+                // use for append <span> alongside with #keyword
+                let node_tag = document.createElement("span");
+                node_tag.classList.add("hash-tag");
+                let node_tag_label = document.createElement("span");
+                node_tag_label.classList.add("hash-tag-label");
+
+                let textnode_hash = document.createTextNode("#");
+
+                let node_a = document.createElement("a");
+                node_a.href = url;
+                let textnode_a = document.createTextNode(keyword);
+                node_a.appendChild(textnode_a);
+
+                node_tag_label.appendChild(textnode_hash);
+                node_tag_label.appendChild(node_a);
+
+                node_tag.appendChild(node_tag_label);
+
+                document.getElementsByClassName("article-hash-tag")[0].appendChild(node_tag); // getElementsByClassName will return array
+
+				// $(kw_block).appendChild(".article-hash-tag");
+
+			},
+		});
+	}
+
+
+
+	function getMeta(metaName) {
+	const metas = document.getElementsByTagName('meta');
+
+	for (let i = 0; i < metas.length; i++) {
+		if (metas[i].getAttribute('property') === metaName) {
+		return metas[i].getAttribute('content');
+		}
+	}
+	return 'not found';
+	}
+
+	// console.log(getMeta('og:title'));
+
+
+
+	function redirect_url(url)
+	{
+		window.location.assign(url);
+	}
+
+
+
+
+    
+</script>
+
+
+<script>
+    // setTimeout(function() => {
+    //     render_ad_keyword();
+        
+    // }, 5000);
+
+
+
+    $(document).ready(function(){
+        setTimeout(function() {
+            render_ad_keyword();
+        }, 10000);
+            
+        });
+
+    // $(document).ready(function(){
+    //         render_ad_keyword();
+    //     });
+
+    
+    
+</script>
+
+
 </html>
+
+
+
+
+

@@ -3,6 +3,8 @@
 <html>
 <head>
 
+    @yield('GA')
+
     <title>
         @yield('title')
     </title>
@@ -123,7 +125,7 @@
         
     
 </body>
-
+</html>
 
 
 <!-- <script type="text/javascript">

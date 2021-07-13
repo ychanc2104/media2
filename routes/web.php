@@ -7,6 +7,7 @@ use App\Http\Controllers\media\HomeController;
 use App\Http\Controllers\media\DailyReportController;
 use App\Http\Controllers\media\ADController;
 use App\Http\Controllers\AdKey\AdKeyController;
+use App\Http\Controllers\AdKey\CompareGAController;
 
 
 /*
@@ -37,13 +38,15 @@ Route::get('daily_report/data', [DailyReportController::class, 'transmit_daily_r
 Route::get('/create_ad', [ADController::class, 'index']);
 Route::get('/ad_demo', [AdKeyController::class, 'index']);
 
-Route::get('/test_1', [AdKeyController::class, 'test_1']);
+Route::get('/test_1', [AdKeyController::class, 'test_1'])->name('test_1');
+Route::get('/test_2', [AdKeyController::class, 'test_2'])->name('test_2');
 
 
 
 
 Route::get('/render_url', [AdKeyController::class, 'render_ad_url']);
 
+Route::get('/count_click', [CompareGAController::class, 'count_click'])->name('count.click');
 
 // Route::get('/login/account', [LoginController::class, 'get_account']);
 

@@ -16,13 +16,8 @@
         $web_id = $_GET['web_id'];
         // $uuid = ($_GET['uuid']!==null? $_GET['uuid'] : create_uuid());
 
-        // $uuid = $_COOKIE['AviviD_uuid'];
-
-
         // $uuid = ($_COOKIE['AviviD_uuid']!==null? $_COOKIE['AviviD_uuid'] : '_');
-        $uuid = isset($_COOKIE['AviviD_uuid']) ? $_COOKIE['AviviD_uuid'] : '_';
-        // echo $uuid;
-        
+        $uuid = isset($_COOKIE['AviviD_uuid']) ? $_COOKIE['AviviD_uuid'] : '_'; // get AviviD_uuid from cookie
 
 
         // $uuid = $inputData->input('uuid');
