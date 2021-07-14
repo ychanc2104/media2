@@ -10,9 +10,10 @@
 <meta property="og:url" itemprop="url" content="https://www.chinatimes.com/realtimenews/20210611002493-260410?chdtv">
 <!-- <meta property="og:title" itemprop="name" content="1、2字頭占優勢 八德房市交易熱 磁吸北客比價移居 - 財經"> -->
 <!-- <meta property="og:title" itemprop="name" content="央行數位貨幣 陳冲：不能坐等看迦納車尾燈 - 財經"> -->
-<meta property="og:title" itemprop="name" content="3星座女天生是賺錢專家 富貴在天不愁吃穿 - 星座">
-<!-- <meta property="og:title" itemprop="name" content="PLG》共同抗疫！攻城獅捐10％球衣收入給醫護人員 - 籃球"> -->
-
+<!-- <meta property="og:title" itemprop="name" content="3星座女天生是賺錢專家 富貴在天不愁吃穿 - 星座"> -->
+<meta property="og:title" itemprop="name" content="PLG》共同抗疫！攻城獅捐10％球衣收入給醫護人員 - 籃球">
+<!-- <meta property="og:title" itemprop="name" content="湖北十堰爆炸案 民眾睡夢中被炸醒 床上驚見碎玻璃 - 兩岸"> -->
+<!-- <meta property="og:title" itemprop="name" content="中時新聞網sxx"> -->
 
 <meta property="og:image" itemprop="image" content="https://images.chinatimes.com/newsphoto/2021-06-11/1024/20210611002496.jpg">
 <meta property="og:image:width" content="1024">
@@ -1491,25 +1492,52 @@
 
 <script type="text/javascript">
 
+    $(document).ready(function(){
+        console.log('test')
+
+            setTimeout(function() {
+
+                render_ad_keyword();
+
+            }, 1000);
+                
+        });
+
+
 	function render_ad_keyword()
 	{
-		const title = getMeta('og:title');
+        const title = getMeta('og:title');
+        const uuid = AviviD['uuid'];
 		console.log('title is '+title)
-		$.ajax({
-			type: 'get',
-			url: 'http://35.194.177.54/api/clare/ad_key.php',
-            // url: '/render_url',
+        console.log('uuid is '+uuid)
 
+		$.ajax({
+			type: 'post',
+			// url: 'http://35.194.177.54/api/clare/ad_keyword.php',
+            url: 'https://moon01slave.advividnetwork.com/api/ad_keyword_api.php',
+            // url: 'http://34.80.212.13/api/ad_keyword_api.php',
+
+            // url: '/render_url',
 			dateType: 'json',
 			data:
 			{
-				'title': title,
+				'title' : title,
+                'web_id': 'ctnews',
+                'uuid'  : uuid,
 			}, 
-			success: function(url_keyword_json)
+			success: function(result_json)
 			{
-				const url = String(JSON.parse(url_keyword_json)[0]);
-				console.log(url);
-				const keyword = JSON.parse(url_keyword_json)[1];
+                console.log(result_json);
+
+                const result = JSON.parse(result_json);
+                const code = result['code'];
+                const message = result['message'];
+                const data = result['data'];
+				const url = data['url'];
+
+				const keyword = data['keyword'];
+
+
 				console.log('keyword is '+keyword);
 
 				const kw_block = 
@@ -1519,10 +1547,8 @@
                 <span class="avivid_PR">PR</span>
                 </span>
 				`;
-
                 // insert our div below #keyword
 				$(kw_block).insertAfter(".article-hash-tag");
-
 
 
                 // use for append <span> alongside with #keyword
@@ -1561,7 +1587,6 @@
 		return metas[i].getAttribute('content');
 		}
 	}
-	return 'not found';
 	}
 
 	// console.log(getMeta('og:title'));
@@ -1580,28 +1605,7 @@
 </script>
 
 
-<script>
-    // setTimeout(function() => {
-    //     render_ad_keyword();
-        
-    // }, 5000);
 
-
-
-    $(document).ready(function(){
-        setTimeout(function() {
-            render_ad_keyword();
-        }, 10000);
-            
-        });
-
-    // $(document).ready(function(){
-    //         render_ad_keyword();
-    //     });
-
-    
-    
-</script>
 
 
 </html>

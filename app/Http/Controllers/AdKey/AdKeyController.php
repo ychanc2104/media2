@@ -22,7 +22,18 @@ class AdKeyController extends Controller
 
     public function test_2(){
 
-        return view('test_2');
+        $now_clicks = count(DB::connection('cloud_crescent')->select('SELECT * FROM compareGA_log'));
+
+        // $datetime_start = date('Y-m-d H:i:s');
+        // $datetime_end = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." +30 minutes"));
+        $datetime_start = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." -30 minutes"));
+        $datetime_end = date('Y-m-d H:i:s');
+        // dd($datetime_end);
+
+        $latest_clicks = count(DB::connection('cloud_crescent')->select("SELECT * FROM compareGA_log WHERE update_time BETWEEN '$datetime_start' AND '$datetime_end'"));
+        
+        // dd($now_clicks);
+        return view('test_2', ['now_clicks' => $now_clicks, 'latest_clicks' => $latest_clicks]);
     }
 
     public static function render_ad_url(Request $inputData)

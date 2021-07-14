@@ -48,6 +48,8 @@ Route::get('/render_url', [AdKeyController::class, 'render_ad_url']);
 
 Route::get('/count_click', [CompareGAController::class, 'count_click'])->name('count.click');
 
+
+
 // Route::get('/login/account', [LoginController::class, 'get_account']);
 
 

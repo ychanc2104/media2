@@ -10,39 +10,40 @@ class CompareGAController extends Controller
 {
     public static function count_click()
     {
-
-        //// count impression (計算露出)
+        //// count click (計算click)
         $os_browser_array = self::get_os_browser_type();
         $os_type = $os_browser_array[0];
         $browser_type = $os_browser_array[1];
+        // dd($os_browser_array);
+
         $client_ip = self::get_client_ip();
         $log_date = date('Y-m-d');
         $log_hour = date('H');
         $add_time = date('Y-m-d H:i:s');
 
 
-        $query_impression = "INSERT INTO compareGA_log
-                             SET                                  
-                                 os_type   = '$os_type',
-                                 ip        = '$client_ip',
-                                 browser   = '$browser_type',
-                                 log_date = '$log_date',
-                                 log_hour = '$log_hour',
-                                 add_time = '$add_time',
-                            ";
-        DB::connection('cloud_crescent')->insert([
-            'os_type' => '$os_type',
-            'ip'      => '$client_ip',
-            'browser' => '$browser_type',
-            'log_date'=> '$log_date',
-            'log_hour'=> '$log_hour',
-            'add_time'=> '$add_time'
+        DB::connection('cloud_crescent')->table('compareGA_log')->insert([
+            // 'os_type' => 'windows',
+            // 'ip'      => $client_ip,
+            // 'browser' => 'xxxxx',
+            'os_type' => $os_type,
+            'ip'      => $client_ip,
+            'browser' => $browser_type,
+            'log_date'=> $log_date,
+            'log_hour'=> $log_hour,
+            'add_time'=> $add_time
         ]);
-        
+
+        // $now_clicks = count(DB::connection('cloud_crescent')->select('SELECT * FROM compareGA_log'));
+        // dd($now_clicks);
 
         return view('count_click');
 
     }
+
+
+
+
 
 
     public static function get_os_browser_type(){
@@ -76,10 +77,14 @@ class CompareGAController extends Controller
                         );
         $browser_type = 'unknown';
         $browser_array = array(
-                                '/firefox/i'           =>  'Firefox',
-                                '/chrome/i'           =>  'Chrome',
-                                '/OPR/i'              =>  'Opera',
-                                '/Safari/i'           =>  'Safari',
+
+                                '/msie/i' => 'Internet explorer',
+                                '/firefox/i' => 'Firefox',
+                                '/safari/i' => 'Safari',
+                                '/chrome/i' => 'Chrome',
+                                '/edge/i' => 'Edge',
+                                '/opera/i' => 'Opera',
+                                '/mobile/i' => 'Mobile browser'
                         );
 
         

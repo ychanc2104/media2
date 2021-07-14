@@ -26,6 +26,12 @@ class DBHelper
                 'username' => 'hodo_user',
                 'password' => 'hodomobile*777',
             ),
+        'meteor_db0' => array(
+            'host' => '10.108.160.3',
+            'dbname' => 'crescent_db',
+            'username' => 'hodo_user',
+            'password' => 'hodomobile*777',
+        ),
 
         // 'crescent_hodo' => array(
         //     'host' => '104.199.175.43',
@@ -215,15 +221,7 @@ class DBHelper
                  'username' => 'hodo_user',
                  'password' => 'hodomobile*777',
             ),
-    'meteor_hodo_cloud' => array(
-                //  'host' => '10.108.160.193',
-                 'host' => '10.108.160.3',
 
-                //  'host' => '172.16.32.25',
-                 'dbname' => 'crescent_db',
-                 'username' => 'hodo_user',
-                 'password' => 'hodomobile*777',
-            ),
     );
 
     /**
