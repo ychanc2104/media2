@@ -97,7 +97,6 @@
 
 
 
-
 <script type="text/javascript" defer>
 
 	function render_ad_keyword()

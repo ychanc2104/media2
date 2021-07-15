@@ -19,34 +19,12 @@ class DBHelper
      * @version 2017-08-29
      */
     public static $db_list = array(
-        'ad_record' => array(
-                'host' => '172.16.47.246', // internal IP
-                // 'host' => '34.80.211.104',
-                'dbname' => 'ad_record',
+        'localhost_web_push' => array(
+                'host' => 'localhost',
+                'dbname' => 'web_push',
                 'username' => 'hodo_user',
                 'password' => 'hodomobile*777',
             ),
-        'meteor_db0' => array(
-            'host' => '10.108.160.3',
-            'dbname' => 'crescent_db',
-            'username' => 'hodo_user',
-            'password' => 'hodomobile*777',
-        ),
-
-        // 'crescent_hodo' => array(
-        //     'host' => '104.199.175.43',
-        //     'dbname' => 'crescent_hodo',
-        //     'username' => 'hodo_user',
-        //     'password' => 'hodomobile*777',
-        // ),
-
-        'localhost_web_push' => array(
-            'host' => 'localhost',
-            'dbname' => 'web_push',
-            'username' => 'hodo_user',
-            'password' => 'hodomobile*777',
-        ),
-
         'subscribe_web_push' => array(
                 'host' => 'www.likr.com.tw',
                 'dbname' => 'web_push',
@@ -168,10 +146,10 @@ class DBHelper
                  'password' => 'hodomobile*777',
             ),
     'account' => array(
-        'host' => '172.16.32.14',
-        'dbname' => 'account',
-        'username' => 'hodo_user',
-        'password' => 'hodomobile*777',
+                 'host' => '172.16.32.14',
+                 'dbname' => 'account',
+                 'username' => 'hodo_user',
+                 'password' => 'hodomobile*777',
            ),
     'titan01' => array(
                  'host' => '10.108.160.3',
@@ -221,7 +199,37 @@ class DBHelper
                  'username' => 'hodo_user',
                  'password' => 'hodomobile*777',
             ),
+    'meteor_hodo_cloud' => array(
+                 'host' => '10.108.160.193',
+                 'dbname' => 'crescent_hodo',
+                 'username' => 'hodo_user',
+                 'password' => 'hodomobile*777',
+           ),
+    'moon-db0' => array(
+                 'host' => '10.108.160.203',
+                 'dbname' => 'crescent_hodo',
+                 'username' => 'hodo_user',
+                 'password' => 'hodomobile*777',
+           ),
+    'moon-db1' => array(
+                 'host' => '10.108.160.206',
+                 'dbname' => 'crescent_hodo',
+                 'username' => 'hodo_user',
+                 'password' => 'hodomobile*777',
+           ),
 
+    'ad_record' => array(
+                'host' => '172.16.47.246', // internal IP
+                'dbname' => 'ad_record',
+                'username' => 'hodo_user',
+                'password' => 'hodomobile*777',
+            ),
+    'meteor_db0' => array(
+                'host' => '10.108.160.3',
+                'dbname' => 'crescent_db',
+                'username' => 'hodo_user',
+                'password' => 'hodomobile*777',
+            ),
     );
 
     /**

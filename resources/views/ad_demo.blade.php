@@ -1374,6 +1374,9 @@
 <script src="https://static.chinatimes.com/scripts/nwscard/nwscard.min.js" type="f493500dfd393ccc68f98ffd-text/javascript"></script>
 <script src="https://static.chinatimes.com/scripts/2019/stock-info-prompt2019-v2.min.js" type="f493500dfd393ccc68f98ffd-text/javascript"></script>
 
+
+
+
 <script type="f493500dfd393ccc68f98ffd-text/javascript">
         //定義DFP非同步廣告版位
         googletag.cmd.push(function () {
@@ -1489,41 +1492,107 @@
 
 
 
-
 <script type="text/javascript">
 
+    console.log('test');
+
     $(document).ready(function(){
-        console.log('test')
+        console.log('test');
 
-            setTimeout(function() {
+        setTimeout(function() {
+            render_ad_keyword();
+            // log impression
+            const title = getMeta('og:title');
+            const uuid = AviviD['uuid'];
+            const current_url = document.URL;
+            const web_id = 'ctnews';
 
-                render_ad_keyword();
+            console.log('22222 current url '+current_url);
+            console.log('22222 title is '+title);
+            console.log('22222 uuid is '+uuid);
+            $.ajax({
+			type: 'post',
+            url: 'https://moon01slave.advividnetwork.com/api/ad_keyword_api.php',
+			dateType: 'json',
+			data:
+			{
+                'current_url': 'https://www.chinatimes.com/opinion/20210715002570-262103?ctrack=pc_opinion_headl_p01&chdtv',
+                // 'current_url': 'https://www.chinatimes.com/realtimenews/20210715002571-260405?chdtv',
+                // 'current_url': 'https://www.chinatimes.com/politic/?chdtv',
+				'title' : title,
+                'web_id': web_id,
+                'uuid'  : uuid,
+                'state' : '2'
+			},
+            success: function(result_json)
+			{
+                console.log(result_json);
+            },
 
-            }, 1000);
-                
         });
+
+        }, 1000);
+
+        // // log impression
+        // const title = getMeta('og:title');
+        // const uuid = AviviD['uuid'];
+        // const current_url = document.URL;
+        // const web_id = 'ctnews';
+
+        // console.log('22222 current url '+current_url);
+		// console.log('22222 title is '+title);
+        // console.log('22222 uuid is '+uuid);
+
+		// $.ajax({
+		// 	type: 'post',
+        //     url: 'https://moon01slave.advividnetwork.com/api/ad_keyword_api.php',
+		// 	dateType: 'json',
+		// 	data:
+		// 	{
+        //         'current_url': 'https://www.chinatimes.com/opinion/20210715002570-262103?ctrack=pc_opinion_headl_p01&chdtv',
+        //         // 'current_url': 'https://www.chinatimes.com/realtimenews/20210715002571-260405?chdtv',
+        //         // 'current_url': 'https://www.chinatimes.com/politic/?chdtv',
+		// 		'title' : title,
+        //         'web_id': web_id,
+        //         'uuid'  : uuid,
+        //         'state' : '2'
+		// 	},
+        //     success: function(result_json)
+		// 	{
+        //         console.log(result_json);
+        //     },
+
+        // });
+    });
+    // }
 
 
 	function render_ad_keyword()
 	{
         const title = getMeta('og:title');
         const uuid = AviviD['uuid'];
-		console.log('title is '+title)
-        console.log('uuid is '+uuid)
+        const current_url = document.URL;
+        const web_id = 'ctnews';
+
+        console.log('current url '+current_url);
+		console.log('title is '+title);
+        console.log('uuid is '+uuid);
 
 		$.ajax({
 			type: 'post',
-			// url: 'http://35.194.177.54/api/clare/ad_keyword.php',
+			url: 'https://auto-satellite.advividnetwork.com/api/ad_keyword_api.php',
             url: 'https://moon01slave.advividnetwork.com/api/ad_keyword_api.php',
             // url: 'http://34.80.212.13/api/ad_keyword_api.php',
-
-            // url: '/render_url',
 			dateType: 'json',
 			data:
 			{
+                'current_url': 'https://www.chinatimes.com/opinion/20210715002570-262103?ctrack=pc_opinion_headl_p01&chdtv',
+                // 'current_url': 'https://www.chinatimes.com/realtimenews/20210715002571-260405?chdtv',
+                // 'current_url': 'https://www.chinatimes.com/politic/?chdtv',
 				'title' : title,
-                'web_id': 'ctnews',
+                'web_id': web_id,
                 'uuid'  : uuid,
+                'state' : '1' // get data
 			}, 
 			success: function(result_json)
 			{
@@ -1536,7 +1605,6 @@
 				const url = data['url'];
 
 				const keyword = data['keyword'];
-
 
 				console.log('keyword is '+keyword);
 
