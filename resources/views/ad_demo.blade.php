@@ -10,8 +10,8 @@
 <meta property="og:url" itemprop="url" content="https://www.chinatimes.com/realtimenews/20210611002493-260410?chdtv">
 <!-- <meta property="og:title" itemprop="name" content="1、2字頭占優勢 八德房市交易熱 磁吸北客比價移居 - 財經"> -->
 <!-- <meta property="og:title" itemprop="name" content="央行數位貨幣 陳冲：不能坐等看迦納車尾燈 - 財經"> -->
-<!-- <meta property="og:title" itemprop="name" content="3星座女天生是賺錢專家 富貴在天不愁吃穿 - 星座"> -->
-<meta property="og:title" itemprop="name" content="PLG》共同抗疫！攻城獅捐10％球衣收入給醫護人員 - 籃球">
+<meta property="og:title" itemprop="name" content="3星座女天生是賺錢專家 富貴在天不愁吃穿 - 星座">
+<!-- <meta property="og:title" itemprop="name" content="PLG》共同抗疫！攻城獅捐10％球衣收入給醫護人員 - 籃球"> -->
 <!-- <meta property="og:title" itemprop="name" content="湖北十堰爆炸案 民眾睡夢中被炸醒 床上驚見碎玻璃 - 兩岸"> -->
 <!-- <meta property="og:title" itemprop="name" content="中時新聞網sxx"> -->
 
@@ -1503,16 +1503,16 @@
             render_ad_keyword();
             // log impression
             const title = getMeta('og:title');
-            const uuid = AviviD['uuid'];
+            const uuid = AviviD.uuid;
             const current_url = document.URL;
-            const web_id = 'ctnews';
+            const web_id = AviviD.web_id;
 
             console.log('22222 current url '+current_url);
             console.log('22222 title is '+title);
             console.log('22222 uuid is '+uuid);
             $.ajax({
 			type: 'post',
-            url: 'https://moon01slave.advividnetwork.com/api/ad_keyword_api.php',
+            url: 'https://auto-satellite.advividnetwork.com/api/ad_keyword_api.php',
 			dateType: 'json',
 			data:
 			{
@@ -1570,9 +1570,10 @@
 	function render_ad_keyword()
 	{
         const title = getMeta('og:title');
-        const uuid = AviviD['uuid'];
+        const uuid = AviviD.uuid;
         const current_url = document.URL;
-        const web_id = 'ctnews';
+        // const web_id = 'ctnews';
+        const web_id = AviviD.web_id;
 
         console.log('current url '+current_url);
 		console.log('title is '+title);
@@ -1581,14 +1582,14 @@
 		$.ajax({
 			type: 'post',
 			url: 'https://auto-satellite.advividnetwork.com/api/ad_keyword_api.php',
-            url: 'https://moon01slave.advividnetwork.com/api/ad_keyword_api.php',
+            // url: 'https://moon01slave.advividnetwork.com/api/ad_keyword_api.php',
             // url: 'http://34.80.212.13/api/ad_keyword_api.php',
 			dateType: 'json',
 			data:
 			{
-                'current_url': 'https://www.chinatimes.com/opinion/20210715002570-262103?ctrack=pc_opinion_headl_p01&chdtv',
+                // 'current_url': 'https://www.chinatimes.com/opinion/20210715002570-262103?ctrack=pc_opinion_headl_p01&chdtv',
                 // 'current_url': 'https://www.chinatimes.com/realtimenews/20210715002571-260405?chdtv',
-                // 'current_url': 'https://www.chinatimes.com/politic/?chdtv',
+                'current_url': 'https://www.chinatimes.com/politic/?chdtv',
 				'title' : title,
                 'web_id': web_id,
                 'uuid'  : uuid,

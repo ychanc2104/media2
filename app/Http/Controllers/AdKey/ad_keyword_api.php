@@ -1,7 +1,7 @@
 
 <?php
 
-    include '/var/www/html/likr_library/DBHelper2.php';
+    include '/var/www/html/likr_library/DBHelper.php';
 
     header("Access-Control-Allow-Origin: *");
     header('Access-Control-Allow-Methods:POST, GET');  
